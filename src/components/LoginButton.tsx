@@ -1,44 +1,29 @@
 "use client";
 
-import { signInWithPopup, signOut } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
-import { useAuth } from "@/context/AuthContext";
+import { useSessao } from "@/hooks/useSessao";
+import { Button, ButtonSize } from "@/components/ui/Button";
+import { IconeGoogle } from "@/components/ui/icons";
+import { cn } from "@/components/ui/cn";
 
-export default function LoginButton() {
-  const { user, loading } = useAuth();
+type LoginButtonProps = {
+  size?: ButtonSize;
+  className?: string;
+};
 
-  const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const idToken = await result.user.getIdToken();
-      await fetch("/api/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idToken }),
-      });
-    } catch (err) {
-      console.error("Erro ao fazer login:", err);
-    }
-  };
+export default function LoginButton({ size = "md", className }: LoginButtonProps) {
+  const { entrar, entrando } = useSessao();
 
-  const handleLogout = async () => {
-    await fetch("/api/session", { method: "DELETE" });
-    await signOut(auth);
-  };
-
-  if (loading) return null;
-
-  if (user) {
-    return (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        {user.photoURL && (
-          <img src={user.photoURL} alt="" referrerPolicy="no-referrer" width={32} height={32} style={{ borderRadius: "50%" }} />
+  return (
+    <Button size={size} onClick={entrar} disabled={entrando} className={className}>
+      <span
+        className={cn(
+          "grid place-items-center rounded-full bg-white",
+          size === "lg" ? "size-7" : "size-5"
         )}
-        <span>{user.displayName}</span>
-        <button onClick={handleLogout}>Sair</button>
-      </div>
-    );
-  }
-
-  return <button onClick={handleLogin}>Entrar com Google</button>;
+      >
+        <IconeGoogle className={size === "lg" ? "size-4" : "size-3"} />
+      </span>
+      {entrando ? "Entrando..." : "Entrar com Google"}
+    </Button>
+  );
 }

@@ -2,23 +2,29 @@
 
 :root {
   --color-primary: #FAC093;
+  --color-primary-hover: #FCCFAC;
   --color-background: #1A426D;
   --color-dark-bg: #1D2842;
   --color-secondary: #4F95BA;
   --color-foreground: #D7DDE0;
+  --color-danger: #F4978E;
 
   --color-tier-diamond: #a7ebfc;
   --color-tier-gold: #DAA520;
   --color-tier-bronze: #CD7F32;
   --color-tier-platinum: #9fccc5;
+
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
   --color-background: var(--color-background);
   --color-dark-bg: var(--color-dark-bg);
   --color-secondary: var(--color-secondary);
   --color-foreground: var(--color-foreground);
+  --color-danger: var(--color-danger);
 
   --color-tier-diamond: var(--color-tier-diamond);
   --color-tier-gold: var(--color-tier-gold);
@@ -29,27 +35,88 @@
   --font-text: var(--font-spectral);
 }
 
+@theme {
+  --animate-surgir: surgir 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-etapa-avancar: etapa-avancar 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-etapa-voltar: etapa-voltar 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-menu: menu 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-dialogo: dialogo 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-selo: selo 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+  @keyframes surgir {
+    from { opacity: 0; transform: translateY(1rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes etapa-avancar {
+    from { opacity: 0; transform: translateX(2rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes etapa-voltar {
+    from { opacity: 0; transform: translateX(-2rem); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes menu {
+    from { opacity: 0; transform: translateY(-0.5rem) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes dialogo {
+    from { opacity: 0; transform: translateY(0.75rem) scale(0.97); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes selo {
+    from { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 body {
   background: var(--color-dark-bg);
   color: var(--color-foreground);
   font-family: var(--font-spectral), serif;
 }
 
-/* GLASSMORPHISM */
-.glass {
-  background: linear-gradient(135deg, rgba(215, 221, 224, 0.14), rgba(215, 221, 224, 0.03));
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(215, 221, 224, 0.18);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 8px 32px rgba(9, 14, 26, 0.35);
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 90% -10%, rgba(79, 149, 186, 0.26), transparent 60%),
+    radial-gradient(50rem 36rem at -10% 35%, rgba(26, 66, 109, 0.6), transparent 65%),
+    radial-gradient(40rem 28rem at 50% 115%, rgba(250, 192, 147, 0.1), transparent 60%);
 }
 
-.glass-strong {
-  background: linear-gradient(135deg, rgba(215, 221, 224, 0.22), rgba(26, 66, 109, 0.28));
-  backdrop-filter: blur(28px) saturate(180%);
-  -webkit-backdrop-filter: blur(28px) saturate(180%);
-  border: 1px solid rgba(215, 221, 224, 0.26);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 40px rgba(9, 14, 26, 0.45);
+::selection {
+  background: var(--color-primary);
+  color: var(--color-dark-bg);
+}
+
+/* GLASSMORPHISM */
+@layer components {
+  .glass {
+    background: linear-gradient(135deg, rgba(215, 221, 224, 0.14), rgba(215, 221, 224, 0.03));
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(215, 221, 224, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 8px 32px rgba(9, 14, 26, 0.35);
+  }
+
+  .glass-strong {
+    background: linear-gradient(135deg, rgba(215, 221, 224, 0.22), rgba(26, 66, 109, 0.28));
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(215, 221, 224, 0.26);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 40px rgba(9, 14, 26, 0.45);
+  }
 }
 
 /* CUBOS */
@@ -94,4 +161,11 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .glass-solid, .glass-float { animation: none; }
+
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,0 +1,66 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FirebaseError } from "firebase/app";
+import { signInWithPopup, signOut } from "firebase/auth";
+import { toast } from "sonner";
+import { auth, googleProvider } from "@/lib/firebase";
+
+const errosDeCancelamento = new Set(["auth/popup-closed-by-user", "auth/cancelled-popup-request"]);
+
+export function useSessao() {
+  const router = useRouter();
+  const [entrando, setEntrando] = useState(false);
+  const [saindo, setSaindo] = useState(false);
+
+  async function entrar() {
+    if (entrando) return;
+    setEntrando(true);
+    try {
+      const resultado = await signInWithPopup(auth, googleProvider);
+      const idToken = await resultado.user.getIdToken();
+      const resposta = await fetch("/api/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+
+      if (!resposta.ok) {
+        await signOut(auth);
+        toast.error("Não foi possível iniciar sua sessão. Tente de novo.");
+        return;
+      }
+
+      router.push("/votacao");
+    } catch (err) {
+      if (err instanceof FirebaseError && errosDeCancelamento.has(err.code)) return;
+      console.error("Erro ao fazer login:", err);
+      if (err instanceof FirebaseError && err.code === "auth/popup-blocked") {
+        toast.error("O navegador bloqueou a janela de login. Permita pop-ups para este site.");
+        return;
+      }
+      toast.error("Não foi possível entrar. Tente de novo.");
+    } finally {
+      setEntrando(false);
+    }
+  }
+
+  async function sair() {
+    if (saindo) return;
+    setSaindo(true);
+    try {
+      await fetch("/api/session", { method: "DELETE" });
+      await signOut(auth);
+      router.push("/");
+      router.refresh();
+    } catch (err) {
+      console.error("Erro ao sair:", err);
+      toast.error("Não foi possível sair. Tente de novo.");
+    } finally {
+      setSaindo(false);
+    }
+  }
+
+  return { entrar, sair, entrando, saindo };
+}
