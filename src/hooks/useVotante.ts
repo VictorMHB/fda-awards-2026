@@ -7,18 +7,18 @@ import { useAuth } from "@/context/AuthContext";
 import { Votante } from "@/types/voto";
 import { toast } from "sonner";
 
+type EstadoDaCedula = {
+  uid: string;
+  votante: Votante | null;
+  error: string | null;
+};
+
 export function useVotante() {
   const { user } = useAuth();
-  const [votante, setVotante] = useState<Votante | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [estado, setEstado] = useState<EstadoDaCedula | null>(null);
 
   useEffect(() => {
-    if (!user) {
-      setVotante(null);
-      setLoading(false);
-      return;
-    }
+    if (!user) return;
 
     const ref = doc(db, "votantes", user.uid);
 
@@ -35,26 +35,27 @@ export function useVotante() {
               votos: {},
             };
             await setDoc(ref, novoVotante);
-          } else {
-            setVotante(snap.data() as Votante);
-            setError(null);
-            setLoading(false);
+            return;
           }
+          setEstado({ uid: user.uid, votante: snap.data() as Votante, error: null });
         } catch (err) {
           console.error(err);
-          toast.error("Não foi possível criar sua cédula de votação. Recarregue a página.");
-          setLoading(false);
+          setEstado({ uid: user.uid, votante: null, error: "Não foi possível criar sua cédula de votação." });
         }
       },
       (err) => {
         console.error(err);
-        toast.error("Não foi possível conectar ao servidor de votação.");
-        setLoading(false);
+        setEstado({ uid: user.uid, votante: null, error: "Não foi possível conectar ao servidor de votação." });
       }
     );
 
     return () => unsubscribe();
   }, [user]);
+
+  const estadoDoUsuario = user && estado?.uid === user.uid ? estado : null;
+  const votante = estadoDoUsuario?.votante ?? null;
+  const error = estadoDoUsuario?.error ?? null;
+  const loading = Boolean(user) && !estadoDoUsuario;
 
   async function escolherIndicado(categoriaId: string, indicadoId: string) {
     if (!user) return;
@@ -65,7 +66,7 @@ export function useVotante() {
       });
     } catch (err) {
       console.error(err);
-      toast.error("Não foi possível salvar sua escolha. Tenta de novo.");
+      toast.error("Não foi possível salvar sua escolha. Tente de novo.");
     }
   }
 

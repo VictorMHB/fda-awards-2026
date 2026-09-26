@@ -1,26 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 import { useCategorias } from "@/hooks/useCategorias";
 import { useVotante } from "@/hooks/useVotante";
-import { useAuth } from "@/context/AuthContext";
-import { toast } from "sonner";
 import LoginButton from "@/components/LoginButton";
+import { Button } from "@/components/ui/Button";
+import EmptyState from "@/components/ui/EmptyState";
+import Skeleton from "@/components/ui/Skeleton";
+import { cn } from "@/components/ui/cn";
+import AssistenteDeVotacao from "./_components/AssistenteDeVotacao";
+import CedulaConfirmada from "./_components/CedulaConfirmada";
 
-export default function VotacaoPage() {
-  const { categorias, loading: loadingCategorias } = useCategorias();
-  const { user } = useAuth();
-  const {
-    votante,
-    loading: loadingVotante,
-    error: erroVotante,
-    escolherIndicado,
-  } = useVotante();
+function Pagina({ children, centralizada = false }: { children: ReactNode; centralizada?: boolean }) {
+  return (
+    <main
+      className={cn(
+        "mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pb-10 pt-10 sm:pt-14",
+        centralizada && "justify-center pb-24"
+      )}
+    >
+      {children}
+    </main>
+  );
+}
 
+function CarregandoCedula() {
+  return (
+    <Pagina>
+      <div aria-busy="true">
+        <span className="sr-only">Carregando sua cédula...</span>
+        <div className="mx-auto max-w-3xl">
+          <Skeleton className="h-4 w-40" />
+          <Skeleton className="mt-4 h-2 w-full rounded-full" />
+        </div>
+        <div className="mt-14 flex flex-col items-center gap-4">
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-12 w-80 max-w-full" />
+        </div>
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fit,minmax(11rem,14rem))] sm:justify-center sm:gap-5">
+          {Array.from({ length: 4 }, (_, indice) => (
+            <Skeleton key={indice} className="aspect-[4/5] rounded-3xl" />
+          ))}
+        </div>
+      </div>
+    </Pagina>
+  );
+}
+
+export default function VotacaoClient() {
+  const { user, loading: carregandoUsuario } = useAuth();
+  const { categorias, loading: carregandoCategorias, error: erroCategorias } = useCategorias();
+  const { votante, loading: carregandoVotante, error: erroVotante, escolherIndicado } = useVotante();
   const [confirmando, setConfirmando] = useState(false);
-  const [erro, setErro] = useState<string | null>(null);
 
-  async function handleConfirmar() {
+  async function confirmarVotos() {
     if (!user) return;
     setConfirmando(true);
     try {
@@ -29,12 +64,12 @@ export default function VotacaoPage() {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         toast.error(data.error ?? "Erro ao confirmar.");
-      } else {
-        toast.success("Voto confirmado com sucesso!");
+        return;
       }
+      toast.success("Voto confirmado com sucesso!");
     } catch {
       toast.error("Erro de conexão.");
     } finally {
@@ -42,67 +77,66 @@ export default function VotacaoPage() {
     }
   }
 
+  if (carregandoUsuario) return <CarregandoCedula />;
+
   if (!user) {
     return (
-      <main className="p-10">
-        <p className="mb-4">Você precisa estar logado pra votar.</p>
-        <LoginButton />
-      </main>
+      <Pagina centralizada>
+        <EmptyState
+          title="Entre para votar"
+          description="Você precisa estar conectado com sua conta Google para acessar a cédula."
+          action={<LoginButton size="lg" />}
+        />
+      </Pagina>
     );
   }
 
-  if (loadingCategorias || loadingVotante)
-    return <p className="p-10">Carregando...</p>;
+  const erro = erroCategorias ?? erroVotante;
+  if (erro) {
+    return (
+      <Pagina centralizada>
+        <EmptyState
+          title="Não foi possível carregar a votação"
+          description={erro}
+          action={<Button onClick={() => window.location.reload()}>Tentar de novo</Button>}
+        />
+      </Pagina>
+    );
+  }
+
+  if (carregandoCategorias || carregandoVotante || !votante) return <CarregandoCedula />;
+
+  if (categorias.length === 0) {
+    return (
+      <Pagina centralizada>
+        <EmptyState
+          title="A cédula ainda está sendo montada"
+          description="Nenhuma categoria foi publicada até agora. Volte mais tarde."
+        />
+      </Pagina>
+    );
+  }
+
+  const votos = votante.votos ?? {};
+
+  if (votante.confirmado) {
+    return (
+      <Pagina>
+        <CedulaConfirmada categorias={categorias} votos={votos} confirmadoEm={votante.confirmadoEm} />
+      </Pagina>
+    );
+  }
 
   return (
-    <main className="p-10">
-      <h1 className="text-4xl font-title font-bold mb-6">Votação</h1>
-
-      {erroVotante && (
-        <p className="mb-4 text-red-400 border border-red-400 rounded p-3">
-          ⚠️ {erroVotante}
-        </p>
-      )}
-
-      {categorias.map((categoria) => (
-        <div key={categoria.id} className="mb-8">
-          <h2 className="text-2xl font-title mb-2">{categoria.nome}</h2>
-          <div className="flex gap-2 flex-wrap">
-            {categoria.indicados.map((indicado) => {
-              const selecionado = votante?.votos[categoria.id] === indicado.id;
-              return (
-                <button
-                  key={indicado.id}
-                  onClick={() => escolherIndicado(categoria.id, indicado.id)}
-                  disabled={votante?.confirmado}
-                  className={`px-4 py-2 rounded border ${
-                    selecionado ? "bg-primary text-dark-bg" : "border-secondary"
-                  }`}
-                >
-                  {indicado.nome}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-
-      {votante?.confirmado ? (
-        <p className="text-primary font-bold text-xl">
-          ✅ Voto confirmado, obrigado por participar!
-        </p>
-      ) : (
-        <>
-          {erro && <p className="text-red-400 mb-2">{erro}</p>}
-          <button
-            onClick={handleConfirmar}
-            disabled={confirmando}
-            className="px-6 py-3 rounded bg-primary text-dark-bg font-bold"
-          >
-            {confirmando ? "Confirmando..." : "Confirmar votos"}
-          </button>
-        </>
-      )}
-    </main>
+    <Pagina>
+      <h1 className="sr-only">Votação</h1>
+      <AssistenteDeVotacao
+        categorias={categorias}
+        votos={votos}
+        confirmando={confirmando}
+        onEscolher={escolherIndicado}
+        onConfirmar={confirmarVotos}
+      />
+    </Pagina>
   );
 }
