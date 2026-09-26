@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Categoria } from "@/types/voto";
@@ -9,8 +9,11 @@ export function useCategorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [versao, setVersao] = useState(0);
 
   useEffect(() => {
+    let ativo = true;
+
     async function fetchCategorias() {
       try {
         const q = query(collection(db, "categorias"), orderBy("ordem"));
@@ -19,16 +22,24 @@ export function useCategorias() {
           id: doc.id,
           ...doc.data(),
         })) as Categoria[];
+        if (!ativo) return;
         setCategorias(data);
+        setError(null);
       } catch (err) {
         console.error(err);
-        setError("Erro ao carregar categorias.");
+        if (ativo) setError("Erro ao carregar categorias.");
       } finally {
-        setLoading(false);
+        if (ativo) setLoading(false);
       }
     }
     fetchCategorias();
-  }, []);
 
-  return { categorias, loading, error };
+    return () => {
+      ativo = false;
+    };
+  }, [versao]);
+
+  const recarregar = useCallback(() => setVersao((anterior) => anterior + 1), []);
+
+  return { categorias, loading, error, recarregar };
 }
