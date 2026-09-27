@@ -1,7 +1,7 @@
 import Link from "next/link";
-import GlassShapes from "@/components/GlassShapes";
 import GlassPanel from "@/components/ui/GlassPanel";
 import ChamadaParaVotar from "./_components/ChamadaParaVotar";
+import VideoDeFundo from "./_components/VideoDeFundo";
 
 const passos = [
   {
@@ -21,11 +21,9 @@ const passos = [
 export default function Home() {
   return (
     <main className="flex-1">
-      <section className="relative isolate flex min-h-[calc(100svh-4.25rem)] items-center overflow-hidden">
-        <div className="absolute inset-0 opacity-45 sm:opacity-100">
-          <GlassShapes />
-        </div>
-        <div className="relative mx-auto w-full max-w-6xl px-4 py-20 text-center">
+      <VideoDeFundo />
+      <section className="relative z-10 flex min-h-[calc(100svh-4.25rem)] items-end">
+        <div className="mx-auto w-full max-w-6xl px-4 pb-14 pt-24 text-center sm:pb-20">
           <p className="animate-surgir font-title text-xs font-bold uppercase tracking-[0.4em] text-primary sm:text-sm">
             Edição 2026
           </p>
@@ -47,7 +45,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="como-funciona" className="mx-auto w-full max-w-6xl px-4 pb-24">
+      <section aria-labelledby="como-funciona" className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-24">
         <div className="text-center">
           <p className="font-title text-xs font-bold uppercase tracking-[0.35em] text-primary">Como funciona</p>
           <h2 id="como-funciona" className="mt-3 font-title text-3xl font-bold sm:text-4xl">
