@@ -1,17 +1,17 @@
 "use client";
 
 function Solid({
-  width, height, depth, top, left, right, duration, floatDelay, className = "",
+  width, height, depth, duration, floatDelay = "0s", className = "",
 }: {
   width: number; height: number; depth: number;
-  top?: string; left?: string; right?: string;
-  duration: string; floatDelay: string; className?: string;
+  duration: string; floatDelay?: string; className?: string;
 }) {
   const w = width, h = height, d = depth;
   return (
     <div
       className={`glass-scene glass-float ${className}`}
-      style={{ width: w, height: h, top, left, right, perspective: 2400, animationDelay: floatDelay }}
+      
+      style={{ position: "relative", width: w, height: h, perspective: 2000, animationDelay: floatDelay }}
       aria-hidden="true"
     >
       <div className="glass-solid" style={{ animationDuration: duration }}>
@@ -28,13 +28,12 @@ function Solid({
 
 export default function GlassShapes() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      <Solid width={120} height={120} depth={120} top="12%" right="8%" duration="34s" floatDelay="0s" />
-      <Solid width={64} height={160} depth={64} top="46%" left="6%" duration="26s" floatDelay="1.2s" />
-      <Solid width={150} height={70} depth={70} top="70%" right="16%" duration="40s" floatDelay="2.4s" />
-      <div className="hidden lg:block">
-        <Solid width={54} height={54} depth={54} top="20%" left="20%" duration="20s" floatDelay="0.6s" />
-      </div>
+    <div
+      className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none"
+      aria-hidden="true"
+    >
+      {/* Placeholder do troféu 3D (trocar pelo troféu real no futuro) */}
+      <Solid width={180} height={550} depth={180} duration="30s" />
     </div>
   );
 }
