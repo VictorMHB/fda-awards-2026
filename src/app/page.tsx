@@ -1,4 +1,5 @@
 import Countdown from "@/components/Countdown";
+import Footer from "@/components/Footer";
 import GlassShapes from "@/components/GlassShapes";
 import LoginButton from "@/components/LoginButton";
 
@@ -32,10 +33,7 @@ export default function Home() {
           </h2>
           <Countdown />
           <LoginButton />
-        </div>
-
-        <div>
-          
+          <Footer />
         </div>
       </section>
     </main>
