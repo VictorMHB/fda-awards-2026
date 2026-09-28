@@ -5,6 +5,7 @@ import { Krona_One } from "next/font/google";
 import localFont from "next/font/local";
 import OfflineToast from "@/components/OfflineToast";
 import Header from "@/components/Header";
+import AlertBanner from "@/components/AlertBanner";
 
 const krona = Krona_One({
   subsets: ["latin", "latin-ext"],
@@ -29,7 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${krona.variable} ${swansea.variable} antialiased bg-dark-bg text-foreground`}>
         <AuthProvider>
           <Header />
-          <div className="pt-24 md:pt-28">{children}</div>
+          <div className="pt-24 md:pt-28">
+            <AlertBanner />
+            {children}
+          </div>
         </AuthProvider>
         <Toaster richColors position="top-center" />
         <OfflineToast />

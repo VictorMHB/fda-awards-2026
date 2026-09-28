@@ -24,10 +24,10 @@ export default function Header() {
   return (
     <>
       <header className="glass-bar fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
+        <div className="mx-auto flex h-20 italic max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
           {/* Logo (fonte de título) */}
           <Link href="/" onClick={closeMenu} className="group relative flex items-center py-2">
-            <span className="font-display text-2xl tracking-normal text-primary md:text-3xl">
+            <span className="font-display  text-2xl tracking-normal text-primary md:text-3xl">
               FDA{" "}
               <span className="text-foreground transition-colors duration-300 group-hover:text-primary">
                 AWARDS
@@ -59,12 +59,12 @@ export default function Header() {
               );
             })}
 
-            <Link
+            {/* <Link
               href="/votacao"
               className="btn-aero px-7 py-3 text-lg font-bold uppercase tracking-wider text-dark-bg"
             >
               Votar
-            </Link>
+            </Link> */}
           </nav>
 
           {/* Botão do menu mobile */}
