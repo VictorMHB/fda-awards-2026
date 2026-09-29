@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Marquee from "./Marquee";
 
 const CONTATO = {
   email: "contato@fdaawards.com",
@@ -19,23 +20,7 @@ const ANO_ATUAL = new Date().getFullYear();
 export default function Footer() {
   return (
     <footer className="glass-footer relative mt-24">
-      {/* Faixa de texto repetido */}
-      <div className="overflow-hidden border-b border-foreground/10 py-3">
-        <div className="marquee-track">
-          {Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="flex shrink-0 items-center">
-              {Array.from({ length: 6 }).map((_, j) => (
-                <span
-                  key={j}
-                  className="font-display mx-6 text-lg text-primary/80 md:text-xl"
-                >
-                  FDA AWARDS 2026
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      <Marquee text="SOU BURROW" />
 
       <div className="mx-auto max-w-7xl px-6 py-14 md:px-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
@@ -50,7 +35,7 @@ export default function Footer() {
 </div>
 
           {/* Mapa do site */}
-          <div>
+          {/* <div>
             <h3 className="text-sm font-bold uppercase tracking-widest text-primary">
               Navegação
             </h3>
@@ -66,10 +51,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
           {/* Contato */}
-          <div>
+          {/* <div>
             <h3 className="text-sm font-bold uppercase tracking-widest text-primary">
               Contato
             </h3>
@@ -113,7 +98,7 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
         {/* Expediente, estilo revista */}

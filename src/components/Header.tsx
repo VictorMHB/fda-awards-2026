@@ -24,7 +24,7 @@ export default function Header() {
   return (
     <>
       <header className="glass-bar fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto flex h-20 italic max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
           {/* Logo (fonte de título) */}
           <Link href="/" onClick={closeMenu} className="group relative flex items-center py-2">
             <span className="font-display  text-2xl tracking-normal text-primary md:text-3xl">
@@ -36,7 +36,7 @@ export default function Header() {
             <span className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
           </Link>
 
-          {/* Navegação desktop (Swansea Bold, herdada do body) */}
+          {/* Navegação desktop*/}
           <nav className="hidden items-center gap-10 xl:flex">
             {NAV_LINKS.map((link) => {
               const active = isActive(link.href);

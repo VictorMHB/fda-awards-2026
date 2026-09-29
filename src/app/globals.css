@@ -26,13 +26,13 @@
   --color-tier-platinum: var(--color-tier-platinum);
 
   --font-title: var(--font-krona);
-  --font-text: var(--font-swansea);
+   --font-text: var(--font-work-sans);
 }
 
 body {
   background: var(--color-dark-bg);
   color: var(--color-foreground);
-  font-family: var(--font-swansea), system-ui, sans-serif;
+  font-family: var(--font-work-sans), system-ui, sans-serif;
   font-weight: 400;
 }
 
