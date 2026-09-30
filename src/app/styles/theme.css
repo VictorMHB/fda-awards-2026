@@ -1,0 +1,17 @@
+@theme static {
+  --color-primary: #FAC093;
+  --color-background: #1A426D;
+  --color-dark-bg: #1D2842;
+  --color-secondary: #4F95BA;
+  --color-foreground: #D7DDE0;
+
+  --color-tier-diamond: #a7ebfc;
+  --color-tier-gold: #DAA520;
+  --color-tier-bronze: #CD7F32;
+  --color-tier-platinum: #9fccc5;
+}
+
+@theme inline {
+  --font-title: var(--font-krona);
+  --font-text: var(--font-work-sans);
+}

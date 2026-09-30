@@ -1,0 +1,175 @@
+@layer components {
+
+  .glass-bar {
+    overflow: hidden;
+    isolation: isolate;
+
+    background:
+      radial-gradient(
+        ellipse 70% 100% at 15% 0%,
+        rgba(100, 170, 230, 0.14) 0%,
+        rgba(100, 170, 230, 0.04) 35%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 100% at 90% 20%,
+        rgba(90, 130, 210, 0.10) 0%,
+        transparent 65%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(26, 66, 109, 0.98) 0%,
+        rgba(29, 40, 66, 0.99) 100%
+      );
+
+    backdrop-filter: blur(14px) saturate(135%) contrast(105%);
+    -webkit-backdrop-filter: blur(14px) saturate(135%) contrast(105%);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.10),   /* brilho interno superior */
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18),        /* sombra interna inferior */
+      0 8px 24px rgba(0, 0, 0, 0.30),            /* sombra externa */
+      0 0 35px rgba(45, 100, 160, 0.08);         /* glow sutil */
+  }
+
+  /* Reflexo principal do vidro */
+  .glass-bar::before {
+    content: "";
+    position: absolute;
+    inset: -100px;
+
+    background:
+      linear-gradient(
+        115deg,
+        transparent 32%,
+        rgba(255, 255, 255, 0.015) 39%,
+        rgba(255, 255, 255, 0.08) 46%,
+        rgba(255, 255, 255, 0.025) 51%,
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse at 25% 0%,
+        rgba(255, 255, 255, 0.09),
+        transparent 45%
+      );
+
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: screen;
+    opacity: 0.75;
+  }
+
+  /* Linha de destaque na base do header */
+  .glass-bar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 3px;
+
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      var(--color-primary) 35%,
+      var(--color-secondary) 100%
+    );
+
+    box-shadow:
+      0 0 14px rgba(250, 192, 147, 0.55),
+      0 0 2px rgba(250, 192, 147, 0.9);
+
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .glass-bar > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* MENU MOBILE */
+  .glass-panel {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    background:
+      radial-gradient(
+        ellipse at 20% 0%,
+        rgba(90, 140, 200, 0.10),
+        transparent 50%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(29, 40, 66, 0.94),
+        rgba(29, 40, 66, 0.90)
+      );
+
+    backdrop-filter: blur(28px) saturate(140%) contrast(105%);
+    -webkit-backdrop-filter: blur(28px) saturate(140%) contrast(105%);
+
+    border-left: 1px solid rgba(215, 221, 224, 0.14);
+
+    box-shadow:
+      inset 1px 0 0 rgba(255, 255, 255, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      -12px 0 40px rgba(9, 14, 26, 0.5);
+  }
+
+  /* Reflexo do painel */
+  .glass-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.07),
+      transparent 25%,
+      transparent 70%,
+      rgba(100, 150, 220, 0.04)
+    );
+
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Garante que o conteúdo fique acima do efeito */
+  .glass-panel > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* FOOTER */
+  .glass-footer {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(29, 40, 66, 0.86) 0%,
+        rgba(29, 40, 66, 0.94) 100%
+      ),
+      rgba(26, 66, 109, 0.2);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-footer::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--color-secondary) 0%,
+      var(--color-primary) 65%,
+      var(--color-primary) 100%
+    );
+    box-shadow: 0 0 14px rgba(250, 192, 147, 0.5), 0 0 2px rgba(250, 192, 147, 0.9);
+  }
+}

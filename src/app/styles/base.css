@@ -1,0 +1,12 @@
+body {
+  background: var(--color-dark-bg);
+  color: var(--color-foreground);
+  font-family: var(--font-work-sans), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+@utility font-display {
+  font-family: var(--font-krona), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-synthesis: none;
+}
