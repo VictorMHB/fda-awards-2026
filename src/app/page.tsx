@@ -27,11 +27,8 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center gap-4">
           <h1 className="font-display text-5xl tracking-tight text-primary md:text-7xl">
-            FDA Awards 2026
+            FDA AWARDS 2026
           </h1>
-          <p className="max-w-xl text-base text-foreground/80 md:text-lg">
-            Sou muito burro, né? Pouco não, faço isso por diversão.
-          </p>
           <div className="mt-2">
             <LoginButton />
           </div>
