@@ -2,10 +2,11 @@ import GlassShapes from "@/components/GlassShapes";
 import LoginButton from "@/components/LoginButton";
 import Countdown from "@/components/Countdown";
 import Marquee from "@/components/Marquee";
+import NewsCarousel from "@/components/NewsCarousel";
 import Footer from "@/components/Footer";
 
 
-const HERO_BG = "/images/hero-bg.jpg";
+const HOME_BG = "/images/home_page.png";
 
 export default function Home() {
   return (
@@ -14,8 +15,8 @@ export default function Home() {
       <section className="relative flex min-h-[calc(100vh-5rem)] flex-col items-center justify-center overflow-hidden px-6 text-center md:min-h-[calc(100vh-6rem)]">
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-          style={{ backgroundImage: `url(${HERO_BG})` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat "
+          style={{ backgroundImage: `url(${HOME_BG})` }}
         />
         <div
           aria-hidden="true"
@@ -47,13 +48,16 @@ export default function Home() {
 
       {/* 4. Notícias */}
       <section className="px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl text-left">
-          <h2 className="font-display text-3xl text-foreground md:text-4xl">Notícias</h2>
-          <p className="mt-3 max-w-2xl text-base text-foreground/70">
-            Em breve, novidades sobre os indicados, a votação e a festa de encerramento.
-          </p>
-        </div>
-      </section>
+  <div className="mx-auto max-w-6xl">
+    <h2 className="font-display text-3xl text-foreground md:text-4xl">Notícias</h2>
+    <p className="mt-3 max-w-2xl text-base text-foreground/70">
+      Fique de olho nas novidades sobre os indicados, a votação e a festa de encerramento.
+    </p>
+    <div className="mt-8">
+      <NewsCarousel />
+    </div>
+  </div>
+</section>
 
       {/* 5. Mapa — ocupa a largura toda */}
       <section className="w-full">
