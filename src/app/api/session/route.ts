@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { adminAuth } from "@/lib/firebase-admin";
+import { getAdminAuth } from "@/lib/firebase-admin";
 
 export async function POST(request: NextRequest) {
-  const { idToken } = await request.json();
+  const { idToken } = (await request.json().catch(() => null)) ?? {};
+  if (typeof idToken !== "string" || !idToken) {
+    return NextResponse.json({ error: "Token não informado." }, { status: 400 });
+  }
+
+  const adminAuth = getAdminAuth();
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
 
   try {
