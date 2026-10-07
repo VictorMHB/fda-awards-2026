@@ -3,8 +3,8 @@ import LoginButton from "@/components/LoginButton";
 import Countdown from "@/components/Countdown";
 import Marquee from "@/components/Marquee";
 import NewsCarousel from "@/components/NewsCarousel";
+import NavMap from "@/components/NavMap";
 import Footer from "@/components/Footer";
-
 
 const HOME_BG = "/images/home_page.png";
 
@@ -45,21 +45,33 @@ export default function Home() {
 
       {/* 4. Notícias */}
       <section className="px-6 py-16 md:py-24">
-  <div className="mx-auto max-w-6xl">
-    <h2 className="font-display text-3xl text-foreground md:text-4xl">Notícias</h2>
-    <p className="mt-3 max-w-2xl text-base text-foreground/70">
-      Fique de olho nas novidades sobre os indicados, a votação e a festa de encerramento.
-    </p>
-    <div className="mt-8">
-      <NewsCarousel />
-    </div>
-  </div>
-</section>
+        <div className="mx-auto max-w-6xl">
+          <h2 className="font-display text-3xl text-foreground md:text-4xl">
+            Notícias
+          </h2>
+          <p className="mt-3 max-w-2xl text-base text-foreground/70">
+            Fique de olho nas novidades sobre os indicados, a votação e a festa
+            de encerramento.
+          </p>
+          <div className="mt-8">
+            <NewsCarousel />
+          </div>
+        </div>
+      </section>
 
       {/* 5. Mapa — ocupa a largura toda */}
-      <section className="w-full">
-        <div className="flex h-96 w-full items-center justify-center bg-dark-bg/60 text-foreground/50">
-          Mapa em breve
+      <section className="w-full py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4">
+          <header className="mb-8 md:mb-12">
+            <h2 className="font-display text-3xl text-foreground md:text-4xl">
+              Explorar
+            </h2>
+            <p className="mt-3 max-w-2xl text-base text-foreground/70">
+              Descubra o que o site do FDA AWARDS tem a oferecer
+            </p>
+          </header>
+
+          <NavMap />
         </div>
       </section>
 
