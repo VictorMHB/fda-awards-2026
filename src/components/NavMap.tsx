@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { useAgora } from "@/hooks/useAgora";
 import { getPhase } from "@/lib/phases";
+import { Trophy, Sparkle, Briefcase, InfoBox } from "pixelarticons/react";
 
 type Item = {
   id: string;
@@ -29,9 +30,9 @@ export default function NavMapa() {
       // Antes da votação, o card leva pra Informações em vez de uma página vazia
       cta: votacaoAberta ? "Votar agora" : "Saiba mais",
       href: votacaoAberta ? "/votacao" : "/informacoes",
-      tag: votacaoAberta ? "Aberta" : "Em breve",
+      tag: votacaoAberta ? "Aberta" : "EM BREVE",
       destaque: votacaoAberta,
-      icone: <TrophyIcon />,
+      icone: <Trophy width={32} height={32} className="pixel-icon" />,
     },
     {
       id: "categorias",
@@ -39,7 +40,7 @@ export default function NavMapa() {
       descricao: "Explore todas as categorias e veja os indicados ao FDA AWARDS.",
       cta: "Explorar",
       href: "/categorias",
-      icone: <StarIcon />,
+      icone: <Sparkle width={32} height={32} className="pixel-icon" />,
     },
     {
       id: "patrocinadores",
@@ -47,7 +48,7 @@ export default function NavMapa() {
       descricao: "Conheça as empresas que tornam o FDA AWARDS possível todos os anos.",
       cta: "Conhecer",
       href: "/patrocinadores",
-      icone: <BriefcaseIcon />,
+      icone: <Briefcase width={32} height={32} className="pixel-icon" />,
     },
     {
       id: "informacoes",
@@ -55,7 +56,7 @@ export default function NavMapa() {
       descricao: "Saiba tudo sobre o evento, local, horários e como participar.",
       cta: "Saber mais",
       href: "/informacoes",
-      icone: <InfoIcon />,
+      icone: <InfoBox width={32} height={32} className="pixel-icon" />,
     },
   ];
 
@@ -80,7 +81,7 @@ export default function NavMapa() {
               {item.icone}
             </span>
             {item.tag && (
-              <span className="bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
+              <span className="bg-primary px-2.5 py-1 text-xs uppercase tracking-wider text-dark-bg font-pixel">
                 {item.tag}
               </span>
             )}
