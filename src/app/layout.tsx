@@ -6,8 +6,7 @@ import localFont from "next/font/local";
 import OfflineToast from "@/components/feedback/OfflineToast";
 import Header from "@/components/layout/Header";
 import AlertBanner from "@/components/feedback/AlertBanner";
-import IntroAnimation from "@/components/intro/IntroAnimation";
-import { INTRO_SCRIPT } from "@/lib/intro";
+import Boot from "@/components/intro/Boot";
 
 const krona = Krona_One({
   subsets: ["latin", "latin-ext"],
@@ -27,11 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // suppressHydrationWarning: o script da abertura marca o <html> antes do React
     <html lang="pt-BR" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
-      </head>
       <body className={`${krona.variable} ${workSans.variable} antialiased bg-dark-bg text-foreground`}>
-        <IntroAnimation />
+        <Boot />
         <AuthProvider>
           <Header />
           <div className="pt-24 md:pt-28">

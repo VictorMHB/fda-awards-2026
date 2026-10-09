@@ -2,6 +2,7 @@
 
 @import "./styles/theme.css";
 @import "./styles/base.css";
+@import "./styles/boot.css";
 @import "./styles/glass.css";
 @import "./styles/solids.css";
 @import "./styles/header-footer.css";
