@@ -1,10 +1,10 @@
-import GlassShapes from "@/components/GlassShapes";
-import LoginButton from "@/components/LoginButton";
-import Countdown from "@/components/Countdown";
-import Marquee from "@/components/Marquee";
-import NewsCarousel from "@/components/NewsCarousel";
-import NavMap from "@/components/NavMap";
-import Footer from "@/components/Footer";
+import GlassShapes from "@/components/ui/GlassShapes";
+import LoginButton from "@/components/ui/LoginButton";
+import Countdown from "@/components/ui/Countdown";
+import Marquee from "@/components/ui/Marquee";
+import NewsCarousel from "@/components/news/NewsCarousel";
+import NavMap from "@/components/layout/NavMap";
+import Footer from "@/components/layout/Footer";
 
 const HOME_BG = "/images/home_page.png";
 

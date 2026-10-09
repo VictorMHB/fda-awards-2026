@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Marquee from "./Marquee";
+import Marquee from "../ui/Marquee";
 
 const CONTATO = {
   email: "contato@fdaawards.com",

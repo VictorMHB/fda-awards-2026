@@ -3,9 +3,9 @@ import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "sonner";
 import { Krona_One, Work_Sans } from "next/font/google";
 import localFont from "next/font/local";
-import OfflineToast from "@/components/OfflineToast";
-import Header from "@/components/Header";
-import AlertBanner from "@/components/AlertBanner";
+import OfflineToast from "@/components/feedback/OfflineToast";
+import Header from "@/components/layout/Header";
+import AlertBanner from "@/components/feedback/AlertBanner";
 
 const krona = Krona_One({
   subsets: ["latin", "latin-ext"],

@@ -5,7 +5,7 @@ import { useCategorias } from "@/hooks/useCategorias";
 import { useVotante } from "@/hooks/useVotante";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import LoginButton from "@/components/LoginButton";
+import LoginButton from "@/components/ui/LoginButton";
 
 export default function VotacaoPage() {
   const { categorias, loading: loadingCategorias } = useCategorias();
