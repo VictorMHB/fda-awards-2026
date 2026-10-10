@@ -1,7 +1,6 @@
 @layer components {
 
   .glass-bar {
-    overflow: hidden;
     isolation: isolate;
 
     background:
@@ -38,7 +37,7 @@
   .glass-bar::before {
     content: "";
     position: absolute;
-    inset: -100px;
+    inset: 0;
 
     background:
       linear-gradient(
@@ -87,7 +86,7 @@
 
   .glass-bar > * {
     position: relative;
-    z-index: 2;
+    z-index: 4;
   }
 
   /* MENU MOBILE */

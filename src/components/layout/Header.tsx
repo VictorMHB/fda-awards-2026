@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MenuMobile from "./MenuMobile";
-import AreaDoUsuario from "./AreaDoUsuario";
+import AreaDoUsuario from "./UserMenu";
 
 const NAV_LINKS = [
   { href: "/", label: "HOME" },
@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <>
       <header className="glass-bar fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
+        <div className="flex h-20 items-center justify-between px-5 md:h-24 md:px-8 xl:px-24">
           {/* Logo (fonte de título) */}
           <Link href="/" onClick={closeMenu} className="group relative flex items-center py-2">
             <span className="font-display  text-2xl tracking-normal text-primary md:text-3xl">
