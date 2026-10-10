@@ -1,0 +1,70 @@
+/* Logo do header com o mesmo tratamento da intro */
+.logo-aero {
+  --tinta: #0b1430;
+  display: inline-flex;
+  gap: 0.3em;
+  line-height: 1;
+  transform: skewX(-8deg);
+  /* folga pra extrusão não encostar na barra de baixo */
+  padding-bottom: 0.15em;
+  transition: filter 0.3s;
+}
+
+.group:hover .logo-aero {
+  filter: brightness(1.12) drop-shadow(0 0 10px rgba(250, 192, 147, 0.45));
+}
+
+.logo-aero-palavra {
+  position: relative;
+  display: block;
+}
+
+/* Contorno, extrusão e eco azul */
+.logo-aero-palavra::before {
+  content: attr(data-l);
+  position: absolute;
+  inset: 0;
+  color: var(--tinta);
+  -webkit-text-stroke: 0.08em var(--tinta);
+  text-shadow:
+    0.015em 0.015em 0 var(--tinta),
+    0.03em 0.03em 0 var(--tinta),
+    0.045em 0.045em 0 var(--tinta),
+    0.06em 0.06em 0 var(--tinta),
+    0.105em 0.105em 0 var(--color-secondary),
+    0.15em 0.15em 0 rgb(79 149 186 / 0.4);
+}
+
+/* Face com brilho de vidro */
+.logo-aero-face {
+  position: relative;
+  display: block;
+  color: transparent;
+  background-image: var(--face);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.logo-aero-fda .logo-aero-face {
+  --face: linear-gradient(
+    180deg,
+    #fff8ef 0%,
+    #ffe2c6 28%,
+    var(--color-primary) 49%,
+    #e48c50 51%,
+    #f6b07c 74%,
+    #ffd6b3 100%
+  );
+}
+
+.logo-aero-awards .logo-aero-face {
+  --face: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #eef3f6 36%,
+    #b6c6d4 49%,
+    #8ba1b6 51%,
+    #dbe3e9 78%,
+    #ffffff 100%
+  );
+}

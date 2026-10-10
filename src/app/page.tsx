@@ -26,8 +26,32 @@ export default function Home() {
         <GlassShapes />
 
         <div className="relative z-10 flex flex-col items-center gap-4">
-          <h1 className="font-display text-5xl tracking-tight text-primary md:text-7xl">
-            FDA AWARDS 2026
+          <h1
+            className="logo-aero font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+            role="img"
+            aria-label="FDA Awards 2026"
+          >
+            <span
+              className="logo-aero-palavra logo-aero-fda"
+              data-l="FDA"
+              aria-hidden="true"
+            >
+              <span className="logo-aero-face">FDA</span>
+            </span>
+            <span
+              className="logo-aero-palavra logo-aero-awards"
+              data-l="AWARDS"
+              aria-hidden="true"
+            >
+              <span className="logo-aero-face">AWARDS</span>
+            </span>
+            <span
+              className="logo-aero-palavra logo-aero-fda"
+              data-l="2026"
+              aria-hidden="true"
+            >
+              <span className="logo-aero-face">2026</span>
+            </span>
           </h1>
           <div className="mt-2">
             <LoginButton />
