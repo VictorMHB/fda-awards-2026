@@ -33,7 +33,7 @@ export default function Header() {
                 AWARDS
               </span>
             </span>
-            <span className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+            <span className="absolute bottom-0 left-0 h-0.75 w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
           </Link>
 
           {/* Navegação desktop*/}
@@ -51,7 +51,7 @@ export default function Header() {
                 >
                   {link.label}
                   <span
-                    className={`absolute bottom-0 left-0 h-[3px] w-full origin-left bg-primary transition-transform duration-300 ${
+                    className={`absolute bottom-0 left-0 h-0.75 w-full origin-left bg-primary transition-transform duration-300 ${
                       active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                     }`}
                   />
