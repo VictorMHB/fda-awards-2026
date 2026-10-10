@@ -27,7 +27,7 @@ export default function Header() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
           {/* Logo (fonte de título) */}
           <Link href="/" onClick={closeMenu} className="group relative flex items-center py-2">
-            <span className="font-display  text-2xl tracking-normal text-primary md:text-3xl">
+            <span className="font-[family-name:var(--font-krona)] text-2xl tracking-normal text-primary md:text-3xl">
               FDA{" "}
               <span className="text-foreground transition-colors duration-300 group-hover:text-primary">
                 AWARDS

@@ -1,7 +1,7 @@
-/* ================= Abertura estilo PS2 + Frutiger Aero ================= */
+/* ================= Abertura retrô + Frutiger Aero ================= */
 .boot {
   --boot-tinta: #0b1430;
-  --fda: clamp(3.4rem, min(24vw, 20vh), 11rem);
+  --fda: clamp(3.2rem, min(22vw, 17vh), 9rem);
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -16,7 +16,7 @@
   pointer-events: none;
 }
 
-/* Fundo: mesmo azul do site, escurecido, com scanlines e vinheta */
+/* Fundo: azul do site escurecido, com scanlines e vinheta */
 .boot-base {
   position: absolute;
   inset: 0;
@@ -31,10 +31,9 @@
     radial-gradient(55% 48% at 50% 46%, rgb(79 149 186 / 0.4), transparent 70%),
     radial-gradient(42% 40% at 8% 96%, rgb(250 192 147 / 0.14), transparent 70%),
     linear-gradient(165deg, #1b2f4d 0%, #14233d 40%, var(--color-dark-bg) 70%, #0a1122 100%);
-  animation: boot-aparecer 1s ease-out 0.5s backwards;
+  animation: boot-aparecer 0.8s steps(8, end) 0.4s backwards;
 }
 
-/* Retícula (halftone), mais forte nas bordas */
 .boot-pontos {
   position: absolute;
   inset: 0;
@@ -45,63 +44,29 @@
   opacity: 0.55;
 }
 
-/* Torres de vidro (a assinatura do PS2) */
-.boot-torres {
+/* Faixa de luz descendo, como o rolamento de um CRT */
+.boot-varredura {
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: -20%;
+  height: 20%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgb(167 235 252 / 0.07) 50%, transparent);
+  animation: boot-varrer 3.2s linear 0.8s infinite;
 }
 
-.boot-torre {
-  position: absolute;
-  left: calc(var(--x) * 1%);
-  bottom: calc(var(--b) * 1vh);
-  width: calc(var(--w) * 1vmin);
-  height: calc(var(--h) * 1vh);
-  background: linear-gradient(
-    180deg,
-    rgb(167 235 252 / 0.5) 0%,
-    rgb(79 149 186 / 0.18) 55%,
-    transparent 100%
-  );
-  box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 0.2),
-    inset 0 1px 0 rgb(255 255 255 / 0.6),
-    0 0 28px rgb(79 149 186 / 0.3);
-  animation:
-    boot-torre-entrar 1.4s ease-out calc(var(--a) * 1s) backwards,
-    boot-flutuar calc(var(--d) * 1s) ease-in-out calc(var(--a) * 1s) infinite alternate;
-}
-
-/* Bolhas de vidro */
-.boot-bolhas {
-  position: absolute;
-  inset: 0;
-  animation: boot-aparecer 1s ease-out 0.8s backwards;
-}
-
-.boot-bolha {
-  position: absolute;
-  top: 100%;
-  left: calc(var(--x) * 1%);
-  width: calc(var(--s) * 1vmin);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 33% 27%, rgb(255 255 255 / 0.95) 0 6%, rgb(255 255 255 / 0) 16%),
-    radial-gradient(circle at 66% 76%, rgb(250 192 147 / 0.4), rgb(250 192 147 / 0) 32%),
-    radial-gradient(circle, rgb(167 235 252 / 0.05) 0 52%, rgb(167 235 252 / 0.3) 72%, rgb(255 255 255 / 0.7) 100%);
-  animation: boot-subir calc(var(--d) * 1s) linear calc(var(--a) * 1s) infinite;
-}
-
-/* ---------- Logo ---------- */
+/* ---------- Conteúdo ---------- */
 
 .boot-centro {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.75rem, 6vh, 3.5rem);
   padding: 1rem;
-  animation: boot-tremer 0.4s linear 1.5s backwards;
 }
 
 .boot-logo {
@@ -109,6 +74,8 @@
   flex-direction: column;
   align-items: center;
   transform: skewX(-8deg);
+  /* Glitch RGB de vez em quando (em passos, como sinal ruim) */
+  animation: boot-glitch 3.2s steps(1, end) 2.1s infinite;
 }
 
 .boot-fda,
@@ -128,6 +95,8 @@
 .boot-letra {
   position: relative;
   display: block;
+  /* Cada letra liga piscando, uma depois da outra */
+  animation: boot-digitar 0.5s steps(1, end) calc(var(--t0) * 1s + var(--i) * var(--p) * 1s) backwards;
 }
 
 /* Contorno, extrusão e eco azul */
@@ -146,7 +115,7 @@
     0.15em 0.15em 0 rgb(79 149 186 / 0.4);
 }
 
-/* Face com brilho de vidro (metade de cima clara, linha no meio) */
+/* Face com brilho de vidro */
 .boot-face {
   position: relative;
   display: block;
@@ -180,17 +149,25 @@
   );
 }
 
-/* FDA crava de cima, letra a letra */
-.boot-fda .boot-letra {
-  transform-origin: 50% 90%;
-  animation: boot-cravar 0.62s calc(1s + var(--i) * 0.12s) backwards;
-}
-
 /* AWARDS na placa de vidro */
 .boot-awards {
   position: relative;
   margin-top: calc(var(--fda) * 0.1);
-  padding: calc(var(--fda) * 0.07) calc(var(--fda) * 0.2) calc(var(--fda) * 0.045);
+  padding: calc(var(--fda) * 0.07) calc(var(--fda) * 0.2) calc(var(--fda) * 0.05);
+}
+
+.boot-awards-letras {
+  position: relative;
+  font-size: calc(var(--fda) * 0.4);
+  letter-spacing: 0.08em;
+}
+
+.boot-awards-letras .boot-letra::before {
+  text-shadow:
+    0.02em 0.02em 0 var(--boot-tinta),
+    0.04em 0.04em 0 var(--boot-tinta),
+    0.06em 0.06em 0 var(--boot-tinta),
+    0.1em 0.1em 0 rgb(79 149 186 / 0.7);
 }
 
 .boot-placa {
@@ -211,10 +188,10 @@
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.6),
     0 calc(var(--fda) * 0.08) calc(var(--fda) * 0.2) rgb(3 6 14 / 0.5);
-  animation: boot-placa 0.65s cubic-bezier(0.2, 1.3, 0.35, 1) 1.7s backwards;
+  /* Abre em degraus, como um carregamento antigo */
+  animation: boot-placa 0.5s steps(6, end) 1.15s backwards;
 }
 
-/* Linha de destaque, igual à do header */
 .boot-placa::after {
   content: "";
   position: absolute;
@@ -226,49 +203,89 @@
   box-shadow: 0 0 14px rgb(250 192 147 / 0.6);
 }
 
-.boot-awards-letras {
-  position: relative;
-  font-size: calc(var(--fda) * 0.4);
-  letter-spacing: 0.08em;
-  overflow: hidden;
-  padding: 0.2em 0.2em 0.12em;
-  margin: -0.2em -0.28em 0 -0.2em;
-}
-
-.boot-awards-letras .boot-letra {
-  animation: boot-emergir 0.7s calc(1.8s + var(--i) * 0.05s) backwards;
-}
-
-.boot-awards-letras .boot-letra::before {
-  text-shadow:
-    0.02em 0.02em 0 var(--boot-tinta),
-    0.04em 0.04em 0 var(--boot-tinta),
-    0.06em 0.06em 0 var(--boot-tinta),
-    0.1em 0.1em 0 rgb(79 149 186 / 0.7);
-}
-
 /* Ano no botão brilhante do site */
 .boot-ano {
   margin-top: calc(var(--fda) * 0.17);
   padding: 0.5em 1.2em 0.45em 1.55em;
   font-family: var(--font-krona), "Arial Black", sans-serif;
-  font-size: clamp(0.8rem, calc(var(--fda) * 0.13), 1.5rem);
+  font-size: clamp(0.8rem, calc(var(--fda) * 0.13), 1.4rem);
   letter-spacing: 0.35em;
   line-height: 1;
   color: var(--color-dark-bg);
-  animation: boot-saltar 0.6s cubic-bezier(0.2, 1.6, 0.4, 1) 2.5s backwards;
+  animation: boot-digitar 0.5s steps(1, end) 1.8s backwards;
 }
 
-/* ---------- Impacto, TV ligando ---------- */
+/* ---------- Barra de carregamento ---------- */
 
-.boot-impacto {
+.boot-barra {
+  width: min(88vw, 54rem);
+  animation: boot-aparecer 0.4s steps(4, end) 1.9s backwards;
+}
+
+.boot-barra-topo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-krona), sans-serif;
+  font-size: clamp(0.7rem, 1.6vw, 1rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: rgb(215 221 224 / 0.85);
+}
+
+/* Cursor piscando depois do "Carregando" */
+.boot-barra-rotulo::after {
+  content: "_";
+  animation: boot-piscar 1s steps(1, end) infinite;
+}
+
+.boot-trilho {
+  position: relative;
+  padding: clamp(4px, 0.8vh, 7px);
+  border: 2px solid rgb(215 221 224 / 0.55);
+  background: rgb(3 6 14 / 0.55);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 0.6),
+    0 0 0 3px rgb(3 6 14 / 0.6),
+    0 0 28px rgb(79 149 186 / 0.35);
+}
+
+/* Brilho de vidro na metade de cima do trilho */
+.boot-trilho::after {
+  content: "";
   position: absolute;
-  inset: 0;
+  inset: 0 0 50% 0;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 46%, rgb(255 255 255 / 0.45), rgb(167 235 252 / 0.1) 30%, transparent 60%);
-  opacity: 0;
-  animation: boot-clarao 0.5s ease-out 1.5s backwards;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.02));
 }
+
+.boot-blocos {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: clamp(2px, 0.5vw, 5px);
+  height: clamp(26px, 5.5vh, 48px);
+}
+
+.boot-blocos > span {
+  background: rgb(215 221 224 / 0.08);
+  box-shadow: inset 0 0 0 1px rgb(215 221 224 / 0.1);
+}
+
+.boot-blocos > span[data-on] {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-primary) 60%, white) 0%,
+    var(--color-primary) 48%,
+    color-mix(in srgb, var(--color-primary) 88%, black) 52%,
+    var(--color-primary) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.7),
+    0 0 10px rgb(250 192 147 / 0.5);
+}
+
+/* ---------- TV ligando ---------- */
 
 .boot-luz {
   position: absolute;
@@ -323,87 +340,6 @@
   animation: boot-crt-linha 0.5s linear backwards;
 }
 
-/* ---------- Rodapé: loading e pular ---------- */
-
-.boot-rodape {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: clamp(0.75rem, 2vw, 1.5rem);
-  padding: 0 clamp(1rem, 3vw, 2.5rem) max(1rem, env(safe-area-inset-bottom));
-  animation: boot-aparecer 0.6s ease-out 0.9s backwards;
-}
-
-.boot-carregando {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  font-family: var(--font-krona), sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgb(215 221 224 / 0.7);
-}
-
-.boot-progresso {
-  display: block;
-  width: clamp(84px, 14vw, 168px);
-  height: 12px;
-  padding: 2px;
-  border: 1px solid rgb(215 221 224 / 0.45);
-  background: rgb(3 6 14 / 0.35);
-  box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.4);
-}
-
-/* Enche em blocos, estilo tela de loading de console */
-.boot-progresso > span {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-primary) 0 72%, transparent 72%) 0 0 / calc(100% / 14) 100% repeat-x;
-  animation: boot-carregar 3.6s steps(14, end) 0.8s backwards;
-}
-
-.boot-pular {
-  padding: 0.9em 1.2em 0.8em;
-  font-family: var(--font-krona), sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-foreground);
-  background:
-    linear-gradient(
-      180deg,
-      rgb(255 255 255 / 0.2),
-      rgb(255 255 255 / 0.06) 50%,
-      rgb(255 255 255 / 0.02) 51%,
-      rgb(255 255 255 / 0.1)
-    ),
-    rgb(29 40 66 / 0.7);
-  border: 1px solid rgb(215 221 224 / 0.4);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.35),
-    0 4px 14px rgb(3 6 14 / 0.35);
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.boot-pular:hover,
-.boot-pular:focus-visible {
-  color: var(--color-primary);
-  border-color: rgb(250 192 147 / 0.6);
-}
-
-@media (max-width: 479px) {
-  .boot-carregando-texto {
-    display: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .boot *,
   .boot *::before,
@@ -429,75 +365,41 @@
   100% { opacity: 0; transform: scaleX(1) scaleY(6); }
 }
 
-@keyframes boot-torre-entrar {
-  from { opacity: 0; transform: translateY(6vh); }
-}
+@keyframes boot-varrer { to { transform: translateY(600%); } }
 
-@keyframes boot-flutuar { to { translate: 0 -3vh; } }
-
-@keyframes boot-subir {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(calc(var(--g) * 1vmin), -135vh, 0); }
-}
-
-@keyframes boot-tremer {
-  0%, 100% { transform: none; }
-  15% { transform: translate3d(-1vmin, 0.7vmin, 0); }
-  30% { transform: translate3d(0.8vmin, -0.6vmin, 0); }
-  45% { transform: translate3d(-0.5vmin, 0.3vmin, 0); }
-  60% { transform: translate3d(0.3vmin, -0.2vmin, 0); }
-}
-
-@keyframes boot-cravar {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -35%, 0) scale(2.5) rotate(calc((var(--i) - 1) * 12deg));
-    animation-timing-function: cubic-bezier(0.5, 0, 0.9, 0.5);
-  }
-  38% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1.16, 0.82);
-    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
-  }
-  60% {
-    transform: translate3d(0, -6%, 0) scale(0.95, 1.07);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
-  }
-  80% { transform: translate3d(0, 0, 0) scale(1.03, 0.97); }
-  100% { opacity: 1; transform: none; }
+/* Letra ligando, piscando até estabilizar */
+@keyframes boot-digitar {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  35% { opacity: 0.15; }
+  50% { opacity: 1; }
+  65% { opacity: 0.4; }
+  100% { opacity: 1; }
 }
 
 @keyframes boot-placa {
-  0% { opacity: 0; transform: scaleX(0.01); }
-  30% { opacity: 1; }
-  100% { opacity: 1; transform: none; }
-}
-
-@keyframes boot-emergir {
-  0% {
-    transform: translate3d(0, 130%, 0) rotate(10deg);
-    animation-timing-function: cubic-bezier(0.2, 0.8, 0.4, 1);
-  }
-  55% {
-    transform: translate3d(0, -14%, 0) rotate(-3deg);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
-  }
-  78% { transform: translate3d(0, 5%, 0) rotate(1deg); }
-  100% { transform: none; }
-}
-
-@keyframes boot-saltar {
-  from { opacity: 0; transform: scale(0.3); }
+  from { opacity: 0; transform: scaleX(0.01); }
   to { opacity: 1; transform: none; }
 }
 
-@keyframes boot-clarao {
-  0% { opacity: 0; }
-  12% { opacity: 1; }
-  100% { opacity: 0; }
-}
+@keyframes boot-piscar { 50% { opacity: 0; } }
 
-@keyframes boot-carregar {
-  from { clip-path: inset(0 100% 0 0); }
-  to { clip-path: inset(0 0 0 0); }
+/* Glitch RGB: rajadas curtas, o resto do tempo fica limpo */
+@keyframes boot-glitch {
+  0%, 12%, 100% {
+    transform: skewX(-8deg);
+    filter: none;
+  }
+  3% {
+    transform: translate(-0.6vmin, 0) skewX(-8deg);
+    filter: drop-shadow(0.5vmin 0 0 rgb(255 40 90 / 0.75)) drop-shadow(-0.5vmin 0 0 rgb(40 220 255 / 0.75));
+  }
+  6% {
+    transform: translate(0.8vmin, 0.2vmin) skewX(-14deg);
+    filter: drop-shadow(-0.6vmin 0 0 rgb(255 40 90 / 0.75)) drop-shadow(0.6vmin 0 0 rgb(40 220 255 / 0.75));
+  }
+  9% {
+    transform: translate(-0.3vmin, -0.2vmin) skewX(-4deg);
+    filter: drop-shadow(0.3vmin 0 0 rgb(255 40 90 / 0.75)) drop-shadow(-0.3vmin 0 0 rgb(40 220 255 / 0.75));
+  }
 }
