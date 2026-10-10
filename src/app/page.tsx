@@ -1,5 +1,4 @@
 import GlassShapes from "@/components/ui/GlassShapes";
-import LoginButton from "@/components/ui/LoginButton";
 import Countdown from "@/components/ui/Countdown";
 import Marquee from "@/components/ui/Marquee";
 import NewsCarousel from "@/components/news/NewsCarousel";
@@ -29,9 +28,6 @@ export default function Home() {
           <h1 className="font-display text-5xl tracking-tight text-primary md:text-7xl">
             FDA AWARDS 2026
           </h1>
-          <div className="mt-2">
-            <LoginButton />
-          </div>
         </div>
       </section>
 

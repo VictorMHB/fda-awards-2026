@@ -5,7 +5,7 @@ import { useCategorias } from "@/hooks/useCategorias";
 import { useVotante } from "@/hooks/useVotante";
 import { useAuth } from "@/context/AuthContext";
 import { toast } from "sonner";
-import LoginButton from "@/components/ui/LoginButton";
+import UserMenu from "@/components/layout/UserMenu";
 
 export default function VotacaoPage() {
   const { categorias, loading: loadingCategorias } = useCategorias();
@@ -46,7 +46,7 @@ export default function VotacaoPage() {
     return (
       <main className="p-10">
         <p className="mb-4">Você precisa estar logado pra votar.</p>
-        <LoginButton />
+        <UserMenu />
       </main>
     );
   }

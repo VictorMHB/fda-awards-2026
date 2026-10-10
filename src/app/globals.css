@@ -1,9 +1,13 @@
 @import "tailwindcss";
 
-@import "./styles/theme.css";
-@import "./styles/base.css";
-@import "./styles/glass.css";
-@import "./styles/solids.css";
-@import "./styles/header-footer.css";
-@import "./styles/aero.css";
-@import "./styles/marquee.css";
+@import "./styles/core/theme.css";
+@import "./styles/core/base.css";
+
+@import "./styles/components/glass.css";
+@import "./styles/components/solids.css";
+@import "./styles/components/aero.css";
+@import "./styles/features/user-menu.css";
+@import "./styles/components/marquee.css";
+
+@import "./styles/features/header-footer.css";
+@import "./styles/features/notice-bar.css";
