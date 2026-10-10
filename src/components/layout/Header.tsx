@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MenuMobile from "./MenuMobile";
+import AreaDoUsuario from "./AreaDoUsuario";
 
 const NAV_LINKS = [
   { href: "/", label: "HOME" },
@@ -65,6 +66,8 @@ export default function Header() {
             >
               Votar
             </Link> */}
+
+            <AreaDoUsuario />
           </nav>
 
           {/* Botão do menu mobile */}

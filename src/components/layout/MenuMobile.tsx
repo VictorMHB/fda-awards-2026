@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AreaDoUsuario from "./AreaDoUsuario";
 
 type NavLink = { href: string; label: string };
 
@@ -56,6 +57,10 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
             </Link>
           );
         })}
+
+        <div className="mt-4 border-t border-foreground/15 pt-6">
+          <AreaDoUsuario variante="menu" />
+        </div>
 
         <Link
           href="/votacao"
