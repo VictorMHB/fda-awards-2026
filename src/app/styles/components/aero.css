@@ -89,58 +89,68 @@
       drop-shadow(0 2px 3px rgba(90, 50, 20, 0.35));
   }
 
-  .text-aero {
-    position: relative;
-    display: inline-block;
-    font-family: var(--font-title, var(--font-krona)), sans-serif;
-    line-height: 1.1;
-    color: var(--aero-stroke);
-    -webkit-text-stroke: 0.2em var(--aero-stroke); /* metade fica por fora */
-  }
+  /* src/app/styles/components/aero.css */
+.text-aero {
+  --aero-stroke: #0b1430;                 /* mesmo tom do --tinta da logo */
+  --aero-stroke-width: 0.14em;
 
-  .text-aero::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    -webkit-text-stroke: 0;
-    color: transparent;
-    background: var(--aero-fill);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
+  position: relative;
+  display: inline-block;
+  line-height: 1.15;
+  color: var(--aero-stroke);
+  -webkit-text-stroke: var(--aero-stroke-width) var(--aero-stroke);
+}
 
-  .text-aero--ice {
-    --aero-stroke: var(--color-dark-bg);
-    --aero-fill: linear-gradient(
-      to bottom,
-      #fff 0%,
-      var(--color-foreground) 45%,
-      color-mix(in srgb, var(--color-secondary) 55%, var(--color-foreground))
-        50%,
-      color-mix(in srgb, var(--color-foreground) 70%, white) 100%
-    );
-  }
+.text-aero::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  -webkit-text-stroke: 0;
+  color: transparent;
+  background: var(--aero-fill);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
 
-  .text-aero--primary {
-    --aero-stroke: var(--color-dark-bg);
-    --aero-fill: linear-gradient(
-      to bottom,
-      #fff 0%,
-      color-mix(in srgb, var(--color-primary) 45%, white) 45%,
-      color-mix(in srgb, var(--color-primary) 80%, #000) 50%,
-      color-mix(in srgb, var(--color-primary) 65%, white) 100%
-    );
-  }
+.text-aero--italic {
+  transform: skewX(-8deg);
+  padding-inline: 0.1em;
+}
 
-  .text-aero--aqua {
-    --aero-stroke: var(--color-dark-bg);
-    --aero-fill: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-secondary) 40%, white) 0%,
-      color-mix(in srgb, var(--color-secondary) 70%, white) 45%,
-      color-mix(in srgb, var(--color-secondary) 70%, var(--color-background))
-        50%,
-      color-mix(in srgb, var(--color-secondary) 60%, white) 100%
-    );
-  }
+/* Prata: igual ao AWARDS da logo */
+.text-aero--silver {
+  --aero-fill: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #eef3f6 36%,
+    #b6c6d4 49%,
+    #8ba1b6 51%,
+    #dbe3e9 78%,
+    #ffffff 100%
+  );
+}
+
+/* Laranja: igual ao FDA da logo */
+.text-aero--primary {
+  --aero-fill: linear-gradient(
+    180deg,
+    #fff8ef 0%,
+    #ffe2c6 28%,
+    var(--color-primary) 49%,
+    #e48c50 51%,
+    #f6b07c 74%,
+    #ffd6b3 100%
+  );
+}
+
+/* Azul-vidro */
+.text-aero--aqua {
+  --aero-fill: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-secondary) 40%, white) 0%,
+    color-mix(in srgb, var(--color-secondary) 70%, white) 45%,
+    color-mix(in srgb, var(--color-secondary) 70%, var(--color-background)) 50%,
+    color-mix(in srgb, var(--color-secondary) 60%, white) 100%
+  );
+}
 }

@@ -47,39 +47,21 @@ export default function Header() {
 </Link>
 
           {/* Navegação desktop*/}
-          <nav className="hidden items-center gap-10 xl:flex">
-            {NAV_LINKS.map((link) => {
-              const active = isActive(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`group relative py-2 text-lg font-bold uppercase tracking-wider transition-colors duration-300 ${
-                    active
-                      ? "text-primary"
-                      : "text-foreground hover:text-primary"
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`absolute bottom-0 left-0 h-0.75 w-full origin-left bg-primary transition-transform duration-300 ${
-                      active
-                        ? "scale-x-100"
-                        : "scale-x-0 group-hover:scale-x-100"
-                    }`}
-                  />
-                </Link>
-              );
-            })}
-
-            {/* <Link
-              href="/votacao"
-              className="btn-aero px-7 py-3 text-lg font-bold uppercase tracking-wider text-dark-bg"
-            >
-              Votar
-            </Link> */}
-          </nav>
+          <nav className="hidden items-center gap-4 xl:flex">
+  {NAV_LINKS.map((link) => {
+    const active = isActive(link.href);
+    return (
+      <Link
+        key={link.href}
+        href={link.href}
+        aria-current={active ? "page" : undefined}
+        className={`nav-link ${active ? "nav-link--active" : ""}`}
+      >
+        {link.label}
+      </Link>
+    );
+  })}
+</nav>
 
           {/* Botão do menu mobile */}
           <button

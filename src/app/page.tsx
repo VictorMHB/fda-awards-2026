@@ -5,6 +5,7 @@ import Marquee from "@/components/ui/Marquee";
 import NewsCarousel from "@/components/news/NewsCarousel";
 import NavMap from "@/components/layout/NavMap";
 import Footer from "@/components/layout/Footer";
+import { AeroText } from "@/components/ui/AeroText";
 
 const HOME_BG = "/images/home_page.png";
 
@@ -27,19 +28,31 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center gap-4">
           <h1
-  className="logo-aero logo-aero--italic font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
-  aria-label="FDA Awards 2026"
->
-  <span className="logo-aero-word logo-aero-fda" data-l="FDA" aria-hidden="true">
-    <span className="logo-aero-face">FDA</span>
-  </span>
-  <span className="logo-aero-word logo-aero-awards" data-l="AWARDS" aria-hidden="true">
-    <span className="logo-aero-face">AWARDS</span>
-  </span>
-  <span className="logo-aero-word logo-aero-fda" data-l="2026" aria-hidden="true">
-    <span className="logo-aero-face">2026</span>
-  </span>
-</h1>
+            className="logo-aero logo-aero--italic font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+            aria-label="FDA Awards 2026"
+          >
+            <span
+              className="logo-aero-word logo-aero-fda"
+              data-l="FDA"
+              aria-hidden="true"
+            >
+              <span className="logo-aero-face">FDA</span>
+            </span>
+            <span
+              className="logo-aero-word logo-aero-awards"
+              data-l="AWARDS"
+              aria-hidden="true"
+            >
+              <span className="logo-aero-face">AWARDS</span>
+            </span>
+            <span
+              className="logo-aero-word logo-aero-fda"
+              data-l="2026"
+              aria-hidden="true"
+            >
+              <span className="logo-aero-face">2026</span>
+            </span>
+          </h1>
           <div className="mt-2">
             <LoginButton />
           </div>
@@ -57,9 +70,9 @@ export default function Home() {
       {/* 4. Notícias */}
       <section className="px-6 py-16 md:py-24">
         <div className="mx-auto max-w-6xl">
-          <h2 className="font-display text-3xl text-foreground md:text-4xl">
+          <AeroText as="h2" className="text-3xl md:text-4xl">
             Notícias
-          </h2>
+          </AeroText>
           <p className="mt-3 max-w-2xl text-base text-foreground/70">
             Fique de olho nas novidades sobre os indicados, a votação e a festa
             de encerramento.
@@ -74,9 +87,9 @@ export default function Home() {
       <section className="w-full py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4">
           <header className="mb-8 md:mb-12">
-            <h2 className="font-display text-3xl text-foreground md:text-4xl">
+            <AeroText as="h2" className="text-3xl md:text-4xl">
               Explorar
-            </h2>
+            </AeroText>
             <p className="mt-3 max-w-2xl text-base text-foreground/70">
               Descubra o que o site do FDA AWARDS tem a oferecer
             </p>
