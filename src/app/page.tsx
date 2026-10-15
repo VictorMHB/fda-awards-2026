@@ -1,5 +1,4 @@
 import GlassShapes from "@/components/ui/GlassShapes";
-import LoginButton from "@/components/ui/LoginButton";
 import Countdown from "@/components/ui/Countdown";
 import Marquee from "@/components/ui/Marquee";
 import NewsCarousel from "@/components/news/NewsCarousel";
@@ -53,9 +52,6 @@ export default function Home() {
               <span className="logo-aero-face">2026</span>
             </span>
           </h1>
-          <div className="mt-2">
-            <LoginButton />
-          </div>
         </div>
       </section>
 

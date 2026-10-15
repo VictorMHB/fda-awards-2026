@@ -10,7 +10,7 @@ type Noticia = {
   resumo: string;
 };
 
-// 👉 Placeholder — troque pelos posts reais quando existirem
+// PLACEHOLDER
 const NOTICIAS: Noticia[] = [
   {
     id: "1",

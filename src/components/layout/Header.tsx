@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MenuMobile from "./MenuMobile";
-import { AeroText } from "@/components/ui/AeroText";
+import AreaDoUsuario from "./UserMenu";
 
 const NAV_LINKS = [
   { href: "/", label: "HOME" },
@@ -25,43 +25,47 @@ export default function Header() {
   return (
     <>
       <header className="glass-bar fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
+        <div className="flex h-20 items-center justify-between px-5 md:h-24 md:px-8 xl:px-24">
           {/* Logo (fonte de título) */}
           <Link
-  href="/"
-  onClick={closeMenu}
-  aria-label="FDA Awards"
-  className="group flex items-center py-2"
->
-  <span
-    aria-hidden="true"
-    className="logo-aero font-display text-3xl md:text-4xl"
-  >
-    <span className="logo-aero-word logo-aero-fda" data-l="FDA">
-      <span className="logo-aero-face">FDA</span>
-    </span>
-    <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
-      <span className="logo-aero-face">AWARDS</span>
-    </span>
-  </span>
-</Link>
+            href="/"
+            onClick={closeMenu}
+            aria-label="FDA Awards"
+            className="group flex items-center py-2"
+          >
+            <span
+              aria-hidden="true"
+              className="logo-aero font-display text-3xl md:text-4xl"
+            >
+              <span className="logo-aero-word logo-aero-fda" data-l="FDA">
+                <span className="logo-aero-face">FDA</span>
+              </span>
+              <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
+                <span className="logo-aero-face">AWARDS</span>
+              </span>
+            </span>
+          </Link>
 
-          {/* Navegação desktop*/}
+          {/* Navegação desktop */}
           <nav className="hidden items-center gap-4 xl:flex">
-  {NAV_LINKS.map((link) => {
-    const active = isActive(link.href);
-    return (
-      <Link
-        key={link.href}
-        href={link.href}
-        aria-current={active ? "page" : undefined}
-        className={`nav-link ${active ? "nav-link--active" : ""}`}
-      >
-        {link.label}
-      </Link>
-    );
-  })}
-</nav>
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`nav-link ${active ? "nav-link--active" : ""}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            <div className="ml-6">
+              <AreaDoUsuario />
+            </div>
+          </nav>
 
           {/* Botão do menu mobile */}
           <button
