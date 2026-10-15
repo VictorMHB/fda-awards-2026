@@ -1,48 +1,73 @@
-/* Logo do header com o mesmo tratamento da intro */
 .logo-aero {
   --tinta: #0b1430;
+  /* espessura do contorno (metade fica por fora). Sobrescreva por elemento:
+     className="[--logo-stroke:0.2em]" */
+  --logo-stroke: 0.16em;
+
   display: inline-flex;
   gap: 0.3em;
   line-height: 1;
-  transform: skewX(-8deg);
-  /* folga pra extrusão não encostar na barra de baixo */
+  letter-spacing: 0.03em;
   padding-bottom: 0.15em;
-  transition: filter 0.3s;
 }
 
-.group:hover .logo-aero {
-  filter: brightness(1.12) drop-shadow(0 0 10px rgba(250, 192, 147, 0.45));
+.logo-aero--italic {
+  transform: skewX(-8deg);
+  padding-inline: 0.1em;
 }
 
-.logo-aero-palavra {
+.logo-aero-word {
   position: relative;
   display: block;
 }
 
-/* Contorno, extrusão e eco azul */
-.logo-aero-palavra::before {
+/* Contorno, extrusão e eco azul (camada de trás) */
+.logo-aero-word::before {
   content: attr(data-l);
   position: absolute;
   inset: 0;
   color: var(--tinta);
-  -webkit-text-stroke: 0.08em var(--tinta);
+  -webkit-text-stroke: var(--logo-stroke) var(--tinta);
   text-shadow:
     0.015em 0.015em 0 var(--tinta),
     0.03em 0.03em 0 var(--tinta),
     0.045em 0.045em 0 var(--tinta),
-    0.06em 0.06em 0 var(--tinta),
-    0.105em 0.105em 0 var(--color-secondary),
-    0.15em 0.15em 0 rgb(79 149 186 / 0.4);
+    0.06em 0.06em 0 var(--tinta);
 }
 
-/* Face com brilho de vidro */
+/* Face com brilho de vidro (camada da frente) */
 .logo-aero-face {
   position: relative;
   display: block;
   color: transparent;
-  background-image: var(--face);
+  background-image:
+    linear-gradient(
+      115deg,
+      transparent 35%,
+      rgb(255 255 255 / 0.85) 50%,
+      transparent 65%
+    ),
+    var(--face);
+  background-size: 250% 100%, 100% 100%;
+  background-position: 120% 0, 0 0;      /* brilho começa fora, à esquerda */
+  background-repeat: no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo-aero-face {
+    transition: background-position 0.7s ease;
+  }
+
+  .group:hover .logo-aero-face {
+    background-position: -20% 0, 0 0;    /* brilho atravessa e sai à direita */
+  }
+
+  /* AWARDS começa um pouco depois: o brilho parece passar pela palavra toda */
+  .group:hover .logo-aero-awards .logo-aero-face {
+    transition-delay: 0.12s;
+  }
 }
 
 .logo-aero-fda .logo-aero-face {
@@ -67,4 +92,18 @@
     #dbe3e9 78%,
     #ffffff 100%
   );
+}
+
+/* Anel claro externo (opcional): para fundos escuros como o header */
+.logo-aero--ring .logo-aero-word {
+  isolation: isolate;
+}
+
+.logo-aero--ring .logo-aero-word::after {
+  content: attr(data-l);
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: calc(var(--logo-stroke) + 0.14em) rgb(215 221 224 / 0.85);
 }

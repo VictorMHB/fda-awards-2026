@@ -11,7 +11,9 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.7),
       inset 0 -1px 0 rgba(90, 50, 20, 0.3),
       0 0 14px rgba(250, 192, 147, 0.3);
-    transition: filter 0.3s, box-shadow 0.3s;
+    transition:
+      filter 0.3s,
+      box-shadow 0.3s;
   }
   .btn-aero:hover {
     filter: brightness(1.08);
@@ -43,7 +45,11 @@
     content: "";
     position: absolute;
     inset: 0 0 50% 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.06));
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.06)
+    );
     pointer-events: none;
   }
 
@@ -64,9 +70,12 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.5),
       inset 0 -2px 4px rgba(255, 255, 255, 0.08),
       0 2px 6px rgba(0, 0, 0, 0.45);
-    transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s,
+      filter 0.2s;
   }
-  
+
   .faixa-btn:hover {
     transform: translateY(-1px);
     filter: brightness(1.25);
@@ -76,8 +85,62 @@
   }
 
   .icone-aero {
-  filter:
-    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.6))
-    drop-shadow(0 2px 3px rgba(90, 50, 20, 0.35));
+    filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.6))
+      drop-shadow(0 2px 3px rgba(90, 50, 20, 0.35));
+  }
+
+  .text-aero {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-title, var(--font-krona)), sans-serif;
+    line-height: 1.1;
+    color: var(--aero-stroke);
+    -webkit-text-stroke: 0.2em var(--aero-stroke); /* metade fica por fora */
+  }
+
+  .text-aero::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    -webkit-text-stroke: 0;
+    color: transparent;
+    background: var(--aero-fill);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .text-aero--ice {
+    --aero-stroke: var(--color-dark-bg);
+    --aero-fill: linear-gradient(
+      to bottom,
+      #fff 0%,
+      var(--color-foreground) 45%,
+      color-mix(in srgb, var(--color-secondary) 55%, var(--color-foreground))
+        50%,
+      color-mix(in srgb, var(--color-foreground) 70%, white) 100%
+    );
+  }
+
+  .text-aero--primary {
+    --aero-stroke: var(--color-dark-bg);
+    --aero-fill: linear-gradient(
+      to bottom,
+      #fff 0%,
+      color-mix(in srgb, var(--color-primary) 45%, white) 45%,
+      color-mix(in srgb, var(--color-primary) 80%, #000) 50%,
+      color-mix(in srgb, var(--color-primary) 65%, white) 100%
+    );
+  }
+
+  .text-aero--aqua {
+    --aero-stroke: var(--color-dark-bg);
+    --aero-fill: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-secondary) 40%, white) 0%,
+      color-mix(in srgb, var(--color-secondary) 70%, white) 45%,
+      color-mix(in srgb, var(--color-secondary) 70%, var(--color-background))
+        50%,
+      color-mix(in srgb, var(--color-secondary) 60%, white) 100%
+    );
   }
 }

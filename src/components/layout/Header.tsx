@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MenuMobile from "./MenuMobile";
+import { AeroText } from "@/components/ui/AeroText";
 
 const NAV_LINKS = [
   { href: "/", label: "HOME" },
@@ -27,32 +28,23 @@ export default function Header() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:h-24 md:px-10">
           {/* Logo (fonte de título) */}
           <Link
-            href="/"
-            onClick={closeMenu}
-            className="group relative flex items-center py-2"
-          >
-            <span
-              className="logo-aero font-display text-2xl md:text-3xl"
-              role="img"
-              aria-label="FDA Awards"
-            >
-              <span
-                className="logo-aero-palavra logo-aero-fda"
-                data-l="FDA"
-                aria-hidden="true"
-              >
-                <span className="logo-aero-face">FDA</span>
-              </span>
-              <span
-                className="logo-aero-palavra logo-aero-awards"
-                data-l="AWARDS"
-                aria-hidden="true"
-              >
-                <span className="logo-aero-face">AWARDS</span>
-              </span>
-            </span>
-            <span className="absolute bottom-0 left-0 h-0.75 w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
-          </Link>
+  href="/"
+  onClick={closeMenu}
+  aria-label="FDA Awards"
+  className="group flex items-center py-2"
+>
+  <span
+    aria-hidden="true"
+    className="logo-aero font-display text-3xl md:text-4xl"
+  >
+    <span className="logo-aero-word logo-aero-fda" data-l="FDA">
+      <span className="logo-aero-face">FDA</span>
+    </span>
+    <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
+      <span className="logo-aero-face">AWARDS</span>
+    </span>
+  </span>
+</Link>
 
           {/* Navegação desktop*/}
           <nav className="hidden items-center gap-10 xl:flex">
