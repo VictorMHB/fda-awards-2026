@@ -1,0 +1,26 @@
+[
+  {
+    "phase": "aguardando",
+    "date": "Fim de novembro",
+    "title": "Anúncio dos indicados",
+    "description": "Os indicados de cada categoria são revelados aqui no site."
+  },
+  {
+    "phase": "votacao",
+    "date": "27 de novembro",
+    "title": "Abertura da votação",
+    "description": "Entre com sua conta Google e escolha um indicado por categoria."
+  },
+  {
+    "phase": "aguardandoShow",
+    "date": "5 de dezembro",
+    "title": "Encerramento da votação",
+    "description": "Último dia para confirmar a cédula, até 23h59 (horário de Brasília)."
+  },
+  {
+    "phase": "aoVivo",
+    "date": "12 de dezembro",
+    "title": "Cerimônia",
+    "description": "Os vencedores são anunciados ao vivo, no Auditório Freguesia."
+  }
+]

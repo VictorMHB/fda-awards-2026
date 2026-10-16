@@ -1,0 +1,129 @@
+@layer components {
+  /* Card de vidro com brilho na metade de cima (o mesmo da NavMap) */
+  .info-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .info-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 50% 0;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-foreground) 12%, transparent),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  /* Linha do tempo: vertical no mobile, horizontal a partir de lg */
+  .timeline {
+    --marker: 1rem;
+    --track: 3px;
+    --marker-gap: 1.25rem;
+
+    position: relative;
+    display: grid;
+    gap: 2rem;
+    padding-left: calc(var(--marker) + var(--marker-gap));
+  }
+
+  /* Trilho que liga as etapas */
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: calc((var(--marker) - var(--track)) / 2);
+    width: var(--track);
+    background: color-mix(in srgb, var(--color-foreground) 18%, transparent);
+  }
+
+  .timeline-step {
+    position: relative;
+  }
+
+  /* Marcador quadrado: vazado nas próximas etapas */
+  .timeline-marker {
+    position: absolute;
+    top: 0.125rem;
+    left: calc(-1 * (var(--marker) + var(--marker-gap)));
+    width: var(--marker);
+    height: var(--marker);
+    border: 2px solid color-mix(in srgb, var(--color-foreground) 45%, var(--color-dark-bg));
+    background: var(--color-dark-bg);
+  }
+
+  /* Passadas: marcador cheio e texto apagado */
+  .timeline-step--past .timeline-marker {
+    background: color-mix(in srgb, var(--color-foreground) 45%, var(--color-dark-bg));
+  }
+
+  .timeline-step--past .timeline-content {
+    opacity: 0.55;
+  }
+
+  /* Atual: marcador laranja cheio, com brilho */
+  .timeline-step--current .timeline-marker {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    box-shadow: 0 0 14px color-mix(in srgb, var(--color-primary) 60%, transparent);
+  }
+
+  @media (width >= 64rem) {
+    .timeline {
+      grid-auto-columns: 1fr;
+      grid-auto-flow: column;
+      gap: 1.5rem;
+      padding-top: calc(var(--marker) + var(--marker-gap));
+      padding-left: 0;
+    }
+
+    .timeline::before {
+      top: calc((var(--marker) - var(--track)) / 2);
+      right: 0;
+      bottom: auto;
+      left: 0;
+      width: auto;
+      height: var(--track);
+    }
+
+    .timeline-marker {
+      top: calc(-1 * (var(--marker) + var(--marker-gap)));
+      left: 0;
+    }
+  }
+
+  /* FAQ: o ícone gira e a resposta entra com fade + deslize curto (só transform e opacity) */
+  .faq-icon {
+    transition: transform 200ms ease-out;
+  }
+
+  .faq-icon--open {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer:not([hidden]) {
+    animation: faq-reveal 200ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-icon {
+      transition: none;
+    }
+
+    .faq-answer:not([hidden]) {
+      animation: none;
+    }
+  }
+}
+
+@keyframes faq-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+}
