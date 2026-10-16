@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useRef, type RefObject } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import UserMenu from "./UserMenu";
+import AreaDoUsuario from "./UserMenu";
 
 type NavLink = { href: string; label: string };
 
@@ -10,12 +11,46 @@ interface MenuMobileProps {
   isOpen: boolean;
   onClose: () => void;
   links: NavLink[];
+  // Botão do header que abre o menu: recebe o foco de volta ao fechar
+  triggerRef: RefObject<HTMLButtonElement | null>;
 }
 
-export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) {
+export default function MenuMobile({ isOpen, onClose, links, triggerRef }: MenuMobileProps) {
   const pathname = usePathname();
+  const navRef = useRef<HTMLElement>(null);
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  // Aberto: foco no primeiro link e fundo sem rolagem. Ao fechar, desfaz os dois
+  useEffect(() => {
+    if (!isOpen) return;
+    const botao = triggerRef.current;
+    const overflowAnterior = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    navRef.current?.querySelector("a")?.focus();
+    return () => {
+      document.body.style.overflow = overflowAnterior;
+      botao?.focus();
+    };
+  }, [isOpen, triggerRef]);
+
+  // Esc fecha. Virar layout desktop também, senão o fundo ficaria travado com o menu escondido
+  useEffect(() => {
+    if (!isOpen) return;
+    const desktop = window.matchMedia("(min-width: 80rem)");
+    const tecla = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    const largura = () => {
+      if (desktop.matches) onClose();
+    };
+    document.addEventListener("keydown", tecla);
+    desktop.addEventListener("change", largura);
+    return () => {
+      document.removeEventListener("keydown", tecla);
+      desktop.removeEventListener("change", largura);
+    };
+  }, [isOpen, onClose]);
 
   return (
     <div
@@ -32,10 +67,22 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
 
       {/* Painel */}
       <nav
-        className={`glass-panel absolute right-0 top-0 flex h-full w-[85%] max-w-sm flex-col gap-2 overflow-y-auto px-8 pt-32 transition-transform duration-300 ease-out ${
+        id="menu-mobile"
+        ref={navRef}
+        className={`glass-panel absolute right-0 top-0 flex h-full w-[85%] max-w-sm flex-col overflow-y-auto px-8 pt-32 pb-10 transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
+        {/* Mesma logo do header, um tamanho menor pra caber no painel estreito */}
+        <span aria-hidden="true" className="logo-aero mb-6 self-start font-display text-2xl">
+          <span className="logo-aero-word logo-aero-fda" data-l="FDA">
+            <span className="logo-aero-face">FDA</span>
+          </span>
+          <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
+            <span className="logo-aero-face">AWARDS</span>
+          </span>
+        </span>
+
         {links.map((link) => {
           const active = isActive(link.href);
           return (
@@ -44,22 +91,15 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
               href={link.href}
               onClick={onClose}
               aria-current={active ? "page" : undefined}
-              className={`group relative self-start py-3 text-2xl font-bold uppercase tracking-wider transition-colors duration-300 ${
-                active ? "text-primary" : "text-foreground hover:text-primary"
-              }`}
+              className={`nav-link nav-link--stacked ${active ? "nav-link--active" : ""}`}
             >
-              {link.label}
-              <span
-                className={`absolute bottom-0 left-0 h-0.75 w-full origin-left bg-primary transition-transform duration-300 ${
-                  active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                }`}
-              />
+              <span className="nav-link-label">{link.label}</span>
             </Link>
           );
         })}
 
-        <div className="mt-4 border-t border-foreground/15 pt-6">
-          <UserMenu variante="menu" />
+        <div className="mt-6 border-t border-foreground/15 pt-6">
+          <AreaDoUsuario variante="menu" />
         </div>
       </nav>
     </div>
