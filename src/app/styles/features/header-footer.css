@@ -110,10 +110,17 @@
     backdrop-filter: blur(28px) saturate(140%) contrast(105%);
     -webkit-backdrop-filter: blur(28px) saturate(140%) contrast(105%);
 
-    border-left: 1px solid rgba(215, 221, 224, 0.14);
+    /* Linha laranja de 3px na borda, com o degradê e o brilho da do header */
+    border-left: 3px solid;
+    border-image: linear-gradient(
+      180deg,
+      var(--color-primary) 0%,
+      var(--color-primary) 35%,
+      var(--color-secondary) 100%
+    ) 1;
 
     box-shadow:
-      inset 1px 0 0 rgba(255, 255, 255, 0.06),
+      inset 12px 0 14px -12px rgba(250, 192, 147, 0.55),
       inset 0 1px 0 rgba(255, 255, 255, 0.05),
       -12px 0 40px rgba(9, 14, 26, 0.5);
   }
@@ -220,8 +227,9 @@
   /* transition: filter 0.3s; */
 }
 
-/* Linha de 3px com degradê */
-.nav-link::after {
+/* Linha de 3px com degradê (no menu mobile ela fica no rótulo: ver nav-link--stacked) */
+.nav-link::after,
+.nav-link-label::after {
   content: "";
   position: absolute;
   inset: auto 0.9rem 0 0.9rem;       /* alinha com o texto, sem o padding */
@@ -256,12 +264,36 @@
 }
 
 .nav-link:hover::after,
-.nav-link--active::after {
+.nav-link--active::after,
+.nav-link:hover .nav-link-label::after,
+.nav-link--active .nav-link-label::after {
   transform: scaleX(1);
 }
 
 /* Glow no hover (o mesmo da logo) */
 .nav-link:hover {
   filter: brightness(1.12) drop-shadow(0 0 10px rgba(250, 192, 147, 0.45));
+}
+
+/* Menu mobile: links em coluna, na largura toda e sem separador.
+   A linha sai do link e vai pro rótulo, pra continuar alinhada com o texto */
+.nav-link--stacked {
+  display: block;
+  padding: 0.85rem 0;
+  font-size: 1.25rem;
+}
+
+.nav-link--stacked.nav-link::before,
+.nav-link--stacked.nav-link::after {
+  content: none;
+}
+
+.nav-link-label {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link-label::after {
+  inset: auto 0 -0.5rem 0;
 }
 }

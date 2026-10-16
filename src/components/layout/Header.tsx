@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MenuMobile from "./MenuMobile";
@@ -16,6 +16,7 @@ const NAV_LINKS = [
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
 
@@ -69,17 +70,19 @@ export default function Header() {
 
           {/* Botão do menu mobile */}
           <button
-            className="flex h-12 w-12 items-center justify-center text-3xl text-foreground transition-colors hover:text-primary focus:outline-none xl:hidden"
+            ref={menuButtonRef}
+            className="flex h-12 w-12 items-center justify-center text-3xl text-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-primary xl:hidden"
             onClick={toggleMenu}
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
+            aria-controls="menu-mobile"
           >
             {menuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>
         </div>
       </header>
 
-      <MenuMobile isOpen={menuOpen} onClose={closeMenu} links={NAV_LINKS} />
+      <MenuMobile isOpen={menuOpen} onClose={closeMenu} links={NAV_LINKS} triggerRef={menuButtonRef} />
     </>
   );
 }
