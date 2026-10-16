@@ -10,7 +10,7 @@ type Noticia = {
   resumo: string;
 };
 
-// 👉 Placeholder — troque pelos posts reais quando existirem
+// PLACEHOLDER
 const NOTICIAS: Noticia[] = [
   {
     id: "1",
@@ -57,19 +57,19 @@ export default function NewsCarousel() {
   <div className="relative">
     <div
       ref={trackRef}
-      className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4 md:gap-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
     >
       {NOTICIAS.map((n) => (
         <article
           key={n.id}
           data-card
-          className="glass group relative flex min-h-[23rem] w-[78vw] shrink-0 snap-start flex-col overflow-hidden sm:w-[22rem] md:min-h-[26rem] md:w-[24rem] lg:w-[26rem]"
+          className="glass group relative flex min-h-92 w-[78vw] shrink-0 snap-start flex-col overflow-hidden sm:w-88 md:min-h-104 md:w-[24rem] lg:w-104"
         >
           {/* Capa placeholder */}
           <div className="relative h-44 w-full overflow-hidden bg-linear-to-br from-secondary/40 via-background to-dark-bg md:h-52">
             <div
               aria-hidden="true"
-              className="absolute inset-0 text-foreground opacity-30 [background-image:radial-gradient(currentColor_1.5px,transparent_1.5px)] [background-size:14px_14px]"
+              className="absolute inset-0 text-foreground opacity-30 bg-[radial-gradient(currentColor_1.5px,transparent_1.5px)] bg-size-[14px_14px]"
             />
             <span className="absolute left-3 top-3 bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
               {n.tag}
@@ -91,7 +91,7 @@ export default function NewsCarousel() {
             </span>
           </div>
 
-          <span className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+          <span className="absolute inset-x-0 bottom-0 h-0.75 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
         </article>
       ))}
     </div>

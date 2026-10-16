@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UserMenu from "./UserMenu";
 
 type NavLink = { href: string; label: string };
 
@@ -19,7 +20,7 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
   return (
     <div
       className={`fixed inset-0 z-40 xl:hidden ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
-      aria-hidden={!isOpen}
+      aria-hidden={!isOpen} inert={!isOpen}
     >
       {/* Overlay */}
       <div
@@ -31,7 +32,7 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
 
       {/* Painel */}
       <nav
-        className={`glass-panel absolute right-0 top-0 flex h-full w-[85%] max-w-sm flex-col gap-2 px-8 pt-32 transition-transform duration-300 ease-out ${
+        className={`glass-panel absolute right-0 top-0 flex h-full w-[85%] max-w-sm flex-col gap-2 overflow-y-auto px-8 pt-32 transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -49,7 +50,7 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
             >
               {link.label}
               <span
-                className={`absolute bottom-0 left-0 h-[3px] w-full origin-left bg-primary transition-transform duration-300 ${
+                className={`absolute bottom-0 left-0 h-0.75 w-full origin-left bg-primary transition-transform duration-300 ${
                   active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                 }`}
               />
@@ -57,13 +58,9 @@ export default function MenuMobile({ isOpen, onClose, links }: MenuMobileProps) 
           );
         })}
 
-        <Link
-          href="/votacao"
-          onClick={onClose}
-          className="btn-aero mt-auto mb-8 block px-5 py-4 text-center text-xl font-bold uppercase tracking-wider text-dark-bg"
-        >
-          Votar
-        </Link>
+        <div className="mt-4 border-t border-foreground/15 pt-6">
+          <UserMenu variante="menu" />
+        </div>
       </nav>
     </div>
   );

@@ -2,11 +2,15 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "sonner";
 import { Krona_One, Work_Sans } from "next/font/google";
-import localFont from "next/font/local";
 import OfflineToast from "@/components/feedback/OfflineToast";
 import Header from "@/components/layout/Header";
 import AlertBanner from "@/components/feedback/AlertBanner";
 import Boot from "@/components/intro/Boot";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FDA Awards 2026",
+};
 
 const krona = Krona_One({
   subsets: ["latin", "latin-ext"],

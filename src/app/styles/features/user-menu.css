@@ -1,0 +1,169 @@
+@layer components {
+  /* Avatar quadrado com moldura glossy */
+  .avatar-frame {
+    background: #0b1430;
+    border: 2px solid var(--color-primary);
+    border-radius: 9999px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  /* Reflexo de vidro por cima da foto */
+  .avatar-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 50% 0;
+    background: var(--aero-gloss);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  /* Painel da conta: entra e sai com fade + deslize curto a partir do avatar */
+  .user-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.75rem);
+    z-index: 60;
+    min-width: 15rem;
+    background: linear-gradient(180deg, #1f3a5f 0%, #1d2842 100%);
+    border: 1px solid rgba(215, 221, 224, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 14px 30px rgba(3, 6, 14, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+    /* Ao fechar, o visibility só esconde depois que o fade termina */
+    transition:
+      opacity 200ms ease-in,
+      transform 200ms ease-in,
+      visibility 0s linear 200ms;
+  }
+
+  .user-dropdown--open {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-timing-function: ease-out;
+    transition-delay: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .user-dropdown {
+      transition: none;
+    }
+  }
+
+  /* Setinha apontando pro avatar */
+  .user-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: #1f3a5f;
+    border-top: 1px solid rgba(215, 221, 224, 0.28);
+    border-left: 1px solid rgba(215, 221, 224, 0.28);
+    transform: rotate(45deg);
+  }
+
+  .user-dropdown-info {
+    position: relative;
+    padding: 1rem 1rem 0.9rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(215, 221, 224, 0.14);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent);
+  }
+
+  .user-dropdown-label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  /* Botão vermelho glossy */
+  .btn-logout {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: calc(100% - 1.5rem);
+    margin: 0 0.75rem 0.75rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(80, 10, 15, 0.6);
+    background: linear-gradient(
+      180deg,
+      #ff8d8d 0%,
+      #e5484d 50%,
+      #b82a30 52%,
+      #d9383e 100%
+    );
+    border: 1px solid rgba(90, 15, 20, 0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      0 2px 0 rgba(90, 15, 20, 0.5);
+    cursor: pointer;
+    transition: filter 0.2s;
+  }
+
+  .btn-logout::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 50% 0;
+    background: var(--aero-gloss);
+    pointer-events: none;
+  }
+
+  .btn-logout:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+
+  .btn-logout:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-logout:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  /* Cartão de perfil (menu mobile) */
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent),
+      rgba(3, 6, 14, 0.25);
+    border: 1px solid rgba(215, 221, 224, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Sair em largura total, sem a margem do dropdown */
+  .btn-logout-full {
+    width: 100%;
+    margin: 0;
+    padding: 0.9rem 1rem;
+  }
+
+  .user-dropdown-item:hover:not(:disabled) {
+    color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .user-dropdown-item {
+      transition: none;
+    }
+  }
+}
