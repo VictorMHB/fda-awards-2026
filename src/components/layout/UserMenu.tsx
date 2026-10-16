@@ -106,28 +106,31 @@ function UsuarioLogado({ user, variante }: { user: User; variante: Variante }) {
         <Avatar nome={nomeCompleto} fotoUrl={user.photoURL} />
       </button>
 
-      {aberto && (
-  <div role="menu" className="user-dropdown">
-    <div className="user-dropdown-info">
-      <span className="user-dropdown-label">Conectado como</span>
-      <p className="truncate text-base font-extrabold uppercase tracking-wider text-foreground">
-        {nomeCompleto}
-      </p>
-      {user.email && user.email !== nomeCompleto && (
-        <p className="mt-0.5 truncate text-xs text-foreground/60">{user.email}</p>
-      )}
-    </div>
-    <button
-      type="button"
-      role="menuitem"
-      onClick={sair}
-      disabled={saindo}
-      className={`btn-logout ${FOCO_VISIVEL}`}
-    >
-      {saindo ? "Saindo..." : "Sair"}
-    </button>
-  </div>
-)}
+      {/* Sempre montado pra saída poder animar; fechado, o inert tira o menu do foco e do clique */}
+      <div
+        role="menu"
+        inert={!aberto}
+        className={`user-dropdown ${aberto ? "user-dropdown--open" : ""}`}
+      >
+        <div className="user-dropdown-info">
+          <span className="user-dropdown-label">Conectado como</span>
+          <p className="truncate text-base font-extrabold uppercase tracking-wider text-foreground">
+            {nomeCompleto}
+          </p>
+          {user.email && user.email !== nomeCompleto && (
+            <p className="mt-0.5 truncate text-xs text-foreground/60">{user.email}</p>
+          )}
+        </div>
+        <button
+          type="button"
+          role="menuitem"
+          onClick={sair}
+          disabled={saindo}
+          className={`btn-logout ${FOCO_VISIVEL}`}
+        >
+          {saindo ? "Saindo..." : "Sair"}
+        </button>
+      </div>
     </div>
   );
 }
