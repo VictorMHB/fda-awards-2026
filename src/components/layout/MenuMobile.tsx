@@ -73,15 +73,6 @@ export default function MenuMobile({ isOpen, onClose, links, triggerRef }: MenuM
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Mesma logo do header, um tamanho menor pra caber no painel estreito */}
-        <span aria-hidden="true" className="logo-aero mb-6 self-start font-display text-2xl">
-          <span className="logo-aero-word logo-aero-fda" data-l="FDA">
-            <span className="logo-aero-face">FDA</span>
-          </span>
-          <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
-            <span className="logo-aero-face">AWARDS</span>
-          </span>
-        </span>
 
         {links.map((link) => {
           const active = isActive(link.href);
