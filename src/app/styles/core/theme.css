@@ -6,9 +6,10 @@
   --color-foreground: #D7DDE0;
 
   --color-tier-diamond: #a7ebfc;
-  --color-tier-gold: #DAA520;
-  --color-tier-bronze: #CD7F32;
   --color-tier-platinum: #9fccc5;
+  --color-tier-gold: #daa520;
+  --color-tier-silver: #c0c0c0;
+  --color-tier-bronze: #cd7f32;
 }
 
 @theme inline {

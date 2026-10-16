@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { AeroText } from "@/components/ui/AeroText";
+import { AeroText, type Tier } from "@/components/ui/AeroText";
 import SectionHeader from "@/components/ui/SectionHeader";
+import SponsorsSection from "@/components/sponsors/SponsorsSection";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
@@ -20,8 +21,6 @@ const RECORDS = [
   { label: "Mais vitórias", value: "—", detail: "Nome" },
   { label: "Vitória mais apertada", value: "—", detail: "Categoria · edição" },
 ];
-
-const SPONSORS = ["Patrocinador 1", "Patrocinador 2", "Patrocinador 3", "Patrocinador 4"];
 
 export default function AboutPage() {
   return (
@@ -111,24 +110,7 @@ export default function AboutPage() {
       </section>
 
       {/* 4. Patrocinadores */}
-      <section id="sponsors" className="px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-6xl">
-          <SectionHeader
-            title="Patrocinadores"
-            description="Quem apoia a premiação e torna ela possível."
-          />
-          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {SPONSORS.map((name) => (
-              <li
-                key={name}
-                className="glass flex h-32 items-center justify-center p-6 text-center text-foreground/70"
-              >
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <SponsorsSection />
 
       <Footer />
     </main>
