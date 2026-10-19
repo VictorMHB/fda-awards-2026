@@ -1,5 +1,7 @@
 @layer components {
-  /* Card de vidro com brilho na metade de cima (o mesmo da NavMap) */
+  /* ==========================================================================
+     Card de vidro com brilho na metade de cima (o mesmo da NavMap)
+     ========================================================================== */
   .info-card {
     position: relative;
     overflow: hidden;
@@ -19,7 +21,186 @@
     pointer-events: none;
   }
 
-  /* Linha do tempo: vertical no mobile, horizontal a partir de lg */
+  /* ==========================================================================
+     Hero da página de Informações: céu Aero, raios, bolhas e janelas de vidro
+     Só transform e opacity animam, e não há backdrop-filter aqui.
+     ========================================================================== */
+  .info-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  /* Céu em degradê */
+  .info-hero__sky {
+    position: absolute;
+    inset: 0;
+    z-index: -4;
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 50% 0%,
+        color-mix(in srgb, var(--color-secondary) 55%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 85% 30%,
+        color-mix(in srgb, var(--color-primary) 22%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(180deg, var(--color-background) 0%, var(--color-dark-bg) 100%);
+  }
+
+  /* Foto opcional por cima do céu */
+  .info-hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.35;
+    mask-image: linear-gradient(180deg, #000 30%, transparent);
+  }
+
+  /* Raios de luz diagonais */
+  .info-hero__rays {
+    position: absolute;
+    inset: -20% -10% auto;
+    height: 120%;
+    z-index: -2;
+    background: repeating-linear-gradient(
+      105deg,
+      transparent 0 90px,
+      rgb(255 255 255 / 0.06) 90px 150px,
+      transparent 150px 260px
+    );
+    mask-image: linear-gradient(180deg, #000, transparent 75%);
+  }
+
+  /* Retícula (halftone) no canto */
+  .info-hero__dots {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%;
+    height: 60%;
+    z-index: -1;
+    opacity: 0.5;
+    background-image: radial-gradient(circle, rgb(255 255 255 / 0.35) 1.5px, transparent 2px);
+    background-size: 10px 10px;
+    mask-image: radial-gradient(circle at 100% 0, #000, transparent 70%);
+  }
+
+  /* Some no fundo da página e fecha com a linha laranja de 3px */
+  .info-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 6rem;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(var(--color-primary), var(--color-primary)) bottom / 100% 3px no-repeat,
+      linear-gradient(180deg, transparent, var(--color-dark-bg));
+  }
+
+  /* Bolhas (exceção aos cantos quadrados: bolha é bolha) */
+  .info-bubble {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--s);
+    height: var(--s);
+    z-index: -1;
+    border-radius: 9999px;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    background:
+      radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.7) 0 7%, transparent 8%),
+      radial-gradient(
+        circle at 50% 50%,
+        transparent 55%,
+        color-mix(in srgb, var(--color-secondary) 45%, transparent) 100%
+      ),
+      color-mix(in srgb, var(--color-secondary) 12%, transparent);
+    box-shadow: inset 0 -8px 14px rgb(255 255 255 / 0.12);
+    animation: info-bubble-float var(--d) ease-in-out infinite alternate;
+  }
+
+  /* Etiqueta pequena acima do título */
+  .info-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.8;
+  }
+
+  .info-eyebrow::before {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    background: var(--color-primary);
+  }
+
+  /* Card estilo janela Aero (usado no hero) */
+  .info-tile {
+    position: relative;
+    background:
+      linear-gradient(
+        180deg,
+        rgb(255 255 255 / 0.12) 0 50%,
+        rgb(255 255 255 / 0.04) 50% 100%
+      ),
+      color-mix(in srgb, var(--color-dark-bg) 60%, transparent);
+    border: 1px solid rgb(215 221 224 / 0.25);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      0 12px 28px rgb(3 6 14 / 0.4);
+  }
+
+  .info-tile::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  }
+
+  .info-tile__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.22) 0 50%,
+      rgb(255 255 255 / 0.06) 50% 100%
+    );
+    border-bottom: 1px solid rgb(215 221 224 / 0.2);
+  }
+
+  .info-tile__dots {
+    display: flex;
+    gap: 0.25rem;
+  }
+
+  .info-tile__dots i {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: rgb(215 221 224 / 0.35);
+  }
+
+  /* ==========================================================================
+     Linha do tempo: vertical no mobile, horizontal a partir de lg
+     ========================================================================== */
   .timeline {
     --marker: 1rem;
     --track: 3px;
@@ -97,7 +278,10 @@
     }
   }
 
-  /* FAQ: o ícone gira e a resposta entra com fade + deslize curto (só transform e opacity) */
+  /* ==========================================================================
+     FAQ: o ícone gira e a resposta entra com fade + deslize curto
+     (só transform e opacity)
+     ========================================================================== */
   .faq-icon {
     transition: transform 200ms ease-out;
   }
@@ -110,7 +294,14 @@
     animation: faq-reveal 200ms ease-out;
   }
 
+  /* ==========================================================================
+     Movimento reduzido
+     ========================================================================== */
   @media (prefers-reduced-motion: reduce) {
+    .info-bubble {
+      animation: none;
+    }
+
     .faq-icon {
       transition: none;
     }
@@ -125,5 +316,11 @@
   from {
     opacity: 0;
     transform: translateY(-0.5rem);
+  }
+}
+
+@keyframes info-bubble-float {
+  to {
+    transform: translateY(-18px);
   }
 }
