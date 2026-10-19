@@ -1,0 +1,31 @@
+{
+  "steps": [
+    {
+      "title": "Entre com o Google",
+      "description": "Faça login com sua conta Google. Cada conta tem uma cédula só."
+    },
+    {
+      "title": "Escolha os indicados",
+      "description": "Marque um indicado em cada categoria. As escolhas são salvas na hora, então dá para continuar depois."
+    },
+    {
+      "title": "Confirme a cédula",
+      "description": "Com todas as categorias preenchidas, confirme o voto. Depois disso, ele não muda mais."
+    },
+    {
+      "title": "Veja o resultado",
+      "description": "Os vencedores são revelados na cerimônia, ao vivo."
+    }
+  ],
+  "rules": [
+    "Um voto por categoria, com uma conta Google por pessoa.",
+    "A votação vai de 27 de novembro a 5 de dezembro, até 23h59 (horário de Brasília).",
+    "Só contam cédulas confirmadas: escolhas sem confirmação até o prazo ficam de fora.",
+    "Votos de contas falsas ou duplicadas são anulados."
+  ],
+  "cta": {
+    "upcoming": "Votação em breve",
+    "open": "Votar agora",
+    "closed": "Votação encerrada"
+  }
+}
