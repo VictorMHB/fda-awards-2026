@@ -1,0 +1,99 @@
+@layer components {
+  .nav-link {
+    position: relative;
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    /* Texto prateado com degradê */
+    color: transparent;
+    background-image: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #eef3f6 40%,
+      #b6c6d4 50%,
+      #dbe3e9 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    /* transition: filter 0.3s; */
+  }
+
+  /* Linha de 3px com degradê (no menu mobile ela fica no rótulo: ver nav-link--stacked) */
+  .nav-link::after,
+  .nav-link-label::after {
+    content: "";
+    position: absolute;
+    inset: auto 0.9rem 0 0.9rem; /* alinha com o texto, sem o padding */
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      #d88d5b 50%,
+      var(--color-primary) 100%
+    );
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  /* Separador vertical entre os links */
+  .nav-link + .nav-link::before {
+    content: "";
+    position: absolute;
+    left: -0.5rem; /* meio do gap-4 */
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: rgb(215 221 224 / 0.25);
+  }
+
+  /* Hover e ativo: texto laranja */
+  .nav-link:hover,
+  .nav-link--active {
+    background-image: linear-gradient(
+      180deg,
+      #fff8ef 0%,
+      #ffe2c6 30%,
+      var(--color-primary) 50%,
+      #f6b07c 100%
+    );
+  }
+
+  .nav-link:hover::after,
+  .nav-link--active::after,
+  .nav-link:hover .nav-link-label::after,
+  .nav-link--active .nav-link-label::after {
+    transform: scaleX(1);
+  }
+
+  /* Glow no hover (o mesmo da logo) */
+  .nav-link:hover {
+    filter: brightness(1.12) drop-shadow(0 0 10px rgba(250, 192, 147, 0.45));
+  }
+
+  /* Menu mobile: links em coluna, na largura toda e sem separador.
+     A linha sai do link e vai pro rótulo, pra continuar alinhada com o texto */
+  .nav-link--stacked {
+    display: block;
+    padding: 0.85rem 0;
+    font-size: 1.25rem;
+  }
+
+  .nav-link--stacked.nav-link::before,
+  .nav-link--stacked.nav-link::after {
+    content: none;
+  }
+
+  .nav-link-label {
+    position: relative;
+    display: inline-block;
+  }
+
+  .nav-link-label::after {
+    inset: auto 0 -0.5rem 0;
+  }
+}

@@ -1,5 +1,6 @@
 [
-  { "name": "Patrocinador 1", "tier": "diamond", "logo": "/sponsors/patrocinador-1.png", "url": "https://exemplo.com" },
+  { "name": "Patrocinador Master", "tier": "diamond", "logo": "/sponsors/patrocinador-1.png", "master": true },
+  { "name": "Patrocinador Main", "tier": "diamond", "logo": "/sponsors/patrocinador-1.png", "master": true },
   { "name": "Patrocinador 2", "tier": "gold", "logo": "/sponsors/patrocinador-2.png" },
   { "name": "Patrocinador 3", "tier": "silver" },
   { "name": "Patrocinador 4", "tier": "bronze" }

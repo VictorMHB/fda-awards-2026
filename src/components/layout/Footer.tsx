@@ -1,113 +1,152 @@
+import Image from "next/image";
 import Link from "next/link";
-import Marquee from "../ui/Marquee";
+import { NAV_LINKS } from "@/lib/nav";
+import { getMasterSponsors, type Sponsor } from "@/lib/sponsors";
 
-const CONTATO = {
-  email: "contato@fdaawards.com",
-  instagram: { label: "@fdaawards", href: "https://instagram.com/fdaawards" },
-  discord: { label: "Discord", href: "https://discord.gg/seu-convite" },
-  youtube: { label: "YouTube", href: "https://youtube.com/@fdaawards" },
-};
-
-const MAPA_SITE = [
-  { href: "/", label: "Home" },
-  { href: "/votacao", label: "Votação" },
-  { href: "/informacoes", label: "Informações" },
-  { href: "/sobre", label: "Sobre" },
+// Troque pelos canais oficiais (depois pode vir de src/data/contact.json)
+const CONTACTS = [
+  { label: "E-mail", href: "mailto:contato@exemplo.com" },
+  { label: "Instagram", href: "https://instagram.com/exemplo" },
+  { label: "Discord", href: "https://discord.gg/exemplo" },
 ];
 
-const ANO_ATUAL = new Date().getFullYear();
+function SponsorTile({ sponsor }: { sponsor: Sponsor }) {
+  const content = sponsor.logo ? (
+    <Image
+      src={sponsor.logo}
+      alt={sponsor.name}
+      fill
+      sizes="(min-width: 768px) 256px, 45vw"
+      className="object-contain p-4"
+    />
+  ) : (
+    <span className="px-3 text-center text-sm text-foreground/80">{sponsor.name}</span>
+  );
+
+  return sponsor.url ? (
+    <a
+      href={sponsor.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={sponsor.name}
+      className="footer-tile footer-tile--link"
+    >
+      {content}
+    </a>
+  ) : (
+    <div className="footer-tile">{content}</div>
+  );
+}
 
 export default function Footer() {
+  const masters = getMasterSponsors();
+
   return (
-    <footer className="glass-footer relative mt-24">
-      <Marquee text="SOU BURROW" />
-
-      <div className="mx-auto max-w-7xl px-6 py-14 md:px-10">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
-          {/* Bloco de identidade */}
-          <div className="md:col-span-2 text-left flex flex-col items-start">
-  <span className="font-display text-2xl text-primary md:text-3xl">
-    FDA <span className="text-foreground">AWARDS</span>
-  </span>
-  <p className="mt-4 max-w-sm text-base text-foreground/70 text-left">
-    Os melhores prêmios do ano. 5 anos de história.
-  </p>
-</div>
-
-          {/* Mapa do site */}
-          {/* <div>
-            <h3 className="text-sm font-bold uppercase tracking-widest text-primary">
-              Navegação
-            </h3>
-            <ul className="mt-4 flex flex-col gap-2.5">
-              {MAPA_SITE.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-base font-bold text-foreground/80 transition-colors hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
+    <footer className="site-footer">
+      {/* 1. Patrocinadores master */}
+      {masters.length > 0 && (
+        <section
+          aria-label="Patrocinadores master"
+          className="border-b border-foreground/15 px-6 py-8 md:py-10"
+        >
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <p className="footer-eyebrow">Apresentado por</p>
+            <ul className="grid w-full max-w-lg grid-cols-2 gap-3 md:gap-5">
+              {masters.map((sponsor) => (
+                <li key={sponsor.name}>
+                  <SponsorTile sponsor={sponsor} />
                 </li>
               ))}
             </ul>
-          </div> */}
+          </div>
+        </section>
+      )}
 
-          {/* Contato */}
-          {/* <div>
-            <h3 className="text-sm font-bold uppercase tracking-widest text-primary">
-              Contato
-            </h3>
-            <ul className="mt-4 flex flex-col gap-2.5">
-              <li>
-                <a
-                  href={`mailto:${CONTATO.email}`}
-                  className="text-base font-bold text-foreground/80 transition-colors hover:text-primary"
-                >
-                  {CONTATO.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={CONTATO.instagram.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base font-bold text-foreground/80 transition-colors hover:text-primary"
-                >
-                  {CONTATO.instagram.label}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={CONTATO.discord.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base font-bold text-foreground/80 transition-colors hover:text-primary"
-                >
-                  {CONTATO.discord.label}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={CONTATO.youtube.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base font-bold text-foreground/80 transition-colors hover:text-primary"
-                >
-                  {CONTATO.youtube.label}
-                </a>
-              </li>
-            </ul>
-          </div> */}
+      {/* 2. Corpo */}
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <Link href="/" aria-label="FDA Awards" className="group inline-block">
+            <span aria-hidden="true" className="logo-aero font-display text-2xl md:text-3xl">
+              <span className="logo-aero-word logo-aero-fda" data-l="FDA">
+                <span className="logo-aero-face">FDA</span>
+              </span>
+              <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
+                <span className="logo-aero-face">AWARDS</span>
+              </span>
+            </span>
+          </Link>
+          <p className="mt-5 max-w-xs text-sm text-foreground/70">
+            Reconhecendo acontecimentos, feitos e histórias do ano.
+          </p>
         </div>
 
-        {/* Expediente, estilo revista */}
-        <div className="mt-12 flex flex-col gap-3 border-t border-foreground/10 pt-6 text-sm text-foreground/60 md:flex-row md:items-center md:justify-between">
-          <p>
-            © {ANO_ATUAL}, FDA AWARDS. Todos os direitos reservados.
+        <nav aria-label="Rodapé">
+          <h2 className="footer-heading">01 / Navegação</h2>
+          <ul>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="footer-link">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div>
+          <h2 className="footer-heading">02 / Contato</h2>
+          <ul>
+            {CONTACTS.map((contact) => {
+              const external = contact.href.startsWith("http");
+              return (
+                <li key={contact.label}>
+                  <a
+                    href={contact.href}
+                    className="footer-link"
+                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  >
+                    {contact.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        {/* 03 / Legal: adicionar quando /privacidade e /termos existirem */}
+      </div>
+
+      {/* 3. Faixa técnica estilo embalagem Y2K */}
+      <div className="footer-strip">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-5">
+          <p className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <span>No.005 / 2026</span>
+            <span>Ver 5.0</span>
+            <span className="footer-status">System ready</span>
           </p>
-          <p>
-            Feito por <span className="font-bold text-foreground/80">Vermes Corp.</span>
+
+          <span aria-hidden="true" className="footer-barcode" />
+
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span>© 2026 FDA Awards · 5ª edição</span>
+            <span aria-hidden="true" lang="ja" className="opacity-60">
+              アワード
+            </span>
+            <a href="#" aria-label="Voltar ao topo" className="btn-aero footer-top">
+              <svg
+                aria-hidden="true"
+                width="1.1em"
+                height="1.1em"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="square"
+              >
+                <line x1="12" y1="19" x2="12" y2="5" />
+                <polyline points="5,12 12,5 19,12" />
+              </svg>
+            </a>
           </p>
         </div>
       </div>

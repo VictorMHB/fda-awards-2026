@@ -1,4 +1,3 @@
-import type { Tier } from "@/components/ui/AeroText";
 import data from "@/data/sponsors.json";
 
 export type Sponsor = {
@@ -6,7 +5,10 @@ export type Sponsor = {
   tier: Tier;
   logo?: string;
   url?: string;
+  master?: boolean;
 };
+
+export type Tier = "diamond" | "platinum" | "gold" | "silver" | "bronze";
 
 export const TIERS: { id: Tier; label: string }[] = [
   { id: "diamond", label: "Diamante" },
@@ -31,4 +33,8 @@ export function getSponsorsByTier() {
     ...tier,
     sponsors: sponsors.filter((s) => s.tier === tier.id),
   })).filter((group) => group.sponsors.length > 0);
+}
+
+export function getMasterSponsors() {
+  return sponsors.filter((s) => s.master).slice(0, 2);
 }
