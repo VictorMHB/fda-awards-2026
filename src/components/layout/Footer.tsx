@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { NAV_LINKS } from "@/lib/nav";
+import FooterStatus from "./FooterStatus";
 import { getMasterSponsors, type Sponsor } from "@/lib/sponsors";
 
 function SponsorTile({ sponsor }: { sponsor: Sponsor }) {
@@ -36,7 +36,7 @@ export default function Footer() {
 
   return (
     <footer className="site-footer">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-8 md:grid-cols-[1.4fr_1fr_1fr] md:py-10">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-8 md:flex-row md:items-start md:justify-between md:py-10">
         <div>
           <Link href="/" aria-label="FDA Awards" className="group inline-block">
             <span aria-hidden="true" className="logo-aero font-display text-2xl md:text-3xl">
@@ -48,28 +48,15 @@ export default function Footer() {
               </span>
             </span>
           </Link>
-          <p className="mt-4 max-w-xs text-sm text-foreground/70">
-            Reconhecendo acontecimentos, feitos e histórias do ano.
+          <p className="mt-4 max-w-sm text-sm text-foreground/70">
+            Há cinco anos reconhecendo histórias, feitos e pessoas. Vote e escolha os próximos vencedores dos maiores prêmios do ano.
           </p>
         </div>
 
-        <nav aria-label="Rodapé">
-          <h2 className="footer-heading">01 / Navegação</h2>
-          <ul>
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="footer-link">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
         {masters.length > 0 && (
-          <section aria-labelledby="footer-sponsors">
+          <section aria-labelledby="footer-sponsors" className="md:w-60">
             <h2 id="footer-sponsors" className="footer-heading">
-              02 / Apresentado por
+              01 / Apresentado por
             </h2>
             <ul className="flex max-w-60 flex-col gap-3">
               {masters.map((sponsor) => (
@@ -86,14 +73,13 @@ export default function Footer() {
       <div className="footer-strip">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-3">
           <p className="flex flex-wrap items-center gap-x-5 gap-y-1">
-            <span>No.005 / 2026</span>
-            <span>Ver 5.0</span>
-            <span className="footer-status">System ready</span>
+            <span>© 2026 FDA Awards - 5ª edição</span>
+            <FooterStatus />
           </p>
 
           <span aria-hidden="true" className="footer-barcode hidden md:block" />
 
-          <p>© 2026 FDA Awards · 5ª edição</p>
+          <p>Feito por Vermes Corp.</p>
         </div>
       </div>
     </footer>
