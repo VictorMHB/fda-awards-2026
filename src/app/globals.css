@@ -11,6 +11,9 @@
 @import "./styles/features/info.css";
 @import "./styles/components/marquee.css";
 
-@import "./styles/features/header-footer.css";
+@import "./styles/components/nav-link.css";
+@import "./styles/features/header.css";
+@import "./styles/features/mobile-menu.css";
+@import "./styles/features/footer.css";
 @import "./styles/features/notice-bar.css";
 @import "./styles/features/logo.css";
