@@ -1,0 +1,52 @@
+/* Painel decorativo do hero do Sobre */
+.about-panel {
+  position: relative;
+  min-height: 20rem;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background:
+    /* curvas de nível (duas "montanhas" sobrepostas) */
+    repeating-radial-gradient(
+      ellipse 70% 55% at 30% 35%,
+      transparent 0 22px,
+      color-mix(in srgb, var(--color-secondary) 45%, transparent) 22px 23px
+    ),
+    repeating-radial-gradient(
+      ellipse 60% 70% at 75% 70%,
+      transparent 0 26px,
+      color-mix(in srgb, var(--color-primary) 30%, transparent) 26px 27px
+    ),
+    /* vidro: metade de cima mais clara */
+    linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.1) 0 50%,
+      rgb(255 255 255 / 0.03) 50% 100%
+    );
+}
+
+/* Linha laranja de 3px */
+.about-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--color-primary);
+}
+
+/* Retícula no canto inferior direito */
+.about-panel::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  height: 55%;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-secondary) 60%, transparent) 1.5px,
+    transparent 2px
+  );
+  background-size: 9px 9px;
+  mask-image: linear-gradient(135deg, transparent 30%, #000);
+  pointer-events: none;
+}

@@ -1,6 +1,7 @@
 import type { ElementType } from "react";
 
-type AeroVariant = "silver" | "primary" | "aqua";
+export type Tier = "diamond" | "platinum" | "gold" | "silver" | "bronze";
+type AeroVariant = "ice" | "primary" | "aqua" | Tier;
 
 type AeroTextProps = {
   children: string;
@@ -12,7 +13,7 @@ type AeroTextProps = {
 
 export function AeroText({
   children,
-  variant = "silver",
+  variant = "ice",
   italic = false,
   as: Tag = "span",
   className = "",

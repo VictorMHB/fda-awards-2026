@@ -1,3 +1,4 @@
+import type { Tier } from "@/components/ui/AeroText";
 import data from "@/data/sponsors.json";
 
 export type Sponsor = {
@@ -5,10 +6,8 @@ export type Sponsor = {
   tier: Tier;
   logo?: string;
   url?: string;
-  master?: boolean;
+    master?: boolean;
 };
-
-export type Tier = "diamond" | "platinum" | "gold" | "silver" | "bronze";
 
 export const TIERS: { id: Tier; label: string }[] = [
   { id: "diamond", label: "Diamante" },
@@ -20,7 +19,6 @@ export const TIERS: { id: Tier; label: string }[] = [
 
 const sponsors = data as Sponsor[];
 
-// Um tier digitado errado no JSON faria o patrocinador sumir em silêncio
 const knownTiers = new Set<string>(TIERS.map((t) => t.id));
 for (const s of sponsors) {
   if (!knownTiers.has(s.tier)) {
