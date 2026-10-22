@@ -1,0 +1,25 @@
+[
+  {
+    "type": "email",
+    "name": "E-mail",
+    "handle": "contato@fdaawards.com"
+  },
+  {
+    "type": "instagram",
+    "name": "Instagram",
+    "handle": "@fdaawards",
+    "url": "https://instagram.com/fdaawards"
+  },
+  {
+    "type": "discord",
+    "name": "Discord",
+    "handle": "Servidor da comunidade",
+    "url": "https://discord.gg/seu-convite"
+  },
+  {
+    "type": "youtube",
+    "name": "YouTube",
+    "handle": "@fdaawards",
+    "url": "https://youtube.com/@fdaawards"
+  }
+]

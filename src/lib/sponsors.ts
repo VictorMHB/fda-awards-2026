@@ -6,6 +6,7 @@ export type Sponsor = {
   tier: Tier;
   logo?: string;
   url?: string;
+    master?: boolean;
 };
 
 export const TIERS: { id: Tier; label: string }[] = [
@@ -18,7 +19,6 @@ export const TIERS: { id: Tier; label: string }[] = [
 
 const sponsors = data as Sponsor[];
 
-// Um tier digitado errado no JSON faria o patrocinador sumir em silêncio
 const knownTiers = new Set<string>(TIERS.map((t) => t.id));
 for (const s of sponsors) {
   if (!knownTiers.has(s.tier)) {
@@ -31,4 +31,8 @@ export function getSponsorsByTier() {
     ...tier,
     sponsors: sponsors.filter((s) => s.tier === tier.id),
   })).filter((group) => group.sponsors.length > 0);
+}
+
+export function getMasterSponsors() {
+  return sponsors.filter((s) => s.master).slice(0, 2);
 }

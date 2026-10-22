@@ -103,7 +103,7 @@ export default function Countdown() {
               <span className="mt-1 block text-xs font-bold uppercase tracking-wider text-foreground/70 md:text-sm">
                 {label}
               </span>
-              <span className="absolute inset-x-0 bottom-0 h-[3px] bg-primary" />
+              <span className="absolute inset-x-0 bottom-0 h-0.75 bg-primary" />
             </div>
           );
         })}
