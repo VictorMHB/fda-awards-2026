@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "@/lib/firebase/client";
 import { useAuth } from "@/context/AuthContext";
 import { Votante } from "@/types/voto";
 import { toast } from "sonner";

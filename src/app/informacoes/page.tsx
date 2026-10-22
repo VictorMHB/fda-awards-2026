@@ -27,8 +27,6 @@ export default function InfoPage() {
 
       {/* 5. Contato */}
       <ContactSection />
-
-      <Footer />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminAuth, getAdminDb } from "@/lib/firebase-admin";
-import { getPhase } from "@/lib/phases";
+import { getAdminAuth, getAdminDb } from "@/lib/firebase/admin";
+import { getPhase } from "@/lib/content/phases";
 import { Categoria, Votante } from "@/types/voto";
 
 export async function POST(request: NextRequest) {

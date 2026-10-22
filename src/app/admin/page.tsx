@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { requireAdmin } from "@/lib/admin";
+import { requireAdmin } from "@/lib/auth/admin";
 import AdminClient from "./AdminClient";
 
 export default async function AdminPage() {

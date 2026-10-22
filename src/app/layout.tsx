@@ -6,6 +6,7 @@ import OfflineToast from "@/components/feedback/OfflineToast";
 import Header from "@/components/layout/Header";
 import AlertBanner from "@/components/feedback/AlertBanner";
 import { Metadata } from "next";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "FDA Awards 2026",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </AuthProvider>
         <Toaster richColors position="top-center" />
         <OfflineToast />
+        <Footer />
       </body>
     </html>
   );

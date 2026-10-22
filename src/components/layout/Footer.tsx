@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import FooterStatus from "./FooterStatus";
-import { getMasterSponsors, type Sponsor } from "@/lib/sponsors";
+import { getMasterSponsors, type Sponsor } from "@/lib/content/sponsors";
 
 function SponsorTile({ sponsor }: { sponsor: Sponsor }) {
   const content = sponsor.logo ? (

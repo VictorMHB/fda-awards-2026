@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getServerUser } from "@/lib/session";
+import { getServerUser } from "@/lib/auth/session";
 import VotacaoClient from "./VotacaoClient";
 
 export default async function VotacaoPage() {

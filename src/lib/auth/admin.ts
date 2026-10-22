@@ -1,4 +1,4 @@
-import { getServerUser } from "@/lib/session";
+import { getServerUser } from "@/lib/auth/session";
 
 export async function requireAdmin() {
   const user = await getServerUser();

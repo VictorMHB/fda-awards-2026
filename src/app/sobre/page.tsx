@@ -111,8 +111,6 @@ export default function AboutPage() {
 
       {/* 4. Patrocinadores */}
       <SponsorsSection />
-
-      <Footer />
     </main>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useId, useState } from "react";
 import { Plus } from "pixelarticons/react";
-import type { FaqEntry } from "@/lib/faq";
+import type { FaqEntry } from "@/lib/content/faq";
 
 export default function FaqItem({ question, answer }: FaqEntry) {
   const [open, setOpen] = useState(false);

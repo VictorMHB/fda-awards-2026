@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useAgora } from "@/hooks/useAgora";
-import { getPhase } from "@/lib/phases";
-import { getVotingCtaLabel } from "@/lib/voting";
+import { getPhase } from "@/lib/content/phases";
+import { getVotingCtaLabel } from "@/lib/services/voting";
 
 export default function VotingCta() {
   const agora = useAgora();

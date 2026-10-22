@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FirebaseError } from "firebase/app";
 import { signInWithPopup, signOut, User } from "firebase/auth";
 import { toast } from "sonner";
-import { auth, googleProvider } from "@/lib/firebase";
+import { auth, googleProvider } from "@/lib/firebase/client";
 
 const errosDeCancelamento = new Set(["auth/popup-closed-by-user", "auth/cancelled-popup-request"]);
 

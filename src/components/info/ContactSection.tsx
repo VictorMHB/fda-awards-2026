@@ -1,7 +1,7 @@
 import type { ComponentType, SVGProps } from "react";
 import { Discord, Instagram, Link as LinkIcon, Mail, Youtube } from "pixelarticons/react";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getContactChannels, NEW_TAB_HINT, type ContactType } from "@/lib/contact";
+import { getContactChannels, NEW_TAB_HINT, type ContactType } from "@/lib/services/contact";
 
 const ICONS: Record<ContactType, ComponentType<SVGProps<SVGSVGElement>>> = {
   email: Mail,

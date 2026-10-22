@@ -1,7 +1,30 @@
 [
   { "name": "Cativeiro", "tier": "diamond", "logo": "/sponsors/cativeiro.png", "master": true },
   { "name": "Logika", "tier": "diamond", "logo": "/sponsors/logika.png", "master": true },
-  { "name": "Patrocinador 2", "tier": "gold", "logo": "/sponsors/patrocinador-2.png" },
-  { "name": "Patrocinador 3", "tier": "silver" },
-  { "name": "Patrocinador 4", "tier": "bronze" }
+
+  { "name": "Solomon Studios", "tier": "platinum" },
+  { "name": "Hillebrande Enterprise", "tier": "platinum" },
+  { "name": "Vermes Corp", "tier": "platinum" },
+
+  { "name": "Armarinhos Romane", "tier": "gold" },
+  { "name": "Bunker Pub", "tier": "gold" },
+  { "name": "Olive Studios", "tier": "gold" },
+  { "name": "X-Brain Desenvolvimento", "tier": "gold" },
+  { "name": "Levita", "tier": "gold" },
+  
+  { "name": "Cismus LTDA", "tier": "silver" },
+  { "name": "INSA Cambé", "tier": "silver" },
+  { "name": "Medicina UFPR", "tier": "silver" },
+  { "name": "Origin Academia NF", "tier": "silver" },
+  { "name": "Rolls", "tier": "silver" },
+  { "name": "SENAI", "tier": "silver" },
+
+
+  { "name": "Batalha do RU", "tier": "bronze" },
+  { "name": "DI Esports", "tier": "bronze" },
+  { "name": "Grupo Ry", "tier": "bronze" },
+  { "name": "Panificadora Tupãssi", "tier": "bronze" },
+  { "name": "Pivata's Sushi", "tier": "bronze" },
+  { "name": "UniFil", "tier": "bronze" },
+  { "name": "Valentino Bar", "tier": "bronze" }
 ]

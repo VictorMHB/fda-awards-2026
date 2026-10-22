@@ -1,7 +1,7 @@
 import type { ComponentType, CSSProperties, SVGProps } from "react";
 import { Calendar, Clock, MapPin } from "pixelarticons/react";
 import { AeroText } from "@/components/ui/AeroText";
-import { getEventDetails, type EventDetail } from "@/lib/event";
+import { getEventDetails, type EventDetail } from "@/lib/content/event";
 
 const ICONS: Record<EventDetail["id"], ComponentType<SVGProps<SVGSVGElement>>> = {
   date: Calendar,

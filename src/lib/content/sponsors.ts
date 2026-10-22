@@ -6,7 +6,7 @@ export type Sponsor = {
   tier: Tier;
   logo?: string;
   url?: string;
-    master?: boolean;
+  master?: boolean;
 };
 
 export const TIERS: { id: Tier; label: string }[] = [

@@ -1,4 +1,4 @@
-import type { PhaseId } from "@/lib/phases";
+import type { PhaseId } from "@/lib/content/phases";
 import data from "@/data/timeline.json";
 
 export type TimelineStep = {

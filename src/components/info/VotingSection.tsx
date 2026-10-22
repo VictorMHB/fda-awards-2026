@@ -1,5 +1,5 @@
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getVotingRules, getVotingSteps } from "@/lib/voting";
+import { getVotingRules, getVotingSteps } from "@/lib/services/voting";
 import VotingCta from "./VotingCta";
 
 export default function VotingSection() {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { getPhase, type PhaseId } from "@/lib/phases";
+import { getPhase, type PhaseId } from "@/lib/content/phases";
 
 const STATUS_LABEL: Record<PhaseId, string> = {
   aguardando: "System loading",

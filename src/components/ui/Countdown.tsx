@@ -1,7 +1,7 @@
 "use client";
 
 import { useAgora } from "@/hooks/useAgora";
-import { DATAS, LINK_TRANSMISSAO, PROXIMA_EDICAO, formatarData, getPhase } from "@/lib/phases";
+import { DATAS, LINK_TRANSMISSAO, PROXIMA_EDICAO, formatarData, getPhase } from "@/lib/content/phases";
 
 const ALVO_SHOW = new Date(DATAS.showInicio).getTime();
 

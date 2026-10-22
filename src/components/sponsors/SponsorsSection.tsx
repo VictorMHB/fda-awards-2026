@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { AeroText, type Tier } from "@/components/ui/AeroText";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getSponsorsByTier, type Sponsor } from "@/lib/sponsors";
+import { getSponsorsByTier, type Sponsor } from "@/lib/content/sponsors";
 
 // Classes escritas por inteiro, senão o Tailwind não as gera
 const TIER_STYLES: Record<Tier, { border: string; grid: string; card: string }> = {

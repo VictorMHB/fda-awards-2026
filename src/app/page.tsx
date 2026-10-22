@@ -94,8 +94,6 @@ export default function Home() {
           <NavMap />
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }
