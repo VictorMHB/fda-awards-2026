@@ -10,7 +10,7 @@ function SponsorTile({ sponsor }: { sponsor: Sponsor }) {
       alt={sponsor.name}
       fill
       sizes="240px"
-      className="object-contain p-3"
+      className="object-contain p-2"
     />
   ) : (
     <span className="px-3 text-center text-sm text-foreground/80">{sponsor.name}</span>

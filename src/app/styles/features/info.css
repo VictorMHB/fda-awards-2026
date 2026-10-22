@@ -130,7 +130,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
-    font-family: ui-monospace, "Courier New", monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;

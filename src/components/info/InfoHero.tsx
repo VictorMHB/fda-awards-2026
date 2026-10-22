@@ -46,9 +46,6 @@ export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
         <AeroText as="h1" className="mt-4 block text-5xl md:text-7xl">
           Informações
         </AeroText>
-        <p className="mt-5 max-w-2xl text-base text-foreground/75 md:text-lg">
-          Quando e onde acontece, como votar e a quem recorrer se surgir alguma dúvida.
-        </p>
 
         <ul className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
           {details.map(({ id, label, value, note }) => {
