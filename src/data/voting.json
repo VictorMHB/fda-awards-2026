@@ -27,5 +27,36 @@
     "upcoming": "Votação em breve",
     "open": "Votar agora",
     "closed": "Votação encerrada"
+  },
+  "hero": {
+    "title": "Votação",
+    "subtitle": "Escolha seus indicados e ajude a coroar os melhores do ano."
+  },
+  "states": {
+    "upcoming": {
+      "label": "Status",
+      "title": "Votação em breve",
+      "description": "A votação abre em {date}."
+    },
+    "login": {
+      "label": "Status",
+      "title": "Votação aberta",
+      "description": "Entre com sua conta Google para montar sua cédula.",
+      "action": "Entrar com Google"
+    },
+    "ready": {
+      "label": "Status",
+      "title": "Votação aberta",
+      "description": "Olá{name}! Sua cédula está esperando por você.",
+      "action": "Começar a votar"
+    },
+    "closed": {
+      "label": "Status",
+      "title": "Votação encerrada",
+      "description": "Obrigado a quem votou. Os vencedores são revelados na cerimônia."
+    }
+  },
+  "notices": {
+    "login": "Entre com sua conta Google para votar."
   }
 }

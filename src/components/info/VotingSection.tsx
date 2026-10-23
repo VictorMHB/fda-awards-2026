@@ -2,7 +2,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { getVotingRules, getVotingSteps } from "@/lib/services/voting";
 import VotingCta from "./VotingCta";
 
-export default function VotingSection() {
+export default function VotingSection({ showCta = true }: { showCta?: boolean }) {
   return (
     <section id="voting" className="px-6 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -35,7 +35,7 @@ export default function VotingSection() {
               ))}
             </ul>
           </div>
-          <VotingCta />
+          {showCta && <VotingCta />}
         </div>
       </div>
     </section>
