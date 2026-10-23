@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Mais votos em um indicado",
+    "value": null,
+    "detail": "Nome · edição"
+  },
+  {
+    "label": "Mais vitórias",
+    "value": null,
+    "detail": "Nome"
+  },
+  {
+    "label": "Vitória mais apertada",
+    "value": null,
+    "detail": "Categoria · edição"
+  }
+]
