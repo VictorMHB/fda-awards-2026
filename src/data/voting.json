@@ -27,5 +27,43 @@
     "upcoming": "Votação em breve",
     "open": "Votar agora",
     "closed": "Votação encerrada"
+  },
+  "hero": {
+    "eyebrow": "FDA Awards 2026 · Votação",
+    "titleTop": "Categorias",
+    "titleHighlight": "& Votação",
+    "subtitle": "Confira abaixo como votar, todas as categorias do prêmio e o acesso à votação."
+  },
+  "states": {
+    "upcoming": {
+      "label": "Status",
+      "title": "Votação em breve",
+      "description": "A votação ainda não abriu. Volte em breve para montar sua cédula."
+    },
+    "login": {
+      "label": "Status",
+      "title": "Votação aberta",
+      "description": "Entre com sua conta Google para montar sua cédula.",
+      "action": "Entrar com Google"
+    },
+    "ready": {
+      "label": "Status",
+      "title": "Votação aberta",
+      "description": "Olá{name}! Sua cédula está esperando por você.",
+      "action": "Começar a votar"
+    },
+    "closed": {
+      "label": "Status",
+      "title": "Votação encerrada",
+      "description": "Obrigado a quem votou. Os vencedores são revelados na cerimônia."
+    }
+  },
+  "categories": {
+    "title": "Categorias em disputa",
+    "description": "Estas são as categorias desta edição. Os indicados você vê na hora de votar.",
+    "empty": "As categorias serão reveladas em breve."
+  },
+  "notices": {
+    "login": "Entre com sua conta Google para votar."
   }
 }
