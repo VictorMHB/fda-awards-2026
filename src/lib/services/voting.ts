@@ -1,21 +1,11 @@
-import { DATAS, formatarData, type PhaseId } from "@/lib/content/phases";
+import type { PhaseId } from "@/lib/content/phases";
 import data from "@/data/voting.json";
-
 
 export type VotingState = "upcoming" | "login" | "ready" | "closed";
 
 export type VotingStep = {
   title: string;
   description: string;
-};
-
-type VotingInfo = {
-  hero: { title: string; subtitle: string };
-  states: Record<VotingState, VotingStateContent>;
-  notices: { login: string };
-  steps: VotingStep[];
-  rules: string[];
-  cta: { upcoming: string; open: string; closed: string };
 };
 
 type VotingStateContent = {
@@ -25,7 +15,22 @@ type VotingStateContent = {
   action?: string;
 };
 
-const voting = data as VotingInfo;
+type VotingInfo = {
+  hero: {
+    eyebrow: string;
+    titleTop: string;
+    titleHighlight: string;
+    subtitle: string;
+  };
+  states: Record<VotingState, VotingStateContent>;
+  notices: { login: string };
+  categories: { title: string; description: string; empty: string };
+  steps: VotingStep[];
+  rules: string[];
+  cta: { upcoming: string; open: string; closed: string };
+};
+
+const voting = data satisfies VotingInfo;
 
 export function getVotingSteps() {
   return voting.steps;
@@ -50,12 +55,12 @@ export function getVotingState(phase: PhaseId, loggedIn: boolean): VotingState {
 
 export function getVotingStateContent(state: VotingState, firstName?: string) {
   const content = voting.states[state];
-  const opensAt = formatarData(new Date(DATAS.votacaoAbre).getTime());
   return {
     ...content,
-    description: content.description
-      .replace("{date}", opensAt)
-      .replace("{name}", firstName ? `, ${firstName}` : ""),
+    description: content.description.replace(
+      "{name}",
+      firstName ? `, ${firstName}` : "",
+    ),
   };
 }
 
@@ -65,4 +70,8 @@ export function getVotingHero() {
 
 export function getVotingNotice(reason?: string) {
   return reason === "login" ? voting.notices.login : null;
+}
+
+export function getVotingCategoriesContent() {
+  return voting.categories;
 }

@@ -109,26 +109,29 @@
      AeroText: contorno + degradê (títulos de seção)
      ========================================================================== */
   .text-aero {
-    --aero-stroke: #0b1430;
-    --aero-stroke-width: 0.14em;
+  --aero-stroke: #0b1430;
+  --aero-stroke-width: 0.14em;
+  --aero-bleed: 0.3em; /* quanto o preenchimento passa da caixa, em cima e embaixo */
 
-    position: relative;
-    display: inline-block;
-    line-height: 1.15;
-    color: var(--aero-stroke);
-    -webkit-text-stroke: var(--aero-stroke-width) var(--aero-stroke);
-  }
+  position: relative;
+  display: inline-block;
+  line-height: 1.2;
+  color: var(--aero-stroke);
+  -webkit-text-stroke: var(--aero-stroke-width) var(--aero-stroke);
+}
 
-  .text-aero::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    -webkit-text-stroke: 0;
-    color: transparent;
-    background: var(--aero-fill);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
+/* O preenchimento cresce pra fora, e o padding devolve o texto ao mesmo lugar */
+.text-aero::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: calc(-1 * var(--aero-bleed)) -0.1em;
+  padding: var(--aero-bleed) 0.1em;
+  -webkit-text-stroke: 0;
+  color: transparent;
+  background: var(--aero-fill);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
 
   .text-aero--italic {
     transform: skewX(-8deg);
