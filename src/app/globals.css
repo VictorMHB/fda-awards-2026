@@ -18,5 +18,7 @@
 @import "./styles/features/notice-bar.css";
 @import "./styles/features/logo.css";
 @import "./styles/features/about.css";
-@import "./styles/features/vote-hero.css";
-@import "./styles/features/about-hero.css";
+
+@import "./styles/features/heros/vote-hero.css";
+@import "./styles/features/heros/about-hero.css";
+@import "./styles/features/heros/home-hero.css";
