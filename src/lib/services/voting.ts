@@ -53,7 +53,10 @@ export function getVotingState(phase: PhaseId, loggedIn: boolean): VotingState {
   return "closed";
 }
 
-export function getVotingStateContent(state: VotingState, firstName?: string) {
+export function getVotingStateContent(
+  state: VotingState, 
+  firstName?: string
+): VotingStateContent {
   const content = voting.states[state];
   return {
     ...content,
