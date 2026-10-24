@@ -1,0 +1,103 @@
+@layer components {
+  .about-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  /* Céu: azul mais claro no topo, brilho laranja discreto embaixo à esquerda */
+  .about-hero__sky {
+    position: absolute;
+    inset: 0;
+    z-index: -6;
+    background:
+      radial-gradient(
+        ellipse 65% 55% at 50% 0%,
+        color-mix(in srgb, var(--color-secondary) 42%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 45% 45% at 5% 100%,
+        color-mix(in srgb, var(--color-primary) 16%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(180deg, var(--color-background) 0%, var(--color-dark-bg) 100%);
+  }
+
+  /* Nuvens: três manchas brancas suaves sobrepostas, sem animação */
+  .about-cloud {
+    position: absolute;
+    z-index: -5;
+    pointer-events: none;
+    width: var(--w);
+    height: calc(var(--w) * 0.32);
+    left: var(--x);
+    top: var(--y);
+    background:
+      radial-gradient(ellipse 40% 55% at 28% 62%, rgb(255 255 255 / 0.1), transparent 70%),
+      radial-gradient(ellipse 36% 70% at 52% 42%, rgb(255 255 255 / 0.13), transparent 70%),
+      radial-gradient(ellipse 40% 52% at 74% 64%, rgb(255 255 255 / 0.09), transparent 70%);
+  }
+
+  /* Colinas (as "montanhas"): elipses com a borda de cima iluminada.
+     Altura em rem, para a parte visível não depender da altura do hero */
+  .about-swoosh {
+    position: absolute;
+    z-index: -4;
+    border-radius: 50%;
+    pointer-events: none;
+    height: 18rem;
+  }
+
+  .about-swoosh--a {
+    left: -25%;
+    bottom: -10rem;
+    width: 150%;
+    transform: rotate(-5deg);
+    border-top: 2px solid rgb(255 255 255 / 0.28);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-secondary) 26%, transparent),
+      transparent 65%
+    );
+  }
+
+  .about-swoosh--b {
+    left: -10%;
+    bottom: -12rem;
+    width: 130%;
+    transform: rotate(4deg);
+    border-top: 2px solid color-mix(in srgb, var(--color-primary) 45%, transparent);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-primary) 10%, transparent),
+      transparent 60%
+    );
+  }
+
+  /* Pontilhado só nos cantos de cima, mais fraco */
+  .about-hero__dots {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 55%;
+    z-index: -3;
+    pointer-events: none;
+    opacity: 0.22;
+    background-image: radial-gradient(circle, rgb(255 255 255 / 0.4) 1.5px, transparent 2px);
+    background-size: 10px 10px;
+    mask-image:
+      radial-gradient(circle at 0 0, #000, transparent 55%),
+      radial-gradient(circle at 100% 0, #000, transparent 55%);
+  }
+
+  /* Fecha com a linha laranja de 3px */
+  .about-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    z-index: 1;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    pointer-events: none;
+  }
+}
