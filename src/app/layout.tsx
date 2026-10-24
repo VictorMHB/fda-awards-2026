@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import AlertBanner from "@/components/feedback/AlertBanner";
 import { Metadata } from "next";
 import Footer from "@/components/layout/Footer";
+import SiteBackground from "@/components/layout/SiteBackground";
 
 export const metadata: Metadata = {
   title: "FDA Awards 2026",
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body className={`${krona.variable} ${workSans.variable} ${shareTechMono.variable} antialiased bg-dark-bg text-foreground`}>
+        <SiteBackground />
         <AuthProvider>
           <Header />
           <div className="pt-24 md:pt-28">

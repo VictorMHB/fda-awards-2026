@@ -1,9 +1,15 @@
 @layer components {
   .home-hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-  }
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Base opaca: esconde o fundo global dentro do hero */
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-background) 88%, var(--color-dark-bg)) 0%,
+    var(--color-dark-bg) 100%
+  );
+}
 
   /* Imagem de fundo, esmaecendo para baixo */
   .home-hero__photo {

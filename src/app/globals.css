@@ -2,6 +2,7 @@
 
 @import "./styles/core/theme.css";
 @import "./styles/core/base.css";
+@import "./styles/core/background.css";
 
 @import "./styles/components/glass.css";
 @import "./styles/components/solids.css";
