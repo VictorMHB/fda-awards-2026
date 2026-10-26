@@ -40,7 +40,7 @@ export default function NavMapa() {
       titulo: "Categorias",
       descricao: "Explore todas as categorias e veja os indicados ao FDA AWARDS.",
       cta: "Explorar",
-      href: "/categorias",
+      href: "/votacao#categories",
       icone: <Sparkle width={32} height={32} className="pixel-icon" />,
     },
     {
@@ -48,7 +48,7 @@ export default function NavMapa() {
       titulo: "Patrocinadores",
       descricao: "Conheça as empresas que tornam o FDA AWARDS possível todos os anos.",
       cta: "Conhecer",
-      href: "/patrocinadores",
+      href: "/sobre#sponsors",
       icone: <Briefcase width={32} height={32} className="pixel-icon" />,
     },
     {
@@ -63,38 +63,45 @@ export default function NavMapa() {
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-      {itens.map((item) => (
+      {itens.map((item, i) => (
         <Card
           key={item.id}
           as={Link}
           href={item.href}
-          variant="feature"
+          variant="window"
+          title={`No.${String(i + 1).padStart(2, "0")}`}
           interactive
-          className={`min-h-[13rem] p-5 md:min-h-[15rem] md:p-7 ${
+          className={`flex min-h-[12rem] flex-col md:min-h-[14rem] ${
             item.destaque ? "border-primary/60" : ""
           }`}
         >
-          <div className="flex items-start justify-between">
-            <span className="btn-aero flex h-12 w-12 items-center justify-center text-dark-bg md:h-14 md:w-14">
-              {item.icone}
-            </span>
-            {item.tag && (
-              <span className="bg-primary px-2.5 py-1 text-xs uppercase tracking-wider text-dark-bg font-pixel">
-                {item.tag}
+          {/* Brilho diagonal do hover (opt-in) */}
+          <span aria-hidden="true" className="card__shine" />
+
+          <div className="flex flex-1 flex-col gap-4 p-5 md:p-7">
+            <div className="flex items-center gap-4">
+              <span className="btn-aero flex h-12 w-12 shrink-0 items-center justify-center text-dark-bg md:h-14 md:w-14">
+                {item.icone}
               </span>
-            )}
+              <h3 className="min-w-0 font-display text-xl uppercase leading-snug text-foreground md:text-2xl">
+                {item.titulo}
+              </h3>
+              {item.tag && (
+                <span className="ml-auto shrink-0 bg-primary px-2.5 py-1 font-pixel text-xs uppercase tracking-wider text-dark-bg">
+                  {item.tag}
+                </span>
+              )}
+            </div>
+
+            <p className="flex-1 text-sm text-foreground/70 md:text-base">
+              {item.descricao}
+            </p>
+
+            <span className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-primary">
+              {item.cta}
+              <span aria-hidden="true" className="card__arrow">→</span>
+            </span>
           </div>
-
-          <h3 className="font-display text-xl uppercase leading-snug text-foreground md:text-2xl">
-            {item.titulo}
-          </h3>
-          <p className="flex-1 text-sm text-foreground/70 md:text-base">
-            {item.descricao}
-          </p>
-
-          <span className="mt-1 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-primary">
-            {item.cta} →
-          </span>
         </Card>
       ))}
     </div>

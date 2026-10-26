@@ -145,6 +145,58 @@
   .card--tier-silver   { --card-tier: var(--color-tier-silver); }
   .card--tier-bronze   { --card-tier: var(--color-tier-bronze); }
 
+    /* ==========================================================================
+     Brilho diagonal (opt-in): um <span className="card__shine" /> dentro do card.
+     Parado fora do card, só corre no hover/foco. O overflow:hidden fica no
+     span, e não no card, pra não cortar a borda laranja (inset: -1px).
+     ========================================================================== */
+  .card__shine {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .card__shine::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 35%,
+      rgb(255 255 255 / 0.16) 50%,
+      transparent 65%
+    );
+    transform: translateX(-120%);
+  }
+
+  .card__arrow {
+    display: inline-block;
+    transition: transform 200ms ease-out;
+  }
+
+  /* A transição só existe no hover: ao sair, o brilho volta direto, sem varrer de volta */
+  .card--interactive:focus-visible .card__shine::before {
+    transform: translateX(120%);
+    transition: transform 800ms ease-out;
+  }
+
+  .card--interactive:focus-visible .card__arrow {
+    transform: translateX(4px);
+  }
+
+  @media (hover: hover) {
+    .card--interactive:hover .card__shine::before {
+      transform: translateX(120%);
+      transition: transform 800ms ease-out;
+    }
+
+    .card--interactive:hover .card__arrow {
+      transform: translateX(4px);
+    }
+  }
+
   /* ==========================================================================
      Movimento reduzido: sem hover animado (a borda laranja continua)
      ========================================================================== */
@@ -155,6 +207,19 @@
     }
 
     .card--interactive:hover {
+      transform: none;
+    }
+
+        .card__shine {
+      display: none;
+    }
+
+    .card__arrow {
+      transition: none;
+    }
+
+    .card--interactive:hover .card__arrow,
+    .card--interactive:focus-visible .card__arrow {
       transform: none;
     }
   }
