@@ -1,5 +1,6 @@
 "use client";
 
+import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useCategorias } from "@/hooks/useCategorias";
 
@@ -20,16 +21,16 @@ export default function CategoriesSection({ title, description, empty }: Props) 
             ))}
           </ul>
         ) : categorias.length === 0 ? (
-          <p className="glass info-card p-6 text-foreground/80">{empty}</p>
+          <Card as="p" className="p-6 text-foreground/80">{empty}</Card>
         ) : (
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {categorias.map((category, index) => (
-              <li key={category.id} className="glass info-card flex items-center gap-4 p-5">
-                <span aria-hidden="true" className="font-display text-2xl text-primary">
+              <Card key={category.id} as="li" className="flex items-center gap-4 p-5">
+                <span aria-hidden="true" className="shrink-0 font-display text-2xl text-primary">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="font-bold text-foreground">{category.nome}</span>
-              </li>
+              </Card>
             ))}
           </ul>
         )}

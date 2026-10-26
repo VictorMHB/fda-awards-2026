@@ -86,7 +86,7 @@ export default async function VotingPage({
           />
         ))}
 
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
             <p className="inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.25em] text-foreground/70">
               <span aria-hidden="true" className="size-2 bg-primary" />
@@ -124,19 +124,7 @@ export default async function VotingPage({
             )}
           </div>
 
-          <div className="vote-window">
-            <div className="vote-window__bar">
-              <span>Status</span>
-              <span className="vote-window__dots" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
-            </div>
-            <div className="p-5 pb-6 md:p-6 md:pb-7">
-              <VotingStatus state={state} firstName={firstName} />
-            </div>
-          </div>
+          <VotingStatus state={state} firstName={firstName} />
         </div>
       </section>
 
