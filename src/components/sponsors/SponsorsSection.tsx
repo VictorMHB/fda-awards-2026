@@ -1,20 +1,20 @@
 import Image from "next/image";
 import { AeroText, type Tier } from "@/components/ui/AeroText";
+import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getSponsorsByTier, type Sponsor } from "@/lib/content/sponsors";
 
 // Classes escritas por inteiro, senão o Tailwind não as gera
-const TIER_STYLES: Record<Tier, { border: string; grid: string; card: string }> = {
-  diamond:  { border: "border-tier-diamond/60",  grid: "grid-cols-1 sm:grid-cols-2",                   card: "h-44" },
-  platinum: { border: "border-tier-platinum/60", grid: "grid-cols-2 lg:grid-cols-3",                   card: "h-36" },
-  gold:     { border: "border-tier-gold/60",     grid: "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",    card: "h-32" },
-  silver:   { border: "border-tier-silver/60",   grid: "grid-cols-2 md:grid-cols-4 lg:grid-cols-5",    card: "h-28" },
-  bronze:   { border: "border-tier-bronze/60",   grid: "grid-cols-3 md:grid-cols-5 lg:grid-cols-6",    card: "h-24" },
+const TIER_STYLES: Record<Tier, { grid: string; card: string }> = {
+  diamond:  { grid: "grid-cols-1 sm:grid-cols-2",                   card: "h-44" },
+  platinum: { grid: "grid-cols-2 lg:grid-cols-3",                   card: "h-36" },
+  gold:     { grid: "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",    card: "h-32" },
+  silver:   { grid: "grid-cols-2 md:grid-cols-4 lg:grid-cols-5",    card: "h-28" },
+  bronze:   { grid: "grid-cols-3 md:grid-cols-5 lg:grid-cols-6",    card: "h-24" },
 };
 
 function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
-  const { border, card } = TIER_STYLES[sponsor.tier];
-  const className = `glass relative flex items-center justify-center border-t-2 p-3 text-center text-sm text-foreground/80 ${card} ${border}`;
+  const className = `flex items-center justify-center p-3 text-center text-sm text-foreground/90 ${TIER_STYLES[sponsor.tier].card}`;
 
   const content = sponsor.logo ? (
     <Image
@@ -25,20 +25,27 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
       className="object-contain p-4"
     />
   ) : (
-    <span>{sponsor.name}</span>
+    // Card estreito (bronze no celular): nome longo quebra com hífen
+    <span className="hyphens-auto">{sponsor.name}</span>
   );
 
   return sponsor.url ? (
-    <a
+    <Card
+      as="a"
       href={sponsor.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${className} transition-transform hover:-translate-y-1`}
+      variant="tier"
+      tier={sponsor.tier}
+      interactive
+      className={className}
     >
       {content}
-    </a>
+    </Card>
   ) : (
-    <div className={className}>{content}</div>
+    <Card variant="tier" tier={sponsor.tier} className={className}>
+      {content}
+    </Card>
   );
 }
 
