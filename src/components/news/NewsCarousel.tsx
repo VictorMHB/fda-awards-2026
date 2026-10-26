@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Card from "@/components/ui/Card";
 
 type Noticia = {
   id: string;
@@ -55,15 +56,17 @@ export default function NewsCarousel() {
 
   return (
   <div className="relative">
+    {/* O scroll corta o que passa da borda: pb-10 dá espaço para a sombra dos cards e -mb-6 devolve o espaçamento */}
     <div
       ref={trackRef}
-      className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-4 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
+      className="-mb-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-10 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
     >
       {NOTICIAS.map((n) => (
-        <article
+        <Card
           key={n.id}
+          as="article"
           data-card
-          className="glass group relative flex min-h-92 w-[78vw] shrink-0 snap-start flex-col overflow-hidden sm:w-88 md:min-h-104 md:w-[24rem] lg:w-104"
+          className="flex min-h-92 w-[78vw] shrink-0 snap-start flex-col sm:w-88 md:min-h-104 md:w-[24rem] lg:w-104"
         >
           {/* Capa placeholder */}
           <div className="relative h-44 w-full overflow-hidden bg-linear-to-br from-secondary/40 via-background to-dark-bg md:h-52">
@@ -77,7 +80,7 @@ export default function NewsCarousel() {
           </div>
 
           <div className="flex flex-1 flex-col gap-2 p-5 md:p-6">
-            <span className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
+            <span className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
               {n.data}
             </span>
             <h3 className="font-display text-lg leading-snug text-foreground md:text-xl">
@@ -86,13 +89,11 @@ export default function NewsCarousel() {
             <p className="flex-1 text-sm text-foreground/70 md:text-base">
               {n.resumo}
             </p>
-            <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-primary transition-transform duration-300 group-hover:translate-x-1">
+            <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-primary">
               Ler mais →
             </span>
           </div>
-
-          <span className="absolute inset-x-0 bottom-0 h-0.75 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
-        </article>
+        </Card>
       ))}
     </div>
 
