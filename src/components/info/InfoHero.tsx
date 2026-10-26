@@ -1,6 +1,7 @@
 import type { ComponentType, CSSProperties, SVGProps } from "react";
 import { Calendar, Clock, MapPin } from "pixelarticons/react";
 import { AeroText } from "@/components/ui/AeroText";
+import Card from "@/components/ui/Card";
 import { getEventDetails, type EventDetail } from "@/lib/content/event";
 
 const ICONS: Record<EventDetail["id"], ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -51,25 +52,21 @@ export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
           {details.map(({ id, label, value, note }) => {
             const Icon = ICONS[id];
             return (
-              <li key={id} className="info-tile">
-                <div className="info-tile__bar">
-                  <span>{label}</span>
-                  <span className="info-tile__dots" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </span>
-                </div>
+              // Fundo mais opaco: o céu do hero é a parte mais clara do site e apagava o rótulo
+              <Card key={id} as="li" variant="window" title={label} className="[--card-bg-alpha:85%]">
                 <div className="flex items-center gap-5 p-5 pb-6 lg:p-7 lg:pb-8">
                   <span className="btn-aero flex h-12 w-12 shrink-0 items-center justify-center text-dark-bg md:h-14 md:w-14">
                     <Icon aria-hidden="true" width={28} height={28} />
                   </span>
                   <div>
-                    <p className="font-display text-lg text-balance text-foreground md:text-xl">{value}</p>
-                    {note && <p className="mt-1 text-sm text-foreground/60">{note}</p>}
+                    <p className="font-display text-lg text-balance text-foreground md:text-xl">
+                      <span className="sr-only">{label}: </span>
+                      {value}
+                    </p>
+                    {note && <p className="mt-1 text-sm text-foreground/70">{note}</p>}
                   </div>
                 </div>
-              </li>
+              </Card>
             );
           })}
         </ul>

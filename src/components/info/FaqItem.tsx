@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { Plus } from "pixelarticons/react";
+import Card from "@/components/ui/Card";
 import type { FaqEntry } from "@/lib/content/faq";
 
 export default function FaqItem({ question, answer }: FaqEntry) {
@@ -11,7 +12,7 @@ export default function FaqItem({ question, answer }: FaqEntry) {
   const answerId = `${id}-answer`;
 
   return (
-    <div className="glass info-card">
+    <Card>
       <h3>
         <button
           type="button"
@@ -37,6 +38,6 @@ export default function FaqItem({ question, answer }: FaqEntry) {
       >
         {answer}
       </div>
-    </div>
+    </Card>
   );
 }
