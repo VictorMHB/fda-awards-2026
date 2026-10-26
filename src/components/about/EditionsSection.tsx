@@ -1,3 +1,4 @@
+import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getEditions } from "@/lib/content/editions";
 
@@ -12,11 +13,11 @@ export default function EditionsSection() {
 
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {getEditions().map((edition) => (
-            <li key={edition.year} className="glass p-6">
+            <Card key={edition.year} as="li" className="p-6">
               <span className="font-display text-2xl text-primary">{edition.year}</span>
               <h3 className="mt-2 text-lg font-bold text-foreground">{edition.title}</h3>
               <p className="mt-2 text-sm text-foreground/70">{edition.description}</p>
-            </li>
+            </Card>
           ))}
         </ul>
       </div>
