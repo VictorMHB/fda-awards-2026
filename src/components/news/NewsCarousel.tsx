@@ -1,50 +1,20 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
+import Image from "next/image";
 import Card from "@/components/ui/Card";
+import NewsModal, { type NewsModalHandle } from "@/components/news/NewsModal";
+import type { NewsItem } from "@/lib/content/news";
 
-type Noticia = {
-  id: string;
-  tag: string;
-  data: string;
-  titulo: string;
-  resumo: string;
+// Como a página manda cada notícia: sem o Markdown cru, com a data por extenso e o texto já renderizado
+export type NewsCardData = Omit<NewsItem, "content"> & {
+  dateLabel: string;
+  body: ReactNode;
 };
 
-// PLACEHOLDER
-const NOTICIAS: Noticia[] = [
-  {
-    id: "1",
-    tag: "Anúncio",
-    data: "10 nov",
-    titulo: "Como funciona a votação deste ano",
-    resumo: "Entenda as categorias, os critérios de elegibilidade e como confirmar seu voto.",
-  },
-  {
-    id: "2",
-    tag: "Bastidores",
-    data: "3 nov",
-    titulo: "5 anos de FDA Awards",
-    resumo: "Um resumo de como a premiação começou e o que mudou a cada edição.",
-  },
-  {
-    id: "3",
-    tag: "Evento",
-    data: "28 out",
-    titulo: "O que esperar da festa de encerramento",
-    resumo: "Data, formato e as novidades da edição de 2026, incluindo a transmissão.",
-  },
-  {
-    id: "4",
-    tag: "Comunidade",
-    data: "20 out",
-    titulo: "Quem pode indicar e votar",
-    resumo: "As regras de participação e como garantir que seu voto seja contabilizado.",
-  },
-];
-
-export default function NewsCarousel() {
+export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<NewsModalHandle>(null);
 
   const scrollBy = (dir: 1 | -1) => {
     const el = trackRef.current;
@@ -54,68 +24,104 @@ export default function NewsCarousel() {
     el.scrollBy({ left: dir * amount, behavior: "smooth" });
   };
 
+  if (news.length === 0) {
+    return <p className="text-base text-foreground/70">Nenhuma notícia por enquanto.</p>;
+  }
+
   return (
-  <div className="relative">
-    {/* O scroll corta o que passa da borda: pb-10 dá espaço para a sombra dos cards e -mb-6 devolve o espaçamento */}
-    <div
-      ref={trackRef}
-      className="-mb-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-10 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
-    >
-      {NOTICIAS.map((n) => (
-        <Card
-          key={n.id}
-          as="article"
-          data-card
-          className="flex min-h-92 w-[78vw] shrink-0 snap-start flex-col sm:w-88 md:min-h-104 md:w-[24rem] lg:w-104"
+    <div className="relative">
+      {/* O scroll corta o que passa da borda: pb-10 dá espaço para a sombra dos cards e -mb-6 devolve o espaçamento */}
+      <div
+        ref={trackRef}
+        className="-mb-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-10 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
+      >
+        {news.map((item) => (
+          <Card
+            key={item.slug}
+            as="article"
+            data-card
+            interactive
+            className="flex min-h-92 w-[78vw] shrink-0 snap-start flex-col sm:w-88 md:min-h-104 md:w-[24rem] lg:w-104"
+          >
+            {/* Brilho diagonal do hover (opt-in) */}
+            <span aria-hidden="true" className="card__shine" />
+
+            <div className="relative h-44 w-full overflow-hidden bg-linear-to-br from-secondary/40 via-background to-dark-bg md:h-52">
+              {item.cover ? (
+                <Image
+                  src={item.cover}
+                  alt={item.coverAlt ?? ""}
+                  fill
+                  sizes="(min-width: 1024px) 416px, (min-width: 768px) 384px, (min-width: 640px) 352px, 78vw"
+                  className="object-cover"
+                />
+              ) : (
+                // Sem capa, fica a retícula
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 text-foreground opacity-30 bg-[radial-gradient(currentColor_1.5px,transparent_1.5px)] bg-size-[14px_14px]"
+                />
+              )}
+              {item.category && (
+                <span className="absolute left-3 top-3 bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
+                  {item.category}
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-1 flex-col gap-2 p-5 md:p-6">
+              <time
+                dateTime={item.date}
+                className="text-xs font-semibold uppercase tracking-wider text-foreground/80"
+              >
+                {item.dateLabel}
+              </time>
+              <h3 className="font-display text-lg leading-snug text-foreground md:text-xl">
+                {/* O ::after do card__trigger cobre o card: o clique vale no card inteiro */}
+                <button
+                  type="button"
+                  onClick={(e) => modalRef.current?.open(item, e.currentTarget)}
+                  className="card__trigger"
+                >
+                  {item.title}
+                </button>
+              </h3>
+              <p className="flex-1 text-sm text-foreground/70 md:text-base">
+                {item.excerpt}
+              </p>
+              <span
+                aria-hidden="true"
+                className="mt-2 inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-primary"
+              >
+                Ler mais
+                <span className="card__arrow">→</span>
+              </span>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      {/* Setas — desktop; no celular o scroll é por toque */}
+      <div className="mt-4 hidden justify-end gap-2 md:flex">
+        <button
+          onClick={() => scrollBy(-1)}
+          aria-label="Notícia anterior"
+          className="glass flex h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary"
         >
-          {/* Capa placeholder */}
-          <div className="relative h-44 w-full overflow-hidden bg-linear-to-br from-secondary/40 via-background to-dark-bg md:h-52">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 text-foreground opacity-30 bg-[radial-gradient(currentColor_1.5px,transparent_1.5px)] bg-size-[14px_14px]"
-            />
-            <span className="absolute left-3 top-3 bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
-              {n.tag}
-            </span>
-          </div>
+          <ArrowIcon flipped />
+        </button>
+        <button
+          onClick={() => scrollBy(1)}
+          aria-label="Próxima notícia"
+          className="glass flex h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary"
+        >
+          <ArrowIcon />
+        </button>
+      </div>
 
-          <div className="flex flex-1 flex-col gap-2 p-5 md:p-6">
-            <span className="text-xs font-semibold uppercase tracking-wider text-foreground/80">
-              {n.data}
-            </span>
-            <h3 className="font-display text-lg leading-snug text-foreground md:text-xl">
-              {n.titulo}
-            </h3>
-            <p className="flex-1 text-sm text-foreground/70 md:text-base">
-              {n.resumo}
-            </p>
-            <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-primary">
-              Ler mais →
-            </span>
-          </div>
-        </Card>
-      ))}
+      <NewsModal ref={modalRef} />
     </div>
-
-    {/* Setas — desktop; no celular o scroll é por toque */}
-    <div className="mt-4 hidden justify-end gap-2 md:flex">
-      <button
-        onClick={() => scrollBy(-1)}
-        aria-label="Notícia anterior"
-        className="glass flex h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary"
-      >
-        <ArrowIcon flipped />
-      </button>
-      <button
-        onClick={() => scrollBy(1)}
-        aria-label="Próxima notícia"
-        className="glass flex h-10 w-10 items-center justify-center text-foreground transition-colors hover:text-primary"
-      >
-        <ArrowIcon />
-      </button>
-    </div>
-  </div>
-);
+  );
 }
 
 function ArrowIcon({ flipped = false }: { flipped?: boolean }) {

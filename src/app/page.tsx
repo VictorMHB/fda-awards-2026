@@ -2,11 +2,20 @@ import GlassShapes from "@/components/ui/GlassShapes";
 import Countdown from "@/components/ui/Countdown";
 import Marquee from "@/components/ui/Marquee";
 import NewsCarousel from "@/components/news/NewsCarousel";
+import NewsBody from "@/components/news/NewsBody";
 import NavMap from "@/components/layout/NavMap";
 import { AeroText } from "@/components/ui/AeroText";
 import HomeHero from "@/components/home/HomeHero";
+import { formatNewsDate, getAllNews } from "@/lib/content/news";
 
 export default function Home() {
+  // Os .md de src/content/news são lidos aqui, no servidor. O texto já vai renderizado para o carrossel
+  const news = getAllNews().map(({ content, ...item }) => ({
+    ...item,
+    dateLabel: formatNewsDate(item.date),
+    body: <NewsBody markdown={content} />,
+  }));
+
   return (
     <main>
       {/* 1. Hero — reservado pro troféu girando */}
@@ -74,7 +83,7 @@ export default function Home() {
             de encerramento.
           </p>
           <div className="mt-8">
-            <NewsCarousel />
+            <NewsCarousel news={news} />
           </div>
         </div>
       </section>
