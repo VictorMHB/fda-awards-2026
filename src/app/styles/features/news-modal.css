@@ -1,4 +1,5 @@
 @layer components {
+
   /* ==========================================================================
      Modal da notícia (<dialog>). A janela é um Card window; o dialog só
      posiciona, anima e escurece o fundo. A posição é dele, e não a do :modal
@@ -9,17 +10,13 @@
     --news-modal-gap: 0.5rem;
 
     position: fixed;
-    inset: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
-      env(safe-area-inset-left);
-    z-index: 60; /* acima do header (z-50) enquanto a saída anima */
-    width: min(
-      56rem,
-      100% - 2 * var(--news-modal-gap) - env(safe-area-inset-left) - env(safe-area-inset-right)
-    );
+    inset: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    z-index: 60;
+    /* acima do header (z-50) enquanto a saída anima */
+    width: min(56rem,
+        100% - 2 * var(--news-modal-gap) - env(safe-area-inset-left) - env(safe-area-inset-right));
     max-width: none;
-    max-height: calc(
-      100dvh - 2 * var(--news-modal-gap) - env(safe-area-inset-top) - env(safe-area-inset-bottom)
-    );
+    max-height: calc(100dvh - 2 * var(--news-modal-gap) - env(safe-area-inset-top) - env(safe-area-inset-bottom));
     margin: auto;
     padding: 0;
     overflow: visible;
@@ -131,8 +128,23 @@
 
   /* Janela estreita demais para a barra inteira (texto em 200% no celular):
      sobra só o Fechar, para ele nunca sair da tela */
+  /* Janela do modal: fundo opaco, navy escuro com nebulosas fracas.
+     Opaco para nada da página aparecer atrás do texto, e sem o brilho
+     do meio do .card, que numa janela alta vira uma faixa no texto */
   .news-modal .card {
     container-type: inline-size;
+    --card-bg-alpha: 100%;
+    background:
+      radial-gradient(ellipse 60% 45% at 10% 6%,
+        color-mix(in srgb, var(--color-secondary) 20%, transparent),
+        transparent 70%),
+      radial-gradient(ellipse 45% 40% at 94% 52%,
+        color-mix(in srgb, var(--color-primary) 8%, transparent),
+        transparent 70%),
+      radial-gradient(ellipse 65% 40% at 38% 104%,
+        color-mix(in srgb, var(--color-secondary) 15%, transparent),
+        transparent 70%),
+      color-mix(in srgb, var(--color-dark-bg) 90%, black);
   }
 
   @container (max-width: 18rem) {
@@ -160,6 +172,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+
     .news-modal,
     .news-modal::backdrop {
       transition: none;
@@ -182,7 +195,7 @@
     }
   }
 
-  .news-prose > * + * {
+  .news-prose>*+* {
     margin-top: 1.25em;
   }
 
@@ -194,11 +207,11 @@
     color: var(--color-foreground);
   }
 
-  .news-prose :is(h3, h4) + * {
+  .news-prose :is(h3, h4)+* {
     margin-top: 0.75em;
   }
 
-  .news-prose > :first-child {
+  .news-prose> :first-child {
     margin-top: 0;
   }
 
@@ -241,7 +254,7 @@
     list-style: decimal;
   }
 
-  .news-prose li + li {
+  .news-prose li+li {
     margin-top: 0.5em;
   }
 
