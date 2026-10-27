@@ -3,7 +3,8 @@
 import { useRef, type ReactNode } from "react";
 import Image from "next/image";
 import Card from "@/components/ui/Card";
-import NewsModal, { type NewsModalHandle } from "@/components/news/NewsModal";
+import NewsModal from "@/components/news/NewsModal";
+import { clearNewsSlug, pushNewsSlug, useNewsSlug } from "@/hooks/useNewsSlug";
 import type { NewsItem } from "@/lib/content/news";
 
 // Como a página manda cada notícia: sem o Markdown cru, com a data por extenso e o texto já renderizado
@@ -14,7 +15,18 @@ export type NewsCardData = Omit<NewsItem, "content"> & {
 
 export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<NewsModalHandle>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  // A URL decide qual notícia está aberta. Slug que não existe (ou de rascunho) é ignorado
+  const slug = useNewsSlug();
+  const openNews = news.find((item) => item.slug === slug) ?? null;
+
+  const closeNews = () => {
+    clearNewsSlug();
+    // O navegador devolve o foco ao card sozinho, mas nem todos (no Safari, o clique não foca o botão)
+    triggerRef.current?.focus();
+    triggerRef.current = null;
+  };
 
   const scrollBy = (dir: 1 | -1) => {
     const el = trackRef.current;
@@ -80,7 +92,10 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
                 {/* O ::after do card__trigger cobre o card: o clique vale no card inteiro */}
                 <button
                   type="button"
-                  onClick={(e) => modalRef.current?.open(item, e.currentTarget)}
+                  onClick={(e) => {
+                    triggerRef.current = e.currentTarget;
+                    pushNewsSlug(item.slug);
+                  }}
                   className="card__trigger"
                 >
                   {item.title}
@@ -119,7 +134,7 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
         </button>
       </div>
 
-      <NewsModal ref={modalRef} />
+      <NewsModal news={openNews} onClose={closeNews} />
     </div>
   );
 }
