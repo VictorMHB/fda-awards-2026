@@ -1,39 +1,41 @@
 "use client";
 
-import { useId, useImperativeHandle, useRef, useState, type Ref } from "react";
-import { flushSync } from "react-dom";
+import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { Close } from "pixelarticons/react";
 import Card from "@/components/ui/Card";
 import type { NewsCardData } from "@/components/news/NewsCarousel";
 
-export type NewsModalHandle = {
-  open: (news: NewsCardData, trigger: HTMLElement) => void;
+type NewsModalProps = {
+  news: NewsCardData | null; // notícia aberta agora (vem da URL); null fecha
+  onClose: () => void; // o <dialog> fechou: Esc, Fechar, clique no fundo ou voltar do navegador
 };
 
-// Um <dialog> para todas as notícias: o carrossel chama open() no clique do card.
-// O showModal() já cuida do foco, do Esc e de deixar o resto da página inerte
-export default function NewsModal({ ref }: { ref: Ref<NewsModalHandle> }) {
+// Um <dialog> para todas as notícias. O showModal() já cuida do foco, do Esc
+// e de deixar o resto da página inerte
+export default function NewsModal({ news, onClose }: NewsModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLElement | null>(null);
   const pressedBackdrop = useRef(false);
-  const [news, setNews] = useState<NewsCardData | null>(null);
   const titleId = useId();
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      open(item, trigger) {
-        triggerRef.current = trigger;
-        // Troca o conteúdo antes de abrir: o modal já aparece com a notícia certa
-        flushSync(() => setNews(item));
-        dialogRef.current?.showModal();
-        scrollRef.current?.scrollTo(0, 0);
-      },
-    }),
-    [],
-  );
+  // A última notícia aberta continua na janela enquanto a saída anima
+  const [shown, setShown] = useState(news);
+  if (news && news !== shown) setShown(news);
+
+  // Abre, troca ou fecha o <dialog> conforme a notícia. Sem setState aqui:
+  // o conteúdo já foi renderizado, o efeito só mexe no elemento
+  const openSlug = news?.slug ?? null;
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (!openSlug) {
+      if (dialog.open) dialog.close();
+      return;
+    }
+    if (!dialog.open) dialog.showModal();
+    scrollRef.current?.scrollTo(0, 0); // toda notícia aberta começa do topo
+  }, [openSlug]);
 
   const close = () => dialogRef.current?.close();
 
@@ -42,8 +44,7 @@ export default function NewsModal({ ref }: { ref: Ref<NewsModalHandle> }) {
       ref={dialogRef}
       aria-labelledby={titleId}
       className="news-modal"
-      // O navegador devolve o foco ao card sozinho, mas nem todos (no Safari, o clique não foca o botão)
-      onClose={() => triggerRef.current?.focus()}
+      onClose={onClose}
       // Clique no fundo fecha. Conferir o pointerdown evita fechar quando a pessoa
       // seleciona o texto e solta o mouse fora da janela
       onPointerDown={(e) => {
@@ -53,7 +54,7 @@ export default function NewsModal({ ref }: { ref: Ref<NewsModalHandle> }) {
         if (pressedBackdrop.current && e.target === e.currentTarget) close();
       }}
     >
-      {news && (
+      {shown && (
         <Card
           variant="window"
           title="Notícia"
@@ -73,11 +74,11 @@ export default function NewsModal({ ref }: { ref: Ref<NewsModalHandle> }) {
             tabIndex={0}
             className="news-modal__scroll"
           >
-            {news.cover && (
+            {shown.cover && (
               <div className="relative aspect-video max-h-[45dvh] w-full">
                 <Image
-                  src={news.cover}
-                  alt={news.coverAlt ?? ""}
+                  src={shown.cover}
+                  alt={shown.coverAlt ?? ""}
                   fill
                   sizes="(min-width: 944px) 896px, 100vw"
                   className="object-cover"
@@ -88,16 +89,16 @@ export default function NewsModal({ ref }: { ref: Ref<NewsModalHandle> }) {
             {/* Coluna de leitura: no desktop, a linha passaria de 90 caracteres na largura toda */}
             <div className="mx-auto max-w-3xl px-5 pt-6 pb-10 md:px-10 md:pt-8 md:pb-12">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                {news.category && (
+                {shown.category && (
                   <span className="bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
-                    {news.category}
+                    {shown.category}
                   </span>
                 )}
                 <time
-                  dateTime={news.date}
+                  dateTime={shown.date}
                   className="text-xs font-semibold uppercase tracking-wider text-foreground/80"
                 >
-                  {news.dateLabel}
+                  {shown.dateLabel}
                 </time>
               </div>
 
@@ -105,10 +106,10 @@ export default function NewsModal({ ref }: { ref: Ref<NewsModalHandle> }) {
                 id={titleId}
                 className="mt-4 font-display text-xl leading-snug text-foreground sm:text-2xl md:text-3xl"
               >
-                {news.title}
+                {shown.title}
               </h2>
 
-              <div className="mt-6">{news.body}</div>
+              <div className="mt-6">{shown.body}</div>
             </div>
           </div>
         </Card>

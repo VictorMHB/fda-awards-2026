@@ -54,6 +54,10 @@ Qualquer campo fora dessa lista faz o build falhar. Assim, um `drafts: true` dig
 - O slug só pode ter letras minúsculas, números e hífens, sem acento e sem espaço.
 - Duas notícias não podem ter o mesmo slug.
 
+## Link para uma notícia
+
+Toda notícia tem um link que abre a Home com ela já aberta: `/?news=<slug>`, por exemplo `/?news=indicados-anunciados`. É o mesmo endereço que aparece no navegador quando alguém clica no card, então dá para copiar de lá e compartilhar. Um link com slug que não existe (ou de uma notícia em rascunho) abre a Home normal, sem modal.
+
 ## Capa
 
 - Cada notícia com capa tem uma pasta com o slug dela: `public/news/<slug>/cover.webp`.
