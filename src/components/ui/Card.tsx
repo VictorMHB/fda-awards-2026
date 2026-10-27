@@ -6,6 +6,7 @@ export type CardVariant = "default" | "window" | "feature" | "stat" | "tier";
 type CardOwnProps<T extends ElementType> = {
   variant?: CardVariant;
   title?: string; // rótulo da barra (variante window)
+  barAction?: ReactNode; // botão no fim da barra, ex.: Fechar (variante window)
   tier?: Tier; // variante tier
   interactive?: boolean; // liga o hover (card clicável)
   as?: T; // "li", "article", "a"...
@@ -20,6 +21,7 @@ type CardProps<T extends ElementType> = CardOwnProps<T> &
 export default function Card<T extends ElementType = "div">({
   variant = "default",
   title,
+  barAction,
   tier,
   interactive = false,
   as,
@@ -41,15 +43,16 @@ export default function Card<T extends ElementType = "div">({
 
   return (
     <Tag className={classes} {...props}>
-      {/* Barra decorativa: se o rótulo importar, o conteúdo repete ele em texto acessível */}
+      {/* Rótulo e quadradinhos são decorativos: se o rótulo importar, o conteúdo repete ele em texto acessível */}
       {variant === "window" && (
-        <div aria-hidden="true" className="card__bar">
-          <span>{title}</span>
-          <span className="card__dots">
+        <div className="card__bar">
+          <span aria-hidden="true" className="card__label">{title}</span>
+          <span aria-hidden="true" className="card__dots">
             <i />
             <i />
             <i />
           </span>
+          {barAction}
         </div>
       )}
       {children}

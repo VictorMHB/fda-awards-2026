@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import Image from "next/image";
 import Card from "@/components/ui/Card";
+import NewsModal, { type NewsModalHandle } from "@/components/news/NewsModal";
 import type { NewsItem } from "@/lib/content/news";
 
 // Como a página manda cada notícia: sem o Markdown cru, com a data por extenso e o texto já renderizado
@@ -13,6 +14,7 @@ export type NewsCardData = Omit<NewsItem, "content"> & {
 
 export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<NewsModalHandle>(null);
 
   const scrollBy = (dir: 1 | -1) => {
     const el = trackRef.current;
@@ -38,8 +40,12 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
             key={item.slug}
             as="article"
             data-card
+            interactive
             className="flex min-h-92 w-[78vw] shrink-0 snap-start flex-col sm:w-88 md:min-h-104 md:w-[24rem] lg:w-104"
           >
+            {/* Brilho diagonal do hover (opt-in) */}
+            <span aria-hidden="true" className="card__shine" />
+
             <div className="relative h-44 w-full overflow-hidden bg-linear-to-br from-secondary/40 via-background to-dark-bg md:h-52">
               {item.cover ? (
                 <Image
@@ -71,13 +77,24 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
                 {item.dateLabel}
               </time>
               <h3 className="font-display text-lg leading-snug text-foreground md:text-xl">
-                {item.title}
+                {/* O ::after do card__trigger cobre o card: o clique vale no card inteiro */}
+                <button
+                  type="button"
+                  onClick={(e) => modalRef.current?.open(item, e.currentTarget)}
+                  className="card__trigger"
+                >
+                  {item.title}
+                </button>
               </h3>
               <p className="flex-1 text-sm text-foreground/70 md:text-base">
                 {item.excerpt}
               </p>
-              <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-primary">
-                Ler mais →
+              <span
+                aria-hidden="true"
+                className="mt-2 inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-primary"
+              >
+                Ler mais
+                <span className="card__arrow">→</span>
               </span>
             </div>
           </Card>
@@ -101,6 +118,8 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
           <ArrowIcon />
         </button>
       </div>
+
+      <NewsModal ref={modalRef} />
     </div>
   );
 }

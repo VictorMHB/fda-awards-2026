@@ -1,0 +1,273 @@
+@layer components {
+  /* ==========================================================================
+     Modal da notícia (<dialog>). A janela é um Card window; o dialog só
+     posiciona, anima e escurece o fundo. A posição é dele, e não a do :modal
+     do navegador, para a saída animar no lugar: no navegador sem `overlay`,
+     o dialog sai da camada de cima antes do fade acabar.
+     ========================================================================== */
+  .news-modal {
+    --news-modal-gap: 0.5rem;
+
+    position: fixed;
+    inset: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+    z-index: 60; /* acima do header (z-50) enquanto a saída anima */
+    width: min(
+      56rem,
+      100% - 2 * var(--news-modal-gap) - env(safe-area-inset-left) - env(safe-area-inset-right)
+    );
+    max-width: none;
+    max-height: calc(
+      100dvh - 2 * var(--news-modal-gap) - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
+    margin: auto;
+    padding: 0;
+    overflow: visible;
+    color: inherit;
+    background: transparent;
+    border: 0;
+
+    /* Entra e sai com fade e um deslize curto: só opacity e transform animam */
+    opacity: 0;
+    transform: translateY(1rem);
+    transition:
+      opacity 200ms ease-in,
+      transform 200ms ease-in,
+      overlay 200ms ease-in allow-discrete,
+      display 200ms ease-in allow-discrete;
+  }
+
+  .news-modal[open] {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: none;
+    transition-timing-function: ease-out;
+  }
+
+  @starting-style {
+    .news-modal[open] {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+  }
+
+  /* Celular: quase tela cheia. Daqui para cima, mais respiro em volta */
+  @media (min-width: 40rem) {
+    .news-modal {
+      --news-modal-gap: 1.5rem;
+    }
+  }
+
+  /* Fundo: o navy do tema translúcido. Sem backdrop-filter, que pesa no celular.
+     A cor sai resolvida no build (inline) porque, no Safari antes do 17.4 (iOS 16
+     dos iPhone 8 e X), o ::backdrop não enxerga as variáveis do tema */
+  .news-modal::backdrop {
+    background: --theme(--color-dark-bg / 80% inline);
+    opacity: 0;
+    transition:
+      opacity 200ms ease-in,
+      overlay 200ms ease-in allow-discrete,
+      display 200ms ease-in allow-discrete;
+  }
+
+  .news-modal[open]::backdrop {
+    opacity: 1;
+    transition-timing-function: ease-out;
+  }
+
+  @starting-style {
+    .news-modal[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  /* Página parada com o modal aberto. O gutter estável guarda o lugar da
+     barra de rolagem, para o site não pular para o lado ao abrir */
+  html:has(.news-modal[open]) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+
+  /* A barra da janela cresce até a altura do Fechar, que tem 44px de área de toque */
+  .news-modal .card__bar {
+    padding-block: 0;
+    padding-inline-end: 0;
+  }
+
+  /* Com texto grande em tela estreita, o rótulo (decorativo) corta com reticências
+     em vez de quebrar letra por letra e esticar a barra */
+  .news-modal .card__label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .news-modal__close {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    align-self: stretch;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1rem;
+    white-space: nowrap;
+    text-transform: inherit;
+    color: var(--color-foreground);
+    border-left: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
+    cursor: pointer;
+  }
+
+  .news-modal__close:hover {
+    color: var(--color-dark-bg);
+    background: var(--color-primary);
+  }
+
+  .news-modal__close:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+
+  /* Janela estreita demais para a barra inteira (texto em 200% no celular):
+     sobra só o Fechar, para ele nunca sair da tela */
+  .news-modal .card {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 18rem) {
+    .news-modal :is(.card__label, .card__dots) {
+      display: none;
+    }
+
+    .news-modal__close {
+      margin-inline-start: auto;
+    }
+  }
+
+  /* Só o texto rola, e a rolagem não passa para a página de trás */
+  .news-modal__scroll {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-foreground) 35%, transparent) transparent;
+  }
+
+  .news-modal__scroll:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .news-modal,
+    .news-modal::backdrop {
+      transition: none;
+    }
+  }
+
+  /* ==========================================================================
+     Texto da notícia (Markdown). O preflight do Tailwind zera margens,
+     tamanhos e marcadores de lista, então o texto corrido ganha os seus aqui.
+     ========================================================================== */
+  .news-prose {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: color-mix(in srgb, var(--color-foreground) 90%, transparent);
+  }
+
+  @media (min-width: 48rem) {
+    .news-prose {
+      font-size: 1.0625rem;
+    }
+  }
+
+  .news-prose > * + * {
+    margin-top: 1.25em;
+  }
+
+  .news-prose :is(h3, h4) {
+    margin-top: 2em;
+    font-family: var(--font-krona), "Arial Black", Impact, sans-serif;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--color-foreground);
+  }
+
+  .news-prose :is(h3, h4) + * {
+    margin-top: 0.75em;
+  }
+
+  .news-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .news-prose h3 {
+    font-size: 1.15em;
+  }
+
+  .news-prose h4 {
+    font-size: 1em;
+  }
+
+  .news-prose strong {
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+
+  .news-prose a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .news-prose a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .news-prose a:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .news-prose ul {
+    padding-left: 1.25em;
+    list-style: square;
+  }
+
+  .news-prose ol {
+    padding-left: 1.5em;
+    list-style: decimal;
+  }
+
+  .news-prose li + li {
+    margin-top: 0.5em;
+  }
+
+  .news-prose li::marker {
+    color: var(--color-primary);
+  }
+
+  .news-prose blockquote {
+    padding-left: 1em;
+    font-style: italic;
+    border-left: 3px solid var(--color-primary);
+  }
+
+  .news-prose code {
+    padding: 0.1em 0.35em;
+    font-family: var(--font-share-tech-mono), ui-monospace, monospace;
+    font-size: 0.9em;
+    background: color-mix(in srgb, var(--color-foreground) 12%, transparent);
+  }
+
+  .news-prose hr {
+    border-top: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
+  }
+
+  .news-prose img {
+    max-width: 100%;
+    height: auto;
+  }
+}

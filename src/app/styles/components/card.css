@@ -54,13 +54,35 @@
     pointer-events: none;
   }
 
-  .card--interactive:focus-visible {
+  .card--interactive:focus-visible,
+  .card--interactive:has(.card__trigger:focus-visible) {
     outline: 2px solid var(--color-primary);
     outline-offset: 4px;
   }
 
-  .card--interactive:focus-visible::before {
+  .card--interactive:focus-visible::before,
+  .card--interactive:has(.card__trigger:focus-visible)::before {
     opacity: 1;
+  }
+
+  /* ==========================================================================
+     Gatilho: botão dentro do card (ex.: o título da notícia, num <h3>) que
+     abre alguma coisa. O ::after dele cobre o card todo, então o clique vale
+     no card inteiro, e o foco dele acende o card como o foco do próprio card.
+     ========================================================================== */
+  .card__trigger {
+    text-align: inherit;
+    cursor: pointer;
+  }
+
+  .card__trigger::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__trigger:focus-visible {
+    outline: none;
   }
 
   /* Só em quem tem mouse: no celular o hover ficaria preso depois do toque */
@@ -99,10 +121,12 @@
     border-bottom: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
   }
 
+  /* margin auto: com um botão no fim da barra (barAction), os quadradinhos ficam colados nele */
   .card__dots {
     display: flex;
     flex-shrink: 0;
     gap: 0.25rem;
+    margin-inline-start: auto;
   }
 
   .card__dots i {
@@ -177,12 +201,14 @@
   }
 
   /* A transição só existe no hover: ao sair, o brilho volta direto, sem varrer de volta */
-  .card--interactive:focus-visible .card__shine::before {
+  .card--interactive:focus-visible .card__shine::before,
+  .card--interactive:has(.card__trigger:focus-visible) .card__shine::before {
     transform: translateX(120%);
     transition: transform 800ms ease-out;
   }
 
-  .card--interactive:focus-visible .card__arrow {
+  .card--interactive:focus-visible .card__arrow,
+  .card--interactive:has(.card__trigger:focus-visible) .card__arrow {
     transform: translateX(4px);
   }
 
@@ -219,7 +245,8 @@
     }
 
     .card--interactive:hover .card__arrow,
-    .card--interactive:focus-visible .card__arrow {
+    .card--interactive:focus-visible .card__arrow,
+    .card--interactive:has(.card__trigger:focus-visible) .card__arrow {
       transform: none;
     }
   }
