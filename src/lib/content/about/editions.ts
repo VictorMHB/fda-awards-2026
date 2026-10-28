@@ -1,4 +1,4 @@
-import data from "@/data/editions.json";
+import data from "@/data/about/editions.json";
 
 export type Edition = {
   year: string;

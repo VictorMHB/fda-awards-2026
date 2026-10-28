@@ -1,0 +1,39 @@
+@layer components {
+  .sponsor-grid {
+    --gap: 1rem;
+    --per-row: 2;
+    --per-row-md: var(--per-row);
+    --per-row-lg: var(--per-row-md);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
+  }
+
+  /* Largura = fatia exata da linha. O -0.02px evita que o arredondamento
+     do navegador jogue o último card da linha para baixo. */
+  .sponsor-grid__item {
+    flex: 0 0
+      calc((100% - (var(--per-row) - 1) * var(--gap)) / var(--per-row) - 0.02px);
+    min-width: 0;
+  }
+
+  /* Por faixa: celular / tablet (md) / desktop (lg) */
+  .sponsor-grid--diamond { --per-row: 1; --per-row-md: 2; --per-row-lg: 2; }
+  .sponsor-grid--platinum { --per-row: 2; --per-row-md: 2; --per-row-lg: 3; }
+  .sponsor-grid--gold { --per-row: 2; --per-row-md: 3; --per-row-lg: 3; } /* 5 = 3+2 */
+  .sponsor-grid--silver { --per-row: 2; --per-row-md: 3; --per-row-lg: 4; } /* 6 = 4+2 */
+  .sponsor-grid--bronze { --per-row: 3; --per-row-md: 4; --per-row-lg: 4; } /* 7 = 4+3 */
+
+  @media (min-width: 48rem) {
+    .sponsor-grid {
+      --per-row: var(--per-row-md);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .sponsor-grid {
+      --per-row: var(--per-row-lg);
+    }
+  }
+}

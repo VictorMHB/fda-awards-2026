@@ -5,7 +5,7 @@ import Image from "next/image";
 import Card from "@/components/ui/Card";
 import NewsModal from "@/components/news/NewsModal";
 import { clearNewsSlug, pushNewsSlug, useNewsSlug } from "@/hooks/useNewsSlug";
-import type { NewsItem } from "@/lib/content/news";
+import type { NewsItem } from "@/lib/content/shared/news";
 
 // Como a página manda cada notícia: sem o Markdown cru, com a data por extenso e o texto já renderizado
 export type NewsCardData = Omit<NewsItem, "content"> & {

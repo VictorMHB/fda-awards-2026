@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useAgora } from "@/hooks/useAgora";
-import { ANUNCIO_PREVISTO, targetPhase, formatarData, getPhase } from "@/lib/content/phases";
+import { ANUNCIO_PREVISTO, targetPhase, formatarData, getPhase } from "@/lib/content/shared/phases";
 
 export default function AlertBanner() {
   const agora = useAgora();

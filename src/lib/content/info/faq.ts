@@ -1,4 +1,4 @@
-import data from "@/data/faq.json";
+import data from "@/data/info/faq.json";
 
 export type FaqEntry = {
   question: string;

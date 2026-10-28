@@ -1,0 +1,44 @@
+{
+  "section": {
+    "title": "Processo de Premiação",
+    "description": "Como os indicados entram na disputa e como os vencedores são escolhidos."
+  },
+  "groups": [
+    {
+      "id": "categories",
+      "title": "Como são escolhidos as categorias?",
+      "items": [
+        "[PREENCHER] O que define o vencedor (voto do público, júri ou combinação).",
+        "[PREENCHER] Critério de desempate.",
+        "Os vencedores são revelados ao vivo, na cerimônia."
+      ]
+    },
+    {
+      "id": "nominees",
+      "title": "Como são escolhidos os indicados?",
+      "items": [
+        "[PREENCHER] Quem pode ser indicado e em qual período.",
+        "[PREENCHER] Como os indicados são selecionados (quem decide e com qual critério).",
+        "[PREENCHER] Quantos indicados por categoria (4, e 5 nas finais)."
+      ]
+    },
+    {
+      "id": "winners",
+      "title": "Como são escolhidos os vencedores?",
+      "items": [
+        "[PREENCHER] O que define o vencedor (voto do público, júri ou combinação).",
+        "[PREENCHER] Critério de desempate.",
+        "Os vencedores são revelados ao vivo, na cerimônia."
+      ]
+    },
+    {
+      "id": "cutoff-date",
+      "title": "Qual é o prazo limite de elegibilidade?",
+      "items": [
+        "[PREENCHER] O que define o vencedor (voto do público, júri ou combinação).",
+        "[PREENCHER] Critério de desempate.",
+        "Os vencedores são revelados ao vivo, na cerimônia."
+      ]
+    }
+  ]
+}

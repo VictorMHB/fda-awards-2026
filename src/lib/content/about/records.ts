@@ -1,4 +1,4 @@
-import data from "@/data/records.json";
+import data from "@/data/about/records.json";
 
 // null = ainda não definido: o card mostra NO_VALUE
 export type RecordEntry = {

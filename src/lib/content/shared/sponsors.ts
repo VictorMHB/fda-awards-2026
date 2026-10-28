@@ -1,5 +1,5 @@
 import type { Tier } from "@/components/ui/AeroText";
-import data from "@/data/sponsors.json";
+import data from "@/data/shared/sponsors.json";
 
 export type Sponsor = {
   name: string;

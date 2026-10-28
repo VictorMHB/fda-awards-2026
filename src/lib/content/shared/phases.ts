@@ -6,21 +6,42 @@ export const DATAS = {
   showFim: "2026-12-12T23:30:00-03:00",
 } as const;
 
-
 export const ANUNCIO_PREVISTO = "no final de novembro";
 export const LINK_TRANSMISSAO: string | null = null;
 export const PROXIMA_EDICAO = 2027;
 
-export type PhaseId =
-  | "aguardando" // antes da abertura
-  | "votacao" // votação aberta
-  | "aguardandoShow" // votação encerrada, show ainda não começou
-  | "aoVivo" // show acontecendo
-  | "encerrado"; // pós-show
+const PHASE_IDS = [
+  "aguardando", // antes da abertura
+  "votacao", // votação aberta
+  "aguardandoShow", // votação encerrada, show ainda não começou
+  "aoVivo", // show acontecendo
+  "encerrado", // pós-show
+] as const;
+
+export type PhaseId = (typeof PHASE_IDS)[number];
 
 const ts = (iso: string) => new Date(iso).getTime();
 
+export function getForcedPhase(): PhaseId | null {
+  if (process.env.NODE_ENV === "production") return null;
+
+  const value = process.env.NEXT_PUBLIC_FORCE_PHASE;
+  if (!value) return null;
+
+  const phase = PHASE_IDS.find((id) => id === value);
+  if (!phase) {
+    console.warn(
+      `NEXT_PUBLIC_FORCE_PHASE="${value}" é inválida. Use: ${PHASE_IDS.join(", ")}.`,
+    );
+    return null;
+  }
+  return phase;
+}
+
 export function getPhase(agora: number): PhaseId {
+  const forced = getForcedPhase();
+  if (forced) return forced;
+
   if (agora < ts(DATAS.votacaoAbre)) return "aguardando";
   if (agora < ts(DATAS.votacaoFecha)) return "votacao";
   if (agora < ts(DATAS.showInicio)) return "aguardandoShow";
@@ -28,7 +49,8 @@ export function getPhase(agora: number): PhaseId {
   return "encerrado";
 }
 
-// Momento em que a fase atual termina (null = sem contagem)
+// Momento em que a fase atual termina (null = sem contagem).
+// Com fase forçada, a contagem continua usando as datas reais.
 export function targetPhase(phase: PhaseId): number | null {
   switch (phase) {
     case "aguardando": return ts(DATAS.votacaoAbre);
