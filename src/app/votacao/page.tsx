@@ -17,39 +17,21 @@ import {
 export const metadata: Metadata = { title: "Votação | FDA Awards 2026" };
 
 type SparkStyle = CSSProperties & Record<`--${string}`, string>;
+type ShootStyle = CSSProperties & Record<`--${string}`, string>;
 
 // Os menores somem no mobile, pra poupar GPU em aparelho fraco
 const SPARKS: { style: SparkStyle; className?: string }[] = [
-  { style: { "--s": "1.6rem", "--x": "8%", "--y": "22%", "--d": "2.4s" } },
-  {
-    style: { "--s": "1rem", "--x": "44%", "--y": "12%", "--d": "3.1s" },
-    className: "hidden sm:block",
-  },
+  { style: { "--s": "1.6rem", "--x": "51%", "--y": "34%", "--d": "2.4s" } },
+  { style: { "--s": "1rem", "--x": "44%", "--y": "12%", "--d": "3.1s" }, className: "hidden sm:block" },
   { style: { "--s": "2rem", "--x": "90%", "--y": "18%", "--d": "2.8s" } },
-  {
-    style: {
-      "--s": "0.9rem",
-      "--x": "72%",
-      "--y": "58%",
-      "--d": "3.6s",
-      "--c": "var(--color-primary)",
-    },
-    className: "hidden md:block",
-  },
-  {
-    style: {
-      "--s": "1.2rem",
-      "--x": "26%",
-      "--y": "70%",
-      "--d": "3.3s",
-      "--c": "var(--color-primary)",
-    },
-    className: "hidden sm:block",
-  },
-  {
-    style: { "--s": "0.8rem", "--x": "58%", "--y": "34%", "--d": "4s" },
-    className: "hidden md:block",
-  },
+  { style: { "--s": "0.9rem", "--x": "72%", "--y": "58%", "--d": "3.6s", "--c": "var(--color-primary)" }, className: "hidden md:block" },
+  { style: { "--s": "1.3rem", "--x": "74%", "--y": "15%", "--d": "3.3s", "--c": "var(--color-primary)" }, className: "hidden sm:block" },
+  { style: { "--s": "0.8rem", "--x": "62%", "--y": "6%", "--d": "4s" }, className: "hidden md:block" },
+];
+
+const SHOOTS: { style: ShootStyle; className?: string }[] = [
+  { style: { "--x": "70%", "--y": "12%", "--delay": "0s" } },
+  { style: { "--x": "20%", "--y": "5%", "--delay": "4s" }, className: "hidden md:block" },
 ];
 
 export default async function VotingPage({
@@ -79,12 +61,20 @@ export default async function VotingPage({
           className="vote-hero__stars vote-hero__stars--b"
         />
         <div aria-hidden="true" className="vote-hero__dots" />
-        <span aria-hidden="true" className="vote-shoot" />
         {SPARKS.map(({ style, className = "" }, i) => (
           <span
             key={i}
             aria-hidden="true"
             className={`vote-spark ${className}`}
+            style={style}
+          />
+        ))}
+
+        {SHOOTS.map(({ style, className = "" }, i) => (
+          <span
+            key={i}
+            aria-hidden="true"
+            className={`vote-shoot ${className}`}
             style={style}
           />
         ))}
@@ -97,16 +87,16 @@ export default async function VotingPage({
             </p>
 
             <h1 className="mt-4 uppercase">
-  <AeroText className="block py-0 text-4xl leading-[1.35] md:text-6xl">
-    {hero.titleTop}
-  </AeroText>
-  <AeroText
-    variant="primary"
-    className="block py-0 text-4xl leading-[1.35] md:text-6xl"
-  >
-    {hero.titleHighlight}
-  </AeroText>
-</h1>
+              <AeroText className="block py-0 text-4xl leading-[1.35] md:text-6xl">
+                {hero.titleTop}
+              </AeroText>
+              <AeroText
+                variant="primary"
+                className="block py-0 text-4xl leading-[1.35] md:text-6xl"
+              >
+                {hero.titleHighlight}
+              </AeroText>
+            </h1>
 
             <div
               aria-hidden="true"
