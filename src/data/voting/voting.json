@@ -1,0 +1,69 @@
+{
+  "steps": [
+    {
+      "title": "Entre com o Google",
+      "description": "Faça login com sua conta Google. Cada conta tem uma cédula só."
+    },
+    {
+      "title": "Escolha os indicados",
+      "description": "Marque um indicado em cada categoria. As escolhas são salvas na hora, então dá para continuar depois."
+    },
+    {
+      "title": "Confirme a cédula",
+      "description": "Com todas as categorias preenchidas, confirme o voto. Depois disso, ele não muda mais."
+    },
+    {
+      "title": "Veja o resultado",
+      "description": "Os vencedores são revelados na cerimônia, ao vivo."
+    }
+  ],
+  "rules": [
+    "Um voto por categoria, com uma conta Google por pessoa.",
+    "A votação vai de 27 de novembro a 5 de dezembro, até 23h59 (horário de Brasília).",
+    "Só contam cédulas confirmadas: escolhas sem confirmação até o prazo ficam de fora.",
+    "Votos de contas falsas ou duplicadas são anulados."
+  ],
+  "cta": {
+    "upcoming": "Votação em breve",
+    "open": "Votar agora",
+    "closed": "Votação encerrada"
+  },
+  "hero": {
+    "eyebrow": "FDA Awards 2026 · Votação",
+    "titleTop": "Categorias",
+    "titleHighlight": "& Votação",
+    "subtitle": "Confira abaixo como votar, todas as categorias do prêmio e o acesso à votação."
+  },
+  "states": {
+    "upcoming": {
+      "label": "Status",
+      "title": "Votação em breve",
+      "description": "A votação ainda não abriu. Volte em breve para montar sua cédula."
+    },
+    "login": {
+      "label": "Status",
+      "title": "Votação aberta",
+      "description": "Entre com sua conta Google para montar sua cédula.",
+      "action": "Entrar com Google"
+    },
+    "ready": {
+      "label": "Status",
+      "title": "Votação aberta",
+      "description": "Olá{name}! Sua cédula está esperando por você.",
+      "action": "Começar a votar"
+    },
+    "closed": {
+      "label": "Status",
+      "title": "Votação encerrada",
+      "description": "Obrigado a quem votou. Os vencedores são revelados na cerimônia."
+    }
+  },
+  "categories": {
+    "title": "Categorias em disputa",
+    "description": "Estas são as categorias desta edição. Os indicados você vê na hora de votar.",
+    "empty": "As categorias serão reveladas em breve."
+  },
+  "notices": {
+    "login": "Entre com sua conta Google para votar."
+  }
+}

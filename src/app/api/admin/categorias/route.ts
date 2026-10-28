@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminAuth, getAdminDb } from "@/lib/firebase-admin";
+import { getAdminAuth, getAdminDb } from "@/lib/firebase/admin";
 
 // O ID da categoria vira ID de documento e chave de `votos.<id>` no cliente,
 // então "." e "/" (entre outros) quebram a votação daquela categoria.

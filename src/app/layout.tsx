@@ -1,12 +1,14 @@
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "sonner";
-import { Krona_One, Work_Sans } from "next/font/google";
+import { Krona_One, Work_Sans, Share_Tech_Mono } from "next/font/google";
 import OfflineToast from "@/components/feedback/OfflineToast";
 import Header from "@/components/layout/Header";
 import AlertBanner from "@/components/feedback/AlertBanner";
 import Boot from "@/components/intro/Boot";
 import { Metadata } from "next";
+import Footer from "@/components/layout/Footer";
+import SiteBackground from "@/components/layout/SiteBackground";
 
 export const metadata: Metadata = {
   title: "FDA Awards 2026",
@@ -24,14 +26,20 @@ const workSans = Work_Sans({
   variable: "--font-work-sans",
 });
 
+const shareTechMono = Share_Tech_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-share-tech-mono",
+  display: "swap",
+});
+
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // suppressHydrationWarning: o script da abertura marca o <html> antes do React
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${krona.variable} ${workSans.variable} antialiased bg-dark-bg text-foreground`}>
-        <Boot />
+    <html lang="pt-BR">
+      <body className={`${krona.variable} ${workSans.variable} ${shareTechMono.variable} antialiased bg-dark-bg text-foreground`}>
+        <SiteBackground />
         <AuthProvider>
           <Header />
           <div className="pt-24 md:pt-28">
@@ -41,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </AuthProvider>
         <Toaster richColors position="top-center" />
         <OfflineToast />
+        <Footer />
       </body>
     </html>
   );

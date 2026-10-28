@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminAuth } from "@/lib/firebase-admin";
+import { getAdminAuth } from "@/lib/firebase/admin";
 
 export async function POST(request: NextRequest) {
   const { idToken } = (await request.json().catch(() => null)) ?? {};

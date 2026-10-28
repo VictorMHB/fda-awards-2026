@@ -1,0 +1,23 @@
+@layer components {
+  .phase-override {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    padding: 0.625rem 1.5rem;
+    background: var(--color-dark-bg);
+    border-bottom: 3px solid var(--color-primary);
+    color: var(--color-foreground);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .phase-override__tag {
+    padding: 0.125rem 0.5rem;
+    background: var(--color-primary);
+    color: var(--color-dark-bg);
+    font-weight: 700;
+  }
+}

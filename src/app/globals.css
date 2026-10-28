@@ -2,18 +2,33 @@
 
 @import "./styles/core/theme.css";
 @import "./styles/core/base.css";
+@import "./styles/core/background.css";
 
 @import "./styles/components/glass.css";
 @import "./styles/components/solids.css";
 @import "./styles/components/aero.css";
+@import "./styles/components/card.css";
+@import "./styles/components/phase-override.css";
+@import "./styles/components/sponsor-grid.css";
 
 @import "./styles/features/user-menu.css";
+@import "./styles/features/info.css";
 @import "./styles/components/marquee.css";
 
-@import "./styles/features/header-footer.css";
+@import "./styles/components/nav-link.css";
+@import "./styles/features/header.css";
+@import "./styles/features/mobile-menu.css";
+@import "./styles/features/footer.css";
 @import "./styles/features/notice-bar.css";
 @import "./styles/features/logo.css";
 
 @import "./styles/intro/boot.css";
 @import "./styles/intro/intro.css";
 @import "./styles/intro/rev.css";
+
+@import "./styles/features/about.css";
+@import "./styles/features/news-modal.css";
+
+@import "./styles/features/heros/vote-hero.css";
+@import "./styles/features/heros/about-hero.css";
+@import "./styles/features/heros/home-hero.css";

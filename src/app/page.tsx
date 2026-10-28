@@ -2,17 +2,24 @@ import GlassShapes from "@/components/ui/GlassShapes";
 import Countdown from "@/components/ui/Countdown";
 import Marquee from "@/components/ui/Marquee";
 import NewsCarousel from "@/components/news/NewsCarousel";
+import NewsBody from "@/components/news/NewsBody";
 import NavMap from "@/components/layout/NavMap";
-import Footer from "@/components/layout/Footer";
 import { AeroText } from "@/components/ui/AeroText";
-
-const HOME_BG = "/images/home_page.png";
+import HomeHero from "@/components/home/HomeHero";
+import { formatNewsDate, getAllNews } from "@/lib/content/shared/news";
 
 export default function Home() {
+  // Os .md de src/content/news são lidos aqui, no servidor. O texto já vai renderizado para o carrossel
+  const news = getAllNews().map(({ content, ...item }) => ({
+    ...item,
+    dateLabel: formatNewsDate(item.date),
+    body: <NewsBody markdown={content} />,
+  }));
+
   return (
     <main>
       {/* 1. Hero — reservado pro troféu girando */}
-      <section className="relative flex min-h-[calc(100vh-5rem)] flex-col items-center justify-center overflow-hidden px-6 text-center md:min-h-[calc(100vh-6rem)]">
+      {/* <section className="relative flex min-h-[calc(100vh-5rem)] flex-col items-center justify-center overflow-hidden px-6 text-center md:min-h-[calc(100vh-6rem)]">
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-cover bg-center bg-no-repeat "
@@ -53,7 +60,9 @@ export default function Home() {
             </span>
           </h1>
         </div>
-      </section>
+      </section> */}
+
+      <HomeHero />
 
       {/* 2. Divisão */}
       <Marquee text="OS MAIORES PRÊMIOS DO ANO" />
@@ -74,7 +83,7 @@ export default function Home() {
             de encerramento.
           </p>
           <div className="mt-8">
-            <NewsCarousel />
+            <NewsCarousel news={news} />
           </div>
         </div>
       </section>
@@ -94,8 +103,6 @@ export default function Home() {
           <NavMap />
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

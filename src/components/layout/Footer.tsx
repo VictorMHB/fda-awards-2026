@@ -1,121 +1,85 @@
+import Image from "next/image";
 import Link from "next/link";
-import Marquee from "../ui/Marquee";
+import FooterStatus from "./FooterStatus";
+import { getMasterSponsors, type Sponsor } from "@/lib/content/shared/sponsors";
 
-const CONTATO = {
-  email: "contato@fdaawards.com",
-  instagram: { label: "@fdaawards", href: "https://instagram.com/fdaawards" },
-  discord: { label: "Discord", href: "https://discord.gg/seu-convite" },
-  youtube: { label: "YouTube", href: "https://youtube.com/@fdaawards" },
-};
+function SponsorTile({ sponsor }: { sponsor: Sponsor }) {
+  const content = sponsor.logo ? (
+    <Image
+      src={sponsor.logo}
+      alt={sponsor.name}
+      fill
+      sizes="240px"
+      className="object-contain p-2"
+    />
+  ) : (
+    <span className="px-3 text-center text-sm text-foreground/80">{sponsor.name}</span>
+  );
 
-const SUMARIO = [
-  { href: "/", label: "Home" },
-  { href: "/votacao", label: "Votação" },
-  { href: "/categorias", label: "Categorias" },
-  { href: "/patrocinadores", label: "Patrocinadores" },
-  { href: "/informacoes", label: "Informações" },
-  { href: "/sobre", label: "Sobre" },
-];
-
-const REDACAO = [
-  { rotulo: "E-mail", texto: CONTATO.email, href: `mailto:${CONTATO.email}` },
-  { rotulo: "Instagram", texto: CONTATO.instagram.label, href: CONTATO.instagram.href },
-  { rotulo: "Discord", texto: CONTATO.discord.label, href: CONTATO.discord.href },
-  { rotulo: "YouTube", texto: CONTATO.youtube.label, href: CONTATO.youtube.href },
-];
-
-// Larguras alternadas barra/espaço
-const BARRAS = (() => {
-  const larguras = [2, 1, 1, 3, 1, 1, 2, 2, 1, 3, 2, 1, 1, 1, 3, 1, 2, 2, 1, 1, 2, 3, 1, 2, 1, 1, 3, 1, 1, 2, 2, 1, 1, 3, 2];
-  let x = 0;
-  const barras: { x: number; w: number }[] = [];
-  larguras.forEach((w, i) => {
-    if (i % 2 === 0) barras.push({ x, w });
-    x += w;
-  });
-  return { barras, total: x };
-})();
-
-const ANO_ATUAL = new Date().getFullYear();
+  return sponsor.url ? (
+    <a
+      href={sponsor.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={sponsor.name}
+      className="footer-tile footer-tile--link"
+    >
+      {content}
+    </a>
+  ) : (
+    <div className="footer-tile">{content}</div>
+  );
+}
 
 export default function Footer() {
+  const masters = getMasterSponsors();
+
   return (
-    <footer className="glass-footer relative mt-24">
-      <Marquee text="SOU BURROW" />
-
-      <div className="mx-auto max-w-7xl px-6 py-12 md:px-10 md:py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-10">
-          {/* Identidade + expediente */}
-          <div className="md:col-span-4">
-            <span className="font-display text-2xl text-primary md:text-3xl">
-              FDA <span className="text-foreground">AWARDS</span>
+    <footer className="site-footer">
+      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-8 md:flex-row md:items-start md:justify-between md:py-10">
+        <div>
+          <Link href="/" aria-label="FDA Awards" className="group inline-block">
+            <span aria-hidden="true" className="logo-aero font-display text-2xl md:text-3xl">
+              <span className="logo-aero-word logo-aero-fda" data-l="FDA">
+                <span className="logo-aero-face">FDA</span>
+              </span>
+              <span className="logo-aero-word logo-aero-awards" data-l="AWARDS">
+                <span className="logo-aero-face">AWARDS</span>
+              </span>
             </span>
-            <p className="mt-4 max-w-xs text-base text-foreground/70">
-              Os melhores prêmios do ano. 5 anos de história.
-            </p>
+          </Link>
+          <p className="mt-4 max-w-sm text-sm text-foreground/70">
+            Há cinco anos reconhecendo histórias, feitos e pessoas. Vote e escolha os próximos vencedores dos maiores prêmios do ano.
+          </p>
+        </div>
 
-            <div className="rev-selo mt-6">
-              <span className="rev-selo-num">Nº 05</span>
-              <span className="rev-selo-texto">Edição {ANO_ATUAL}</span>
-            </div>
-          </div>
-
-          {/* Sumário */}
-          <nav aria-label="Sumário" className="md:col-span-4">
-            <h3 className="rev-titulo">Nesta edição</h3>
-            <ul className="mt-4 flex flex-col gap-2.5">
-              {SUMARIO.map((item, i) => (
-                <li key={item.href}>
-                  <Link href={item.href} className="rev-sumario-item group">
-                    <span className="rev-sumario-nome">{item.label}</span>
-                    <span className="rev-sumario-pontos" aria-hidden="true" />
-                    <span className="rev-sumario-pag">{String(i + 2).padStart(2, "0")}</span>
-                  </Link>
+        {masters.length > 0 && (
+          <section aria-labelledby="footer-sponsors" className="md:w-60">
+            <h2 id="footer-sponsors" className="footer-heading">
+              01 / Apresentado por
+            </h2>
+            <ul className="flex max-w-60 flex-col gap-3">
+              {masters.map((sponsor) => (
+                <li key={sponsor.name}>
+                  <SponsorTile sponsor={sponsor} />
                 </li>
               ))}
             </ul>
-          </nav>
+          </section>
+        )}
+      </div>
 
-          {/* Redação + código de barras */}
-          <div className="flex flex-col gap-8 md:col-span-4">
-            <div>
-              <h3 className="rev-titulo">Fale com a redação</h3>
-              <ul className="mt-4 flex flex-col gap-2.5">
-                {REDACAO.map((c) => (
-                  <li key={c.rotulo} className="flex items-baseline gap-3 text-sm md:text-base">
-                    <span className="w-20 shrink-0 text-xs font-bold uppercase tracking-widest text-foreground/50">
-                      {c.rotulo}
-                    </span>
-                    <a
-                      href={c.href}
-                      target={c.href.startsWith("http") ? "_blank" : undefined}
-                      rel="noopener noreferrer"
-                      className="font-bold text-foreground/85 transition-colors hover:text-primary"
-                    >
-                      {c.texto}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="rev-codigo" aria-hidden="true">
-              <svg viewBox={`0 0 ${BARRAS.total} 30`} preserveAspectRatio="none">
-                {BARRAS.barras.map((b) => (
-                  <rect key={b.x} x={b.x} y={0} width={b.w} height={30} />
-                ))}
-              </svg>
-              <span>7 896026 120052</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Expediente */}
-        <div className="mt-12 flex flex-col gap-3 border-t border-foreground/10 pt-6 text-sm text-foreground/60 md:flex-row md:items-center md:justify-between">
-          <p>© {ANO_ATUAL}, FDA AWARDS. Todos os direitos reservados.</p>
-          <p>
-            Feito por <span className="font-bold text-foreground/80">Vermes Corp.</span>
+      {/* Faixa técnica estilo embalagem Y2K */}
+      <div className="footer-strip">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-3">
+          <p className="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <span>© 2026 FDA Awards - 5ª edição</span>
+            <FooterStatus />
           </p>
+
+          <span aria-hidden="true" className="footer-barcode hidden md:block" />
+
+          <p>Feito por Vermes Corp.</p>
         </div>
       </div>
     </footer>
