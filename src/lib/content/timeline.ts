@@ -1,5 +1,5 @@
 import type { PhaseId } from "@/lib/content/phases";
-import data from "@/data/timeline.json";
+import data from "@/data/info/timeline.json";
 
 export type TimelineStep = {
   phase: PhaseId; // fase de lib/phases em que a etapa é a atual

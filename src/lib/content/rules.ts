@@ -1,4 +1,4 @@
-import data from "@/data/rules.json";
+import data from "@/data/info/rules.json";
 
 export type RuleGroup = {
   id: string;

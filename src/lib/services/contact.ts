@@ -1,4 +1,4 @@
-import data from "@/data/contact.json";
+import data from "@/data/shared/contact.json";
 
 export type ContactType = "email" | "instagram" | "discord" | "youtube";
 
