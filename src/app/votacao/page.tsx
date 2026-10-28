@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { AeroText } from "@/components/ui/AeroText";
+import ForcedPhaseBanner from "@/components/dev/ForcedPhaseBanner";
 import VotingSection from "@/components/info/VotingSection";
 import VotingStatus from "@/components/voting/VotingStatus";
 import CategoriesSection from "@/components/voting/CategoriesSection";
@@ -64,6 +65,8 @@ export default async function VotingPage({
 
   return (
     <main>
+      <ForcedPhaseBanner />
+
       <section className="vote-hero px-6 py-16 md:py-28">
         {/* Fundo decorativo */}
         <div aria-hidden="true" className="vote-hero__sky" />
