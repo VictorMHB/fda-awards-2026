@@ -2,26 +2,27 @@ import Image from "next/image";
 import { AeroText, type Tier } from "@/components/ui/AeroText";
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getSponsorsByTier, type Sponsor } from "@/lib/content/sponsors";
+import { getSponsorsByTier, type Sponsor } from "@/lib/content/shared/sponsors";
 
-// Classes escritas por inteiro, senão o Tailwind não as gera
-const TIER_STYLES: Record<Tier, { grid: string; card: string }> = {
-  diamond:  { grid: "grid-cols-1 sm:grid-cols-2",                   card: "h-44" },
-  platinum: { grid: "grid-cols-2 lg:grid-cols-3",                   card: "h-36" },
-  gold:     { grid: "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",    card: "h-32" },
-  silver:   { grid: "grid-cols-2 md:grid-cols-4 lg:grid-cols-5",    card: "h-28" },
-  bronze:   { grid: "grid-cols-3 md:grid-cols-5 lg:grid-cols-6",    card: "h-24" },
+// Classes escritas por inteiro, senão o Tailwind não as gera.
+// Quantos cards por linha fica em styles/components/sponsor-grid.css
+const CARD_HEIGHT: Record<Tier, string> = {
+  diamond: "h-44",
+  platinum: "h-36",
+  gold: "h-32",
+  silver: "h-28",
+  bronze: "h-24",
 };
 
 function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
-  const className = `flex items-center justify-center p-3 text-center text-sm text-foreground/90 ${TIER_STYLES[sponsor.tier].card}`;
+  const className = `flex h-full items-center justify-center p-3 text-center text-sm text-foreground/90`;
 
   const content = sponsor.logo ? (
     <Image
       src={sponsor.logo}
       alt={sponsor.name}
       fill
-      sizes="(min-width: 1024px) 20vw, 40vw"
+      sizes="(min-width: 1024px) 25vw, 40vw"
       className="object-contain p-4"
     />
   ) : (
@@ -67,9 +68,13 @@ export default function SponsorsSection() {
                 {label}
               </AeroText>
 
-              <ul className={`mt-5 grid gap-4 ${TIER_STYLES[id].grid}`}>
+              <ul className={`sponsor-grid sponsor-grid--${id} mt-5`}>
                 {sponsors.map((sponsor) => (
-                  <li key={sponsor.name}>
+                  // A altura fica no item e o Card preenche (h-full)
+                  <li
+                    key={sponsor.name}
+                    className={`sponsor-grid__item ${CARD_HEIGHT[id]}`}
+                  >
                     <SponsorCard sponsor={sponsor} />
                   </li>
                 ))}

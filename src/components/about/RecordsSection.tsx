@@ -1,6 +1,6 @@
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getRecords } from "@/lib/content/records";
+import { getRecords } from "@/lib/content/about/records";
 
 export default function RecordsSection() {
   return (

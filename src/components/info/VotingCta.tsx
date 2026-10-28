@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useAgora } from "@/hooks/useAgora";
-import { getPhase } from "@/lib/content/phases";
+import { getPhase } from "@/lib/content/shared/phases";
 import { getVotingCtaLabel } from "@/lib/services/voting";
 
 export default function VotingCta() {

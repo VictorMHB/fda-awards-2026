@@ -2,8 +2,8 @@
 
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useAgora } from "@/hooks/useAgora";
-import { getPhase } from "@/lib/content/phases";
-import { CURRENT_STEP_LABEL, getStepStatus, getTimeline } from "@/lib/content/timeline";
+import { getPhase } from "@/lib/content/shared/phases";
+import { CURRENT_STEP_LABEL, getStepStatus, getTimeline } from "@/lib/content/info/timeline";
 
 export default function TimelineSection() {
   const agora = useAgora();

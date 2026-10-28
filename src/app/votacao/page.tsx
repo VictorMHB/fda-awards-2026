@@ -6,7 +6,7 @@ import VotingSection from "@/components/info/VotingSection";
 import VotingStatus from "@/components/voting/VotingStatus";
 import CategoriesSection from "@/components/voting/CategoriesSection";
 import { getServerUser } from "@/lib/auth/session";
-import { getPhase } from "@/lib/content/phases";
+import { getPhase } from "@/lib/content/shared/phases";
 import {
   getVotingCategoriesContent,
   getVotingHero,

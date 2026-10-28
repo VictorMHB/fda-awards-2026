@@ -1,6 +1,6 @@
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getRuleGroups, getRulesSection } from "@/lib/content/rules";
+import { getRuleGroups, getRulesSection } from "@/lib/content/info/rules";
 
 export default function RulesSection() {
   const { title, description } = getRulesSection();
