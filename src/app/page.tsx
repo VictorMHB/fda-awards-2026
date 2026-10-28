@@ -6,7 +6,7 @@ import NewsBody from "@/components/news/NewsBody";
 import NavMap from "@/components/layout/NavMap";
 import { AeroText } from "@/components/ui/AeroText";
 import HomeHero from "@/components/home/HomeHero";
-import { formatNewsDate, getAllNews } from "@/lib/content/news";
+import { formatNewsDate, getAllNews } from "@/lib/content/shared/news";
 
 export default function Home() {
   // Os .md de src/content/news são lidos aqui, no servidor. O texto já vai renderizado para o carrossel
