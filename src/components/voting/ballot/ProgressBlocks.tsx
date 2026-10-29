@@ -35,28 +35,20 @@ export default function ProgressBlocks({
         aria-valuetext={`${done} de ${items.length} categorias respondidas`}
         className="ballot-progress mt-3"
       >
-        {items.map((item, index) => {
-          // O degradê vem das classes do AeroText (só definem --aero-fill)
-          const fill = item.done
-            ? "text-aero--primary"
-            : index === current
-              ? "text-aero--ice"
-              : "";
-
-          return (
-            <span
-              key={item.id}
-              aria-hidden="true"
-              className={[
-                "ballot-progress__block",
-                fill && `${fill} ballot-progress__block--filled`,
-                index === current && "ballot-progress__block--current",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            />
-          );
-        })}
+        {items.map((item, index) => (
+          <span
+            key={item.id}
+            aria-hidden="true"
+            className={[
+              "ballot-progress__block",
+              // Respondida: laranja do AeroText (só define --aero-fill)
+              item.done && "text-aero--primary ballot-progress__block--filled",
+              index === current && "ballot-progress__block--current",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          />
+        ))}
       </div>
     </div>
   );

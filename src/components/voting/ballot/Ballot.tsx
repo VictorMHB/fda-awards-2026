@@ -14,6 +14,7 @@ import type { Categoria } from "@/types/voto";
 import CategoryMenu from "./CategoryMenu";
 import NomineeCard from "./NomineeCard";
 import ProgressBlocks from "./ProgressBlocks";
+import { Check } from "pixelarticons/react";
 
 type BallotProps = {
   categories: Categoria[];
@@ -156,6 +157,7 @@ export default function Ballot({
                       </div>
                       {!confirmed && (
                         <AeroButton
+                          shine
                           variant="blue"
                           size="sm"
                           onClick={() => setStep(index)}
@@ -183,20 +185,23 @@ export default function Ballot({
                     Escolha um indicado em cada uma para poder confirmar.
                   </p>
                 ) : (
-                  <label className="flex min-h-11 cursor-pointer items-center gap-3 text-foreground/90">
-                    <input
-                      type="checkbox"
-                      checked={agreed}
-                      onChange={(e) => setAgreed(e.target.checked)}
-                      className="size-5 shrink-0 accent-primary"
-                    />
-                    Entendo que, depois de confirmar, minha cédula não pode ser
-                    alterada.
-                  </label>
+                    <label className="flex min-h-11 cursor-pointer items-center gap-3 text-foreground/90">
+                        <input
+                            type="checkbox"
+                            checked={agreed}
+                            onChange={(e) => setAgreed(e.target.checked)}
+                            className="ballot-check__input"
+                        />
+                        <span aria-hidden="true" className="ballot-check">
+                            <Check width={16} height={16} />
+                        </span>
+                        Entendo que, depois de confirmar, minha cédula não pode ser alterada.
+                    </label>
                 )}
 
                 <div className="flex flex-wrap justify-between gap-3">
                   <AeroButton
+                    shine
                     variant="blue"
                     onClick={() => setStep(total - 1)}
                   >
@@ -211,6 +216,7 @@ export default function Ballot({
                     <AeroButton
                       disabled={!agreed || confirming}
                       onClick={onConfirm}
+                      shine
                     >
                       {confirming ? "Confirmando..." : "Confirmar cédula"}
                     </AeroButton>
@@ -250,13 +256,14 @@ export default function Ballot({
 
             <div className="mt-10 flex flex-wrap justify-between gap-3">
               <AeroButton
+                shine
                 variant="blue"
                 disabled={current === 0}
                 onClick={() => setStep(current - 1)}
               >
                 Voltar
               </AeroButton>
-              <AeroButton onClick={() => setStep(current + 1)}>
+              <AeroButton shine onClick={() => setStep(current + 1)}>
                 {current === total - 1 ? "Revisar" : "Próxima"}
               </AeroButton>
             </div>

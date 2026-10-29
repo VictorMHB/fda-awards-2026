@@ -1,0 +1,37 @@
+@layer components {
+  /* Linhas sempre centralizadas, como no sponsor-grid */
+  .nominee-grid {
+    --gap: 0.75rem;
+    --per-row: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
+  }
+
+  .nominee-grid__item {
+    flex: 0 0
+      calc((100% - (var(--per-row) - 1) * var(--gap)) / var(--per-row) - 0.02px);
+    min-width: 0;
+  }
+
+  /* Tablet: 5 indicados = 3+2, 4 indicados = 2+2 */
+  @media (min-width: 48rem) {
+    .nominee-grid {
+      --gap: 1rem;
+      --per-row: 3;
+    }
+
+    .nominee-grid[data-count="4"] {
+      --per-row: 2;
+    }
+  }
+
+  /* Desktop: todos em uma linha, até 5 */
+  @media (min-width: 64rem) {
+    .nominee-grid[data-count] {
+      --gap: 1.25rem;
+      --per-row: min(var(--count), 5);
+    }
+  }
+}

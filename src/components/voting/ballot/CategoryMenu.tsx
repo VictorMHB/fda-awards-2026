@@ -44,7 +44,7 @@ export default function CategoryMenu({
 
   return (
     <>
-      <AeroButton variant="blue" size="sm" aria-haspopup="dialog" onClick={open}>
+      <AeroButton variant="blue" shine size="sm" aria-haspopup="dialog" onClick={open}>
         Categorias · {done}/{items.length}
       </AeroButton>
 
@@ -117,6 +117,7 @@ export default function CategoryMenu({
 
           <div className="cat-menu__foot">
             <AeroButton
+              shine
               size="sm"
               aria-current={current === -1 ? "step" : undefined}
               onClick={() => {
