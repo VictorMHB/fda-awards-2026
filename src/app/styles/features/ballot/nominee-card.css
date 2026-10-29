@@ -1,0 +1,170 @@
+@layer components {
+  .nominee {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
+    background: color-mix(
+      in srgb,
+      var(--color-dark-bg) var(--card-bg-alpha, 65%),
+      transparent
+    );
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 25%, transparent);
+    border-bottom: 3px solid color-mix(in srgb, var(--color-secondary) 50%, transparent);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-dark-bg) 60%, transparent);
+    transition: transform 150ms ease-out;
+  }
+
+  /* Vidro: brilho só na metade de cima, corte duro no meio */
+  .nominee::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 50% 0;
+    z-index: -1;
+    background: color-mix(in srgb, var(--color-foreground) 10%, transparent);
+    pointer-events: none;
+  }
+
+  .nominee--selected {
+    border-color: var(--color-primary);
+    border-bottom-color: transparent; /* a linha acesa cobre a base */
+  }
+
+  .nominee--locked {
+    cursor: default;
+  }
+
+  .nominee--locked:not(.nominee--selected) {
+    opacity: 0.55;
+  }
+
+  .nominee:has(.nominee__input:focus-visible) {
+    outline: 3px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .nominee:not(.nominee--locked):hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  /* Radio nativo cobrindo o card inteiro: clique, teclado e leitor de tela */
+  .nominee__input {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .nominee__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.15em;
+    color: color-mix(in srgb, var(--color-foreground) 70%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-foreground) 15%, transparent);
+  }
+
+  .nominee__dots {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .nominee__dots i {
+    width: 4px;
+    height: 4px;
+    background: currentColor;
+  }
+
+  .nominee__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--color-dark-bg);
+  }
+
+  /* Sem imagem: pontilhado (assinatura do site) e a inicial */
+  .nominee__fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    background-image: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-secondary) 55%, transparent) 1px,
+      transparent 1.5px
+    );
+    background-size: 8px 8px;
+  }
+
+  .nominee__check {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--color-primary);
+    color: var(--color-dark-bg);
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity 150ms ease-out,
+      transform 150ms ease-out;
+  }
+
+  .nominee--selected .nominee__check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .nominee__name {
+    display: grid;
+    place-items: center;
+    min-height: 3.5rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--color-foreground);
+  }
+
+  /* Linha de 3px acesa na base quando selecionado */
+  .nominee__line {
+    position: absolute;
+    right: -1px;
+    bottom: -3px;
+    left: -1px;
+    height: 3px;
+    background: var(--color-primary);
+    opacity: 0;
+    transition: opacity 150ms ease-out;
+  }
+
+  .nominee--selected .nominee__line {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nominee,
+    .nominee__check,
+    .nominee__line {
+      transition: none;
+    }
+  }
+}
