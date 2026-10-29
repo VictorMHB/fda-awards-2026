@@ -9,6 +9,7 @@
 @import "./styles/components/aero.css";
 @import "./styles/components/card.css";
 @import "./styles/components/phase-override.css";
+@import "./styles/components/aero-button.css";
 
 @import "./styles/features/user-menu.css";
 @import "./styles/features/info.css";
@@ -21,6 +22,7 @@
 @import "./styles/features/notice-bar.css";
 @import "./styles/features/logo.css";
 @import "./styles/features/about.css";
+@import "./styles/features/ballot.css";
 
 @import "./styles/features/heros/vote-hero.css";
 @import "./styles/features/heros/about-hero.css";
