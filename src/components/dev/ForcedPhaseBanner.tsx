@@ -1,4 +1,4 @@
-import { getForcedPhase } from "@/lib/content/phases";
+import { getForcedPhase } from "@/lib/content/shared/phases";
 
 // Aviso de fase forçada. Some sozinho em produção (getForcedPhase devolve null).
 export default function ForcedPhaseBanner() {

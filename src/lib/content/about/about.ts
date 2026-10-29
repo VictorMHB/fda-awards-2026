@@ -1,4 +1,4 @@
-import data from "@/data/about.json";
+import data from "@/data/about/about.json";
 
 export type AboutContent = {
   title: string;

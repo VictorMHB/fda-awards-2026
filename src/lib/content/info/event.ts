@@ -1,4 +1,4 @@
-import data from "@/data/event.json";
+import data from "@/data/info/event.json";
 
 // null = ainda não definido: o card mostra "Em breve"
 export type EventInfo = {
@@ -50,7 +50,7 @@ export function getEventDetails(): EventDetail[] {
     {
       id: "time",
       label: "Hora",
-      value: time ? formatTime(time) : TO_BE_ANNOUNCED,
+      value: time ? `Início previsto às ${formatTime(time)}` : TO_BE_ANNOUNCED,
       note: time ? "horário de Brasília" : undefined,
     },
     {

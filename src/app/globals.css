@@ -10,6 +10,7 @@
 @import "./styles/components/card.css";
 @import "./styles/components/phase-override.css";
 @import "./styles/components/aero-button.css";
+@import "./styles/components/sponsor-grid.css";
 
 @import "./styles/features/user-menu.css";
 @import "./styles/features/info.css";
@@ -22,6 +23,7 @@
 @import "./styles/features/notice-bar.css";
 @import "./styles/features/logo.css";
 @import "./styles/features/about.css";
+@import "./styles/features/news-modal.css";
 
 @import "./styles/features/ballot/ballot.css";
 @import "./styles/features/ballot/category-menu.css";
@@ -31,3 +33,4 @@
 @import "./styles/features/heros/vote-hero.css";
 @import "./styles/features/heros/about-hero.css";
 @import "./styles/features/heros/home-hero.css";
+@import "./styles/features/heros/info-hero.css";

@@ -1,6 +1,6 @@
 import Card from "@/components/ui/Card";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getEditions } from "@/lib/content/editions";
+import { getEditions } from "@/lib/content/about/editions";
 
 export default function EditionsSection() {
   return (

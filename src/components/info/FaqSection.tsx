@@ -1,5 +1,5 @@
 import SectionHeader from "@/components/ui/SectionHeader";
-import { getFaq } from "@/lib/content/faq";
+import { getFaq } from "@/lib/content/info/faq";
 import FaqItem from "./FaqItem";
 
 export default function FaqSection() {

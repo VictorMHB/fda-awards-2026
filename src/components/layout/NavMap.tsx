@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useAgora } from "@/hooks/useAgora";
-import { getPhase } from "@/lib/content/phases";
+import { getPhase } from "@/lib/content/shared/phases";
 import { Trophy, Sparkle, Briefcase, InfoBox } from "pixelarticons/react";
 import Card from "@/components/ui/Card";
 
