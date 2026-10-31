@@ -112,4 +112,15 @@
     padding: 0.75rem;
     border-top: 1px solid color-mix(in srgb, var(--color-foreground) 18%, transparent);
   }
+
+    /* ---------- Player de vídeo (reaproveita a janela do menu) ---------- */
+  .cat-menu.video-dialog {
+    width: min(calc(100% - 2rem), 56rem, calc((100dvh - 7rem) * 16 / 9));
+  }
+
+  .video-dialog__frame {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: var(--color-dark-bg);
+  }
 }
