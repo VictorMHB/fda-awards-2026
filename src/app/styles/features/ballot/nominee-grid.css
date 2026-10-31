@@ -34,4 +34,21 @@
       --per-row: min(var(--count), 5);
     }
   }
+
+    /* Vídeos: miniaturas 16:9 pedem cards mais largos */
+  .nominee-grid[data-type="video"] {
+    --per-row: 1;
+  }
+
+  @media (min-width: 48rem) {
+    .nominee-grid[data-type="video"] {
+      --per-row: 2;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .nominee-grid[data-type="video"][data-count] {
+      --per-row: 3;
+    }
+  }
 }

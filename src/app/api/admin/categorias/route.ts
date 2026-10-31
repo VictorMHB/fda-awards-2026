@@ -1,77 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAdminAuth, getAdminDb } from "@/lib/firebase/admin";
+import { getAdminDb } from "@/lib/firebase/admin";
+import { requireAdminFromRequest } from "@/lib/auth/admin";
+import { categoriesLocked, ID_VALIDO, validateCategory } from "@/lib/voting/categories";
 
-// O ID da categoria vira ID de documento e chave de `votos.<id>` no cliente,
-// então "." e "/" (entre outros) quebram a votação daquela categoria.
-const ID_VALIDO = /^[\p{L}\p{N}_-]+$/u;
+const forbidden = () => NextResponse.json({ error: "Não autorizado." }, { status: 403 });
 
-const preenchido = (valor: unknown): valor is string =>
-  typeof valor === "string" && valor.trim() !== "";
-
-async function checarAdmin(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
-  if (!token) return null;
-
-  const adminAuth = getAdminAuth();
-  try {
-    const decoded = await adminAuth.verifyIdToken(token, true);
-    if (decoded.uid !== process.env.ADMIN_UID) return null;
-    return decoded;
-  } catch {
-    return null;
-  }
-}
+// Função (e não constante): uma Response só pode ser lida uma vez
+const locked = () =>
+  NextResponse.json(
+    { error: "A votação já abriu: categorias e indicados não podem mais ser alterados." },
+    { status: 423 },
+  );
 
 export async function POST(request: NextRequest) {
-  const admin = await checarAdmin(request);
-  if (!admin) return NextResponse.json({ error: "Não autorizado." }, { status: 403 });
+  if (!(await requireAdminFromRequest(request))) return forbidden();
+  if (categoriesLocked(Date.now())) return locked();
 
-  const { id, nome, ordem, indicados } = (await request.json().catch(() => null)) ?? {};
+  const result = validateCategory(await request.json().catch(() => null));
+  if (!result.ok) return NextResponse.json({ error: result.error }, { status: 400 });
 
-  if (
-    !preenchido(id) ||
-    !preenchido(nome) ||
-    typeof ordem !== "number" ||
-    !Array.isArray(indicados) ||
-    indicados.length === 0 ||
-    !indicados.every((i) => preenchido(i?.id) && preenchido(i?.nome))
-  ) {
-    return NextResponse.json({ error: "Dados incompletos." }, { status: 400 });
-  }
-
-  if (!ID_VALIDO.test(id)) {
-    return NextResponse.json(
-      { error: 'ID inválido: use só letras, números, "_" e "-".' },
-      { status: 400 }
-    );
-  }
-
-  if (new Set(indicados.map((i) => i.id)).size !== indicados.length) {
-    return NextResponse.json({ error: "Há indicados com o mesmo ID." }, { status: 400 });
-  }
-
-  await getAdminDb()
-    .collection("categorias")
-    .doc(id)
-    .set({
-      nome,
-      ordem,
-      indicados: indicados.map((i) => ({
-        id: i.id,
-        nome: i.nome,
-        imagemUrl: typeof i.imagemUrl === "string" ? i.imagemUrl : "",
-      })),
-    });
+  const { id, ...data } = result.value;
+  await getAdminDb().collection("categorias").doc(id).set(data);
   return NextResponse.json({ success: true });
 }
 
 export async function DELETE(request: NextRequest) {
-  const admin = await checarAdmin(request);
-  if (!admin) return NextResponse.json({ error: "Não autorizado." }, { status: 403 });
+  if (!(await requireAdminFromRequest(request))) return forbidden();
+  if (categoriesLocked(Date.now())) return locked();
 
-  const { id } = (await request.json().catch(() => null)) ?? {};
-  if (!preenchido(id)) return NextResponse.json({ error: "ID não informado." }, { status: 400 });
+  const body = await request.json().catch(() => null);
+  const id = typeof body?.id === "string" ? body.id.trim() : "";
+  if (!id || !ID_VALIDO.test(id)) {
+    return NextResponse.json({ error: "ID não informado." }, { status: 400 });
+  }
 
   await getAdminDb().collection("categorias").doc(id).delete();
   return NextResponse.json({ success: true });

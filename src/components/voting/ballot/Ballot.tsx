@@ -7,6 +7,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
+import { Check } from "pixelarticons/react";
 import { AeroText } from "@/components/ui/AeroText";
 import AeroButton from "@/components/ui/AeroButton";
 import Card from "@/components/ui/Card";
@@ -14,7 +15,7 @@ import type { Categoria } from "@/types/voto";
 import CategoryMenu from "./CategoryMenu";
 import NomineeCard from "./NomineeCard";
 import ProgressBlocks from "./ProgressBlocks";
-import { Check } from "pixelarticons/react";
+import VideoDialog from "./VideoDialog";
 
 type BallotProps = {
   categories: Categoria[];
@@ -36,6 +37,10 @@ export default function Ballot({
   const headingId = useId();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [agreed, setAgreed] = useState(false);
+  const [watching, setWatching] = useState<{
+    videoId: string;
+    title: string;
+  } | null>(null);
 
   const total = categories.length;
 
@@ -64,7 +69,7 @@ export default function Ballot({
 
   if (total === 0) {
     return (
-      <section className="ballot px-6 pb-16 pt-28 md:pt-36">
+      <section className="ballot px-6 pb-16 pt-8 md:pt-12">
         <p className="mx-auto max-w-5xl text-foreground/80">
           As categorias serão reveladas em breve.
         </p>
@@ -80,7 +85,7 @@ export default function Ballot({
     : category.nome;
 
   return (
-    <section className="ballot px-6 pb-16 pt-28 md:pb-24 md:pt-36">
+    <section className="ballot px-6 pb-16 pt-8 md:pb-24 md:pt-12">
       <div className="mx-auto max-w-5xl">
         <ProgressBlocks
           items={categories.map((c) => ({
@@ -185,18 +190,19 @@ export default function Ballot({
                     Escolha um indicado em cada uma para poder confirmar.
                   </p>
                 ) : (
-                    <label className="flex min-h-11 cursor-pointer items-center gap-3 text-foreground/90">
-                        <input
-                            type="checkbox"
-                            checked={agreed}
-                            onChange={(e) => setAgreed(e.target.checked)}
-                            className="ballot-check__input"
-                        />
-                        <span aria-hidden="true" className="ballot-check">
-                            <Check width={16} height={16} />
-                        </span>
-                        Entendo que, depois de confirmar, minha cédula não pode ser alterada.
-                    </label>
+                  <label className="flex min-h-11 cursor-pointer items-center gap-3 text-foreground/90">
+                    <input
+                      type="checkbox"
+                      checked={agreed}
+                      onChange={(e) => setAgreed(e.target.checked)}
+                      className="ballot-check__input"
+                    />
+                    <span aria-hidden="true" className="ballot-check">
+                      <Check width={16} height={16} />
+                    </span>
+                    Entendo que, depois de confirmar, minha cédula não pode ser
+                    alterada.
+                  </label>
                 )}
 
                 <div className="flex flex-wrap justify-between gap-3">
@@ -214,9 +220,9 @@ export default function Ballot({
                     </AeroButton>
                   ) : (
                     <AeroButton
+                      shine
                       disabled={!agreed || confirming}
                       onClick={onConfirm}
-                      shine
                     >
                       {confirming ? "Confirmando..." : "Confirmar cédula"}
                     </AeroButton>
@@ -228,7 +234,9 @@ export default function Ballot({
         ) : (
           <>
             <p className="mt-3 text-foreground/80">
-              Escolha um indicado. Sua escolha é salva na hora.
+              {category.tipo === "video"
+                ? "Assista aos vídeos e escolha um. Sua escolha é salva na hora."
+                : "Escolha um indicado. Sua escolha é salva na hora."}
             </p>
 
             <div
@@ -236,23 +244,38 @@ export default function Ballot({
               aria-labelledby={headingId}
               className="nominee-grid mt-8"
               data-count={category.indicados.length}
-              style={
-                { "--count": category.indicados.length } as CSSProperties
-              }
+              data-type={category.tipo ?? "imagem"}
+              style={{ "--count": category.indicados.length } as CSSProperties}
             >
-              {category.indicados.map((nominee, index) => (
-                <div key={nominee.id} className="nominee-grid__item">
-                  <NomineeCard
-                    nominee={nominee}
-                    index={index}
-                    name={category.id}
-                    selected={votes[category.id] === nominee.id}
-                    disabled={confirmed}
-                    onSelect={() => onChoose(category.id, nominee.id)}
-                  />
-                </div>
-              ))}
+              {category.indicados.map((nominee, index) => {
+                const { videoId } = nominee;
+                return (
+                  <div key={nominee.id} className="nominee-grid__item">
+                    <NomineeCard
+                      nominee={nominee}
+                      index={index}
+                      name={category.id}
+                      selected={votes[category.id] === nominee.id}
+                      disabled={confirmed}
+                      onSelect={() => onChoose(category.id, nominee.id)}
+                      onWatch={
+                        videoId
+                          ? () => setWatching({ videoId, title: nominee.nome })
+                          : undefined
+                      }
+                    />
+                  </div>
+                );
+              })}
             </div>
+
+            {watching && (
+              <VideoDialog
+                videoId={watching.videoId}
+                title={watching.title}
+                onClose={() => setWatching(null)}
+              />
+            )}
 
             <div className="mt-10 flex flex-wrap justify-between gap-3">
               <AeroButton

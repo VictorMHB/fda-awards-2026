@@ -160,6 +160,38 @@
     opacity: 1;
   }
 
+    /* ---------- Categoria de vídeo ---------- */
+  .nominee__media--video {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Acima do radio (z-index 2): só o botão assiste, o resto da miniatura seleciona */
+  .nominee__play {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    margin: auto;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-dark-bg);
+    background: var(--aero-gradient);
+    border: 2px solid color-mix(in srgb, var(--color-dark-bg) 70%, transparent);
+    cursor: pointer;
+  }
+
+  .nominee__play:focus-visible {
+    outline: 3px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    .nominee__play:hover {
+      filter: brightness(1.08);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .nominee,
     .nominee__check,

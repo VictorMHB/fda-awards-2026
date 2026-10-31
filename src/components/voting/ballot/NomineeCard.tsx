@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Check } from "pixelarticons/react";
+import { useId, useState } from "react";
+import { Check, Play } from "pixelarticons/react";
+import { youtubeThumb } from "@/lib/voting/categories";
 import type { Indicado } from "@/types/voto";
 
 type NomineeCardProps = {
@@ -11,6 +12,7 @@ type NomineeCardProps = {
   selected: boolean;
   disabled: boolean;
   onSelect: () => void;
+  onWatch?: () => void; // só em categorias de vídeo
 };
 
 export default function NomineeCard({
@@ -20,27 +22,17 @@ export default function NomineeCard({
   selected,
   disabled,
   onSelect,
+  onWatch,
 }: NomineeCardProps) {
+  const nameId = useId();
   const [broken, setBroken] = useState(false);
-  const showImage = Boolean(nominee.imagemUrl) && !broken;
 
-  // <img> simples até decidirmos a origem das imagens (remotePatterns ou Storage)
-  const image = (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={nominee.imagemUrl}
-      alt=""
-      width={600}
-      height={750}
-      loading="lazy"
-      decoding="async"
-      onError={() => setBroken(true)}
-      className="size-full object-cover"
-    />
-  );
+  const isVideo = Boolean(nominee.videoId);
+  const src = nominee.videoId ? youtubeThumb(nominee.videoId) : nominee.imagemUrl;
+  const showImage = Boolean(src) && !broken;
 
   return (
-    <label
+    <div
       className={[
         "nominee",
         selected && "nominee--selected",
@@ -56,6 +48,7 @@ export default function NomineeCard({
         checked={selected}
         disabled={disabled}
         onChange={onSelect}
+        aria-labelledby={nameId}
         className="nominee__input"
       />
 
@@ -69,21 +62,45 @@ export default function NomineeCard({
       </span>
 
       {/* A imagem é decorativa: o nome em texto já identifica o indicado */}
-      <span className="nominee__media">
+      <span className={`nominee__media ${isVideo ? "nominee__media--video" : ""}`}>
         {showImage ? (
-          image
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={src}
+            alt=""
+            width={isVideo ? 480 : 600}
+            height={isVideo ? 360 : 750}
+            loading="lazy"
+            decoding="async"
+            onError={() => setBroken(true)}
+            className="size-full object-cover"
+          />
         ) : (
           <span aria-hidden="true" className="nominee__fallback">
             {nominee.nome.charAt(0)}
           </span>
         )}
+
         <span aria-hidden="true" className="nominee__check">
           <Check width={20} height={20} />
         </span>
+
+        {onWatch && (
+          <button
+            type="button"
+            className="nominee__play"
+            aria-label={`Assistir ao vídeo: ${nominee.nome}`}
+            onClick={onWatch}
+          >
+            <Play aria-hidden="true" width={24} height={24} />
+          </button>
+        )}
       </span>
 
-      <span className="nominee__name">{nominee.nome}</span>
+      <span id={nameId} className="nominee__name">
+        {nominee.nome}
+      </span>
       <span aria-hidden="true" className="nominee__line" />
-    </label>
+    </div>
   );
 }
