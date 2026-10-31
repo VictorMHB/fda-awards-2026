@@ -1,26 +1,22 @@
 [
   {
-    "question": "Preciso de conta Google para votar?",
-    "answer": "Sim. O login é feito com o Google, e cada conta tem uma única cédula."
+    "question": "Preciso de uma conta para votar?",
+    "answer": "Sim. O login é feito exclusivamente utilizando uma conta Google, e cada conta tem direito a realizar a votação uma vez."
   },
   {
     "question": "Posso mudar meu voto depois de confirmar?",
-    "answer": "Não. Até confirmar, você troca as escolhas quantas vezes quiser; depois da confirmação, a cédula fica travada."
+    "answer": "Não. Até confirmar, você troca as escolhas quantas vezes quiser; depois da confirmação, a votação fica travada."
   },
   {
-    "question": "Quando sai o resultado?",
-    "answer": "Os vencedores são anunciados na cerimônia, em 12 de dezembro."
+    "question": "Como posso assitir à cerimônia?",
+    "answer": "A cerimônia do FDA Awards será transmitida ao vivo pelos canais oficiais do evento no YouTube e na Twitch, com início às 20h (BRT). Haverá também cobertura completa no site, incluindo entrevistas e os melhores momentos da noite."
   },
   {
-    "question": "Como são escolhidos os vencedores?",
-    "answer": "Pelo voto do público: em cada categoria, vence o indicado com mais votos em cédulas confirmadas."
-  },
-  {
-    "question": "Onde assisto à cerimônia?",
-    "answer": "No Auditório Freguesia, para quem for ao evento. O link da transmissão ao vivo é divulgado aqui no site perto da data."
+    "question": "Onde posso encontrar a lista completa de indicados e categorias?",
+    "answer": "A lista completa de categorias está disponível em nosso site oficial, na seção “Votação”. Apenas os indicados de cada categoria que apenas serão relevados na abertura das votações."
   },
   {
     "question": "Qual o código de vestimenta para o evento?",
-    "answer": "Esporte fino. É noite de premiação: vale caprichar."
+    "answer": "Para os convidados que comparecerão ao Auditório Freguesia do Ó, recomendamos traje de gala. Sugerimos que os convidados optem por trajes elegantes e formais, adequados a uma noite de celebração e premiação."
   }
 ]
