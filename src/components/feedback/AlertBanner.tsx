@@ -16,7 +16,7 @@ export default function AlertBanner() {
   return (
     <div className="notice-bar relative -mt-4">
       <div className="notice-bar__inner">
-        <span className="notice-bar__tag">
+        <span className="tag">
           {fase === "aguardando" ? "Em breve" : "Votação aberta"}
         </span>
 

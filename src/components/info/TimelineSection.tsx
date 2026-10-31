@@ -33,7 +33,7 @@ export default function TimelineSection() {
                   <p className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">
                     {step.date}
                     {isCurrent && (
-                      <span className="bg-primary px-2 py-0.5 tracking-wider text-dark-bg">
+                      <span className="tag">
                         {CURRENT_STEP_LABEL}
                       </span>
                     )}

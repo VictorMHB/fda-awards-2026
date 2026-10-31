@@ -42,10 +42,11 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
 
   return (
     <div className="relative">
-      {/* O scroll corta o que passa da borda: pb-10 dá espaço para a sombra dos cards e -mb-6 devolve o espaçamento */}
+      {/* O scroll corta o que passa da borda: pt-3 dá espaço para o card subir no hover,
+          pb-10 para a sombra, e -mt-3 / -mb-6 devolvem o espaçamento */}
       <div
         ref={trackRef}
-        className="-mb-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-10 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
+        className="-mt-3 -mb-6 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pt-3 pb-10 md:gap-6 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
       >
         {news.map((item) => (
           <Card
@@ -75,9 +76,7 @@ export default function NewsCarousel({ news }: { news: NewsCardData[] }) {
                 />
               )}
               {item.category && (
-                <span className="absolute left-3 top-3 bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
-                  {item.category}
-                </span>
+                <span className="tag absolute left-3 top-3">{item.category}</span>
               )}
             </div>
 
