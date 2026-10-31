@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { User } from "firebase/auth";
+import AeroButton from "@/components/ui/AeroButton";
 import { useAuth } from "@/context/AuthContext";
 import { useSessao } from "@/hooks/useSessao";
 
@@ -10,7 +11,12 @@ type Variante = "header" | "menu";
 
 const FOCO_VISIVEL = "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary";
 
-export default function UserMenu({ variante = "header" }: { variante?: Variante }) {
+type UserMenuProps = {
+  variante?: Variante;
+  onNavigate?: () => void; // ex.: fechar o menu mobile ao ir para outra página
+};
+
+export default function UserMenu({ variante = "header", onNavigate }: UserMenuProps) {
   const { user, loading } = useAuth();
 
   if (loading) {
@@ -22,7 +28,7 @@ export default function UserMenu({ variante = "header" }: { variante?: Variante 
     );
   }
 
-  if (user) return <UsuarioLogado user={user} variante={variante} />;
+  if (user) return <UsuarioLogado user={user} variante={variante} onNavigate={onNavigate} />;
   return <BotaoEntrar variante={variante} />;
 }
 
@@ -43,8 +49,17 @@ function BotaoEntrar({ variante }: { variante: Variante }) {
   );
 }
 
-function UsuarioLogado({ user, variante }: { user: User; variante: Variante }) {
+function UsuarioLogado({
+  user,
+  variante,
+  onNavigate,
+}: {
+  user: User;
+  variante: Variante;
+  onNavigate?: () => void;
+}) {
   const { sair, saindo } = useSessao();
+  const { isAdmin } = useAuth();
   const [aberto, setAberto] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const nomeCompleto = user.displayName ?? user.email ?? "";
@@ -67,31 +82,41 @@ function UsuarioLogado({ user, variante }: { user: User; variante: Variante }) {
   }, [aberto]);
 
   if (variante === "menu") {
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-3 mb-4">
-        <Avatar nome={nomeCompleto} fotoUrl={user.photoURL} />
-        <div className="min-w-0 flex-1">
-          <span className="user-dropdown-label">Conectado como</span>
-          <p title={nomeCompleto} className="truncate text-base font-extrabold uppercase tracking-wider text-foreground">
-            {nomeCompleto}
-          </p>
-          {user.email && user.email !== nomeCompleto && (
-            <p className="mt-0.5 truncate text-xs text-foreground/60">{user.email}</p>
-          )}
+    return (
+      <div className="flex flex-col gap-3">
+        <div className="mb-4 flex items-center gap-3">
+          <Avatar nome={nomeCompleto} fotoUrl={user.photoURL} />
+          <div className="min-w-0 flex-1">
+            <span className="user-dropdown-label">Conectado como</span>
+            <p
+              title={nomeCompleto}
+              className="truncate text-base font-extrabold uppercase tracking-wider text-foreground"
+            >
+              {nomeCompleto}
+            </p>
+            {user.email && user.email !== nomeCompleto && (
+              <p className="mt-0.5 truncate text-xs text-foreground/60">{user.email}</p>
+            )}
+          </div>
         </div>
+
+        {isAdmin && (
+          <AeroButton href="/admin" variant="blue" className="w-full" onClick={onNavigate}>
+            Admin
+          </AeroButton>
+        )}
+
+        <button
+          type="button"
+          onClick={sair}
+          disabled={saindo}
+          className={`btn-logout btn-logout-full ${FOCO_VISIVEL}`}
+        >
+          {saindo ? "Saindo..." : "Sair"}
+        </button>
       </div>
-      <button
-        type="button"
-        onClick={sair}
-        disabled={saindo}
-        className={`btn-logout btn-logout-full ${FOCO_VISIVEL}`}
-      >
-        {saindo ? "Saindo..." : "Sair"}
-      </button>
-    </div>
-  );
-}
+    );
+  }
 
   return (
     <div ref={ref} className="relative">
@@ -121,6 +146,20 @@ function UsuarioLogado({ user, variante }: { user: User; variante: Variante }) {
             <p className="mt-0.5 truncate text-xs text-foreground/60">{user.email}</p>
           )}
         </div>
+
+        {isAdmin && (
+          <AeroButton
+            href="/admin"
+            role="menuitem"
+            variant="blue"
+            size="sm"
+            className="mx-3 mb-3 flex w-[calc(100%-1.5rem)]"
+            onClick={() => setAberto(false)}
+          >
+            Admin
+          </AeroButton>
+        )}
+
         <button
           type="button"
           role="menuitem"

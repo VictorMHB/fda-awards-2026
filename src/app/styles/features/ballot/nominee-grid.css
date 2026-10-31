@@ -1,4 +1,5 @@
 @layer components {
+
   /* Linhas sempre centralizadas, como no sponsor-grid */
   .nominee-grid {
     --gap: 0.75rem;
@@ -10,8 +11,7 @@
   }
 
   .nominee-grid__item {
-    flex: 0 0
-      calc((100% - (var(--per-row) - 1) * var(--gap)) / var(--per-row) - 0.02px);
+    flex: 0 0 calc((100% - (var(--per-row) - 1) * var(--gap)) / var(--per-row) - 0.02px);
     min-width: 0;
   }
 
@@ -35,7 +35,7 @@
     }
   }
 
-    /* Vídeos: miniaturas 16:9 pedem cards mais largos */
+  /* Vídeos: miniaturas 16:9 pedem cards mais largos */
   .nominee-grid[data-type="video"] {
     --per-row: 1;
   }
@@ -48,7 +48,14 @@
 
   @media (min-width: 64rem) {
     .nominee-grid[data-type="video"][data-count] {
+      --per-row: 2;
+      max-width: 46rem;
+      margin-inline: auto;
+    }
+
+    .nominee-grid[data-type="video"][data-count="5"] {
       --per-row: 3;
+      max-width: none;
     }
   }
 }
