@@ -3,9 +3,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useAgora } from "@/hooks/useAgora";
-import { getPhase } from "@/lib/content/shared/phases";
+import { getPhase, type PhaseId } from "@/lib/content/shared/phases";
 import { Trophy, Sparkle, Briefcase, InfoBox } from "pixelarticons/react";
 import Card from "@/components/ui/Card";
+
+type ItemTag = { label: string; muted?: boolean };
 
 type Item = {
   id: string;
@@ -14,9 +16,18 @@ type Item = {
   cta: string;
   href: string;
   icone: ReactNode;
-  tag?: string;
+  tag?: ItemTag;
   destaque?: boolean;
 };
+
+// Só a votação aberta chama atenção; antes e depois fica discreta.
+// Sem fase (relógio ainda não carregou) fica sem etiqueta, em vez de piscar uma errada.
+function votacaoTag(fase: PhaseId | null): ItemTag | undefined {
+  if (fase === null) return undefined;
+  if (fase === "votacao") return { label: "Aberta" };
+  if (fase === "aguardando") return { label: "Em breve", muted: true };
+  return { label: "Encerrada", muted: true };
+}
 
 export default function NavMapa() {
   const agora = useAgora();
@@ -31,7 +42,7 @@ export default function NavMapa() {
       // Antes da votação, o card leva pra Informações em vez de uma página vazia
       cta: votacaoAberta ? "Votar agora" : "Saiba mais",
       href: votacaoAberta ? "/votacao" : "/informacoes",
-      tag: votacaoAberta ? "Aberta" : "EM BREVE",
+      tag: votacaoTag(fase),
       destaque: votacaoAberta,
       icone: <Trophy width={32} height={32} className="pixel-icon" />,
     },
@@ -71,7 +82,7 @@ export default function NavMapa() {
           variant="window"
           title={`No.${String(i + 1).padStart(2, "0")}`}
           interactive
-          className={`flex min-h-[12rem] flex-col md:min-h-[14rem] ${
+          className={`flex min-h-48 flex-col md:min-h-56 ${
             item.destaque ? "border-primary/60" : ""
           }`}
         >
@@ -87,8 +98,10 @@ export default function NavMapa() {
                 {item.titulo}
               </h3>
               {item.tag && (
-                <span className="ml-auto shrink-0 bg-primary px-2.5 py-1 font-pixel text-xs uppercase tracking-wider text-dark-bg">
-                  {item.tag}
+                <span
+                  className={`tag ml-auto shrink-0 ${item.tag.muted ? "tag--muted" : ""}`}
+                >
+                  {item.tag.label}
                 </span>
               )}
             </div>

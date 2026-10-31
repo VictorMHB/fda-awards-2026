@@ -21,14 +21,16 @@ export async function requireAdmin() {
   return user;
 }
 
-// Rotas de API: o navegador manda o ID token no header Authorization
-export async function requireAdminFromRequest(request: Request) {
+export async function requireAdminFromRequest(
+  request: Request,
+  { checkRevoked = true }: { checkRevoked?: boolean } = {},
+) {
   const header = request.headers.get("authorization");
   const token = header?.startsWith("Bearer ") ? header.slice(7) : null;
   if (!token) return null;
 
   try {
-    const decoded = await getAdminAuth().verifyIdToken(token, true);
+    const decoded = await getAdminAuth().verifyIdToken(token, checkRevoked);
     return isAdminUid(decoded.uid) ? decoded : null;
   } catch {
     return null;

@@ -1,5 +1,5 @@
 import GlassShapes from "@/components/ui/GlassShapes";
-import Countdown from "@/components/ui/Countdown";
+import Countdown from "@/components/home/Countdown";
 import Marquee from "@/components/ui/Marquee";
 import NewsCarousel from "@/components/news/NewsCarousel";
 import NewsBody from "@/components/news/NewsBody";

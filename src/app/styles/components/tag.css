@@ -1,0 +1,22 @@
+@layer components {
+  /* Etiqueta de estado ou categoria: faixa de fase, notícias e cards do Explorar */
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-primary);
+    color: var(--color-dark-bg);
+    font-size: 0.8125rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Estados que não chamam atenção (em breve, encerrada): só contorno */
+  .tag--muted {
+    background: transparent;
+    color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-foreground) 40%, transparent);
+  }
+}

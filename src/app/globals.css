@@ -11,6 +11,7 @@
 @import "./styles/components/phase-override.css";
 @import "./styles/components/aero-button.css";
 @import "./styles/components/sponsor-grid.css";
+@import "./styles/components/tag.css";
 
 @import "./styles/features/user-menu.css";
 @import "./styles/features/info.css";

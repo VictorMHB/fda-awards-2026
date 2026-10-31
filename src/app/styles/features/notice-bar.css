@@ -1,55 +1,46 @@
 @layer components {
   .notice-bar {
     position: relative;
-    overflow: hidden;
-    background: var(--aero-gradient);
-    border-bottom: 2px solid rgba(90, 50, 20, 0.35);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      0 4px 18px rgba(250, 192, 147, 0.35),
-      0 8px 24px rgba(9, 14, 26, 0.45);
+    background: var(--color-dark-bg);
+    border-bottom: 3px solid var(--color-primary);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-dark-bg) 60%, transparent);
   }
 
-  /* Brilho de vidro na metade de cima (estático) */
+  /* Vidro: brilho só na metade de cima, corte duro no meio */
   .notice-bar::before {
     content: "";
     position: absolute;
     inset: 0 0 50% 0;
-    background: var(--aero-gloss);
+    background: color-mix(in srgb, var(--color-foreground) 8%, transparent);
     pointer-events: none;
   }
 
-  .notice-text {
+  .notice-bar__inner {
     position: relative;
-    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1.25rem;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding: 0.75rem 1rem;
+    text-align: center;
   }
 
-  /* Botão glossy escuro */
-  .notice-btn {
-    position: relative;
-    z-index: 1;
-    padding: 0.35rem 1.2rem;
-    border-radius: 9999px;
-    color: #fff;
-    background: linear-gradient(180deg, #3b4350 0%, #12151a 50%, #1e232b 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -2px 4px rgba(255, 255, 255, 0.08),
-      0 2px 6px rgba(0, 0, 0, 0.45);
-    transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+  .notice-bar__text {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-foreground);
   }
 
-  .notice-btn:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.25);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.6),
-      0 4px 12px rgba(0, 0, 0, 0.5);
-  }
+  @media (min-width: 48rem) {
+    .notice-bar__inner {
+      padding-block: 0.875rem;
+    }
 
-  @media (prefers-reduced-motion: reduce) {
-    .notice-btn {
-      transition: none;
+    .notice-bar__text {
+      font-size: 1rem;
     }
   }
 }

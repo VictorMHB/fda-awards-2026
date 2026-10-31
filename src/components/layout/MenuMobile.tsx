@@ -90,7 +90,7 @@ export default function MenuMobile({ isOpen, onClose, links, triggerRef }: MenuM
         })}
 
         <div className="mt-6 border-t border-foreground/15 pt-6">
-          <AreaDoUsuario variante="menu" />
+          <AreaDoUsuario variante="menu" onNavigate={onClose} />
         </div>
       </nav>
     </div>
