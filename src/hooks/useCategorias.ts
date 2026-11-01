@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { Categoria } from "@/types/voto";
@@ -9,38 +9,30 @@ export function useCategorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [version, setVersion] = useState(0);
+  const latest = useRef(0); // só a busca mais recente vale
+
+  // Devolve uma Promise: quem precisa esperar a lista nova (ex.: admin reordenando) usa await
+  const refetch = useCallback(async () => {
+    const request = ++latest.current;
+    try {
+      const q = query(collection(db, "categorias"), orderBy("ordem"));
+      const snapshot = await getDocs(q);
+      if (request !== latest.current) return;
+      setCategorias(
+        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Categoria[],
+      );
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      if (request === latest.current) setError("Erro ao carregar categorias.");
+    } finally {
+      if (request === latest.current) setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function fetchCategorias() {
-      try {
-        const q = query(collection(db, "categorias"), orderBy("ordem"));
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Categoria[];
-        if (cancelled) return;
-        setCategorias(data);
-        setError(null);
-      } catch (err) {
-        console.error(err);
-        if (!cancelled) setError("Erro ao carregar categorias.");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    fetchCategorias();
-    return () => {
-      cancelled = true;
-    };
-  }, [version]);
-
-  // Recarrega sem voltar ao "carregando": a lista antiga fica até a nova chegar
-  const refetch = useCallback(() => setVersion((v) => v + 1), []);
+    refetch();
+  }, [refetch]);
 
   return { categorias, loading, error, refetch };
 }

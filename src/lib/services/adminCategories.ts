@@ -30,3 +30,10 @@ export const deleteCategory = (token: string, id: string) =>
     headers: JSON_HEADERS,
     body: JSON.stringify({ id }),
   });
+
+export const reorderCategories = (token: string, ids: string[]) =>
+  call(token, "/api/admin/categorias", {
+    method: "PATCH",
+    headers: JSON_HEADERS,
+    body: JSON.stringify({ ids }),
+  });
