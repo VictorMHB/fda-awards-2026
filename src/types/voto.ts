@@ -10,6 +10,7 @@ export interface Indicado {
 export interface Categoria {
   id: string;
   nome: string;
+  descricao?: string; // explica a categoria (aparece na cédula)
   ordem: number;
   tipo?: CategoriaTipo; // ausente = "imagem" (categorias já cadastradas)
   indicados: Indicado[];

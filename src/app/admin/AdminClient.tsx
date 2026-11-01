@@ -16,7 +16,6 @@ export default function AdminClient() {
   const { user } = useAuth();
   const { categorias, loading, error, refetch } = useCategorias();
   const agora = useAgora();
-  // Só avisa; quem trava de verdade é a API
   const locked = agora !== 0 && categoriesLocked(agora);
 
   const [editing, setEditing] = useState<Categoria | null>(null);
@@ -120,6 +119,7 @@ export default function AdminClient() {
                     {category.tipo === "video" ? "Vídeo" : "Imagem"} · {category.indicados.length}{" "}
                     indicados
                     {category.indicados.length === MAX_INDICADOS && " · final"}
+                    {!category.descricao && " · sem descrição"}
                   </p>
                 </div>
                 <div className="flex gap-2">

@@ -3,6 +3,7 @@ import type { Categoria, CategoriaTipo, Indicado } from "@/types/voto";
 
 export const MIN_INDICADOS = 4;
 export const MAX_INDICADOS = 5; // 5 indicados = categoria final
+export const MAX_DESCRICAO = 400;
 
 // O ID vira ID de documento e valor em `votos`: "." e "/" quebram a votação
 export const ID_VALIDO = /^[\p{L}\p{N}_-]+$/u;
@@ -72,6 +73,7 @@ export function validateCategory(input: unknown): CategoryResult {
   const id = text(body.id);
   const nome = text(body.nome);
   const ordem = body.ordem;
+  const descricao = text(body.descricao);
   const tipo: CategoriaTipo = body.tipo === "video" ? "video" : "imagem";
   const raw = body.indicados;
 
@@ -80,6 +82,9 @@ export function validateCategory(input: unknown): CategoryResult {
   }
   if (!ID_VALIDO.test(id)) {
     return fail('ID inválido: use só letras, números, "_" e "-".');
+  }
+    if (descricao.length > MAX_DESCRICAO) {
+    return fail(`A descrição passa de ${MAX_DESCRICAO} caracteres.`);
   }
   if (raw.length < MIN_INDICADOS || raw.length > MAX_INDICADOS) {
     return fail(`Use de ${MIN_INDICADOS} a ${MAX_INDICADOS} indicados por categoria.`);
@@ -122,5 +127,15 @@ export function validateCategory(input: unknown): CategoryResult {
     if (new Set(videos).size !== videos.length) return fail("Há indicados com o mesmo vídeo.");
   }
 
-  return { ok: true, value: { id, nome, ordem, tipo, indicados } };
+    return {
+    ok: true,
+    value: {
+      id,
+      nome,
+      ordem,
+      tipo,
+      indicados,
+      ...(descricao ? { descricao } : {}),
+    },
+  };
 }
