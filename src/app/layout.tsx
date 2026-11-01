@@ -1,6 +1,6 @@
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import { Toaster } from "sonner";
+import AppToaster from "@/components/feedback/AppToaster";
 import { Krona_One, Work_Sans, Share_Tech_Mono } from "next/font/google";
 import OfflineToast from "@/components/feedback/OfflineToast";
 import Header from "@/components/layout/Header";
@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </div>
         </AuthProvider>
-        <Toaster richColors position="top-center" />
+        <AppToaster />
         <OfflineToast />
         <Footer />
       </body>
