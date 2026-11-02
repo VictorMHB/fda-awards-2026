@@ -8,36 +8,35 @@
       "id": "categories",
       "title": "Como são escolhidos as categorias?",
       "items": [
-        "[PREENCHER] O que define o vencedor (voto do público, júri ou combinação).",
-        "[PREENCHER] Critério de desempate.",
-        "Os vencedores são revelados ao vivo, na cerimônia."
+        "A cada edição do FDA Awards as categorias podem mudar, de acordo com a relevância do tema durante o ano, apenas algumas categorias são fixas (categorias legado).",
+        "Para uma categoria ser incluída na premiação, ela precisa da maioria dos indicados diferentes, caso contrário, não será incluída.",
+        "A decisão final sobre quais categorias entram na premiação é do comitê organizador e do jurí especializado."
       ]
     },
     {
       "id": "nominees",
       "title": "Como são escolhidos os indicados?",
       "items": [
-        "[PREENCHER] Quem pode ser indicado e em qual período.",
-        "[PREENCHER] Como os indicados são selecionados (quem decide e com qual critério).",
-        "[PREENCHER] Quantos indicados por categoria (4, e 5 nas finais)."
+        "Cada categoria possui um total de 4 indicados, exceto as categorias finais que possuem 5 indicados.",
+        "Os indicados precisam estar dentro do escopo do FDA Awards, ou seja, precisam ter relevância para o público do evento.",
+        "Um indicado pode estar presente em mais de uma categoria, caso seja relevante na temática de cada uma."
       ]
     },
     {
       "id": "winners",
       "title": "Como são escolhidos os vencedores?",
       "items": [
-        "[PREENCHER] O que define o vencedor (voto do público, júri ou combinação).",
-        "[PREENCHER] Critério de desempate.",
-        "Os vencedores são revelados ao vivo, na cerimônia."
+        "Os vencedores de cada categoria são escolhidos por votação do público, cada voto é contabilizado apenas dentro do prazo de votação.",
+        "Em caso de empate, o o vencedor é definido pelo comitê organizador e pelo júri especializado.",
+        "Os vencedores são revelados ao vivo, na durante toda a cerimônia."
       ]
     },
     {
       "id": "cutoff-date",
       "title": "Qual é o prazo limite de elegibilidade?",
       "items": [
-        "[PREENCHER] O que define o vencedor (voto do público, júri ou combinação).",
-        "[PREENCHER] Critério de desempate.",
-        "Os vencedores são revelados ao vivo, na cerimônia."
+        "O prazo limite para a elegibilidade de indicados é até o final a metade de Novembro.",
+        "Caso algum fato importante aconteça após a data limite, a premiação para aquela categoria pode ser adicionada na edição do ano seguinte."
       ]
     }
   ]

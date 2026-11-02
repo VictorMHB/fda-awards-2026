@@ -106,52 +106,63 @@
   }
 
   /* ==========================================================================
-     AeroText: contorno + degradê (títulos de seção)
+     AeroText: mesmo visual do logo (contorno, extrusão e face com degradê)
      ========================================================================== */
   .text-aero {
-  --aero-stroke: #0b1430;
-  --aero-stroke-width: 0.14em;
-  --aero-bleed: 0.3em; /* quanto o preenchimento passa da caixa, em cima e embaixo */
+    --aero-stroke: #0b1430;
+    --aero-stroke-width: 0.16em;
+    --aero-bleed: 0.3em; /* quanto o preenchimento passa da caixa, em cima e embaixo */
 
-  position: relative;
-  display: inline-block;
-  line-height: 1.2;
-  color: var(--aero-stroke);
-  -webkit-text-stroke: var(--aero-stroke-width) var(--aero-stroke);
-}
+    position: relative;
+    display: inline-block;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+    color: var(--aero-stroke);
+    -webkit-text-stroke: var(--aero-stroke-width) var(--aero-stroke);
+    /* Extrusão: igual à do logo */
+    text-shadow:
+      0.015em 0.015em 0 var(--aero-stroke),
+      0.03em 0.03em 0 var(--aero-stroke),
+      0.045em 0.045em 0 var(--aero-stroke),
+      0.06em 0.06em 0 var(--aero-stroke);
+  }
 
-/* O preenchimento cresce pra fora, e o padding devolve o texto ao mesmo lugar */
-.text-aero::after {
-  content: attr(data-text);
-  position: absolute;
-  inset: calc(-1 * var(--aero-bleed)) -0.1em;
-  padding: var(--aero-bleed) 0.1em;
-  -webkit-text-stroke: 0;
-  color: transparent;
-  background: var(--aero-fill);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
+  /* Face: cresce pra fora (acentos e caudas não cortam), o padding devolve
+     o texto ao mesmo lugar e o degradê se encaixa na altura da linha. */
+  .text-aero::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: calc(-1 * var(--aero-bleed)) -0.1em;
+    padding: var(--aero-bleed) 0.1em;
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+    color: transparent;
+    background: var(--aero-fill);
+    background-origin: content-box; /* o degradê cobre só a linha de texto... */
+    background-repeat: repeat; /* ...e repete (pontas brancas) nas áreas dos acentos */
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
 
   .text-aero--italic {
     transform: skewX(-8deg);
     padding-inline: 0.1em;
   }
 
-  /* Gelo: cromado azulado, igual ao AWARDS da logo (padrão dos títulos) */
+  /* Gelo: igual ao AWARDS do logo (padrão dos títulos) */
   .text-aero--ice {
-  --aero-fill: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #eef3f6 36%,
-    #b6c6d4 49%,
-    #8ba1b6 51%,
-    #dbe3e9 78%,
-    #ffffff 100%
-  );
-}
+    --aero-fill: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #eef3f6 36%,
+      #b6c6d4 49%,
+      #8ba1b6 51%,
+      #dbe3e9 78%,
+      #ffffff 100%
+    );
+  }
 
-  /* Laranja: igual ao FDA da logo */
+  /* Laranja: igual ao FDA do logo */
   .text-aero--primary {
     --aero-fill: linear-gradient(
       180deg,
@@ -176,27 +187,27 @@
   }
 
   /* ==========================================================================
-   Tiers de patrocinadores: um gradiente, cor vem de --tier
-   ========================================================================== */
-.text-aero--diamond,
-.text-aero--platinum,
-.text-aero--gold,
-.text-aero--silver,
-.text-aero--bronze {
-  --aero-fill: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--tier) 25%, white) 0%,
-    color-mix(in srgb, var(--tier) 60%, white) 30%,
-    var(--tier) 49%,
-    color-mix(in srgb, var(--tier) 75%, black) 51%,
-    color-mix(in srgb, var(--tier) 90%, white) 78%,
-    color-mix(in srgb, var(--tier) 55%, white) 100%
-  );
-}
+     Tiers de patrocinadores: um degradê, a cor vem de --tier
+     ========================================================================== */
+  .text-aero--diamond,
+  .text-aero--platinum,
+  .text-aero--gold,
+  .text-aero--silver,
+  .text-aero--bronze {
+    --aero-fill: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--tier) 25%, white) 0%,
+      color-mix(in srgb, var(--tier) 60%, white) 30%,
+      var(--tier) 49%,
+      color-mix(in srgb, var(--tier) 75%, black) 51%,
+      color-mix(in srgb, var(--tier) 90%, white) 78%,
+      color-mix(in srgb, var(--tier) 55%, white) 100%
+    );
+  }
 
-.text-aero--diamond  { --tier: var(--color-tier-diamond); }
-.text-aero--platinum { --tier: var(--color-tier-platinum); }
-.text-aero--gold     { --tier: var(--color-tier-gold); }
-.text-aero--silver   { --tier: var(--color-tier-silver); }
-.text-aero--bronze   { --tier: var(--color-tier-bronze); }
+  .text-aero--diamond  { --tier: var(--color-tier-diamond); }
+  .text-aero--platinum { --tier: var(--color-tier-platinum); }
+  .text-aero--gold     { --tier: var(--color-tier-gold); }
+  .text-aero--silver   { --tier: var(--color-tier-silver); }
+  .text-aero--bronze   { --tier: var(--color-tier-bronze); }
 }

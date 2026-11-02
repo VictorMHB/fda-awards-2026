@@ -90,7 +90,7 @@ export default function NewsModal({ news, onClose }: NewsModalProps) {
             <div className="mx-auto max-w-3xl px-5 pt-6 pb-10 md:px-10 md:pt-8 md:pb-12">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 {shown.category && (
-                  <span className="bg-primary px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-dark-bg">
+                  <span className="tag">
                     {shown.category}
                   </span>
                 )}

@@ -14,11 +14,14 @@ type BubbleStyle = CSSProperties & Record<`--${string}`, string>;
 
 // As menores somem no mobile para economizar GPU
 const BUBBLES: { style: BubbleStyle; className?: string }[] = [
-  { style: { "--s": "9rem", "--x": "6%", "--y": "18%", "--d": "8s" } },
-  { style: { "--s": "4.5rem", "--x": "22%", "--y": "62%", "--d": "6s" }, className: "hidden sm:block" },
+  // era 6% / 18% (em cima do título) -> canto superior esquerdo
+  { style: { "--s": "5rem", "--x": "16%", "--y": "6%", "--d": "8s" } },
+  { style: { "--s": "4.5rem", "--x": "40%", "--y": "13%", "--d": "6s" }, className: "hidden sm:block" },
   { style: { "--s": "6rem", "--x": "78%", "--y": "14%", "--d": "9s" } },
-  { style: { "--s": "3rem", "--x": "90%", "--y": "58%", "--d": "5s" }, className: "hidden sm:block" },
+  { style: { "--s": "3rem", "--x": "68%", "--y": "34%", "--d": "5s" }, className: "hidden sm:block" },
   { style: { "--s": "2rem", "--x": "58%", "--y": "8%", "--d": "7s" }, className: "hidden md:block" },
+  { style: { "--s": "2rem", "--x": "4%", "--y": "23%", "--d": "7s" }, className: "hidden md:block" },
+  { style: { "--s": "1.4rem", "--x": "88%", "--y": "45%", "--d": "7s" }, className: "hidden md:block" },
 ];
 
 export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
@@ -36,7 +39,8 @@ export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
         />
       )}
       <div aria-hidden="true" className="info-hero__rays" />
-      <div aria-hidden="true" className="info-hero__dots" />
+      <div aria-hidden="true" className="info-hero__dots info-hero__dots--tr" />
+      <div aria-hidden="true" className="info-hero__dots info-hero__dots--bl" />
       {BUBBLES.map(({ style, className = "" }, i) => (
         <span key={i} aria-hidden="true" className={`info-bubble ${className}`} style={style} />
       ))}
@@ -44,7 +48,7 @@ export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
       <div className="mx-auto max-w-6xl">
         <p className="info-eyebrow">FDA Awards 2026 · 5ª edição</p>
 
-        <AeroText as="h1" className="mt-4 block text-5xl md:text-7xl">
+        <AeroText as="h1" className="mt-4 block uppercase text-5xl md:text-7xl">
           Informações
         </AeroText>
 

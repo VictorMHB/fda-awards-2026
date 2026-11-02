@@ -1,15 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
+import { useAuth } from "@/context/AuthContext";
 import { useCategorias } from "@/hooks/useCategorias";
 import { useVotante } from "@/hooks/useVotante";
-import { useAuth } from "@/context/AuthContext";
-import { toast } from "sonner";
 import UserMenu from "@/components/layout/UserMenu";
+import Ballot from "@/components/voting/ballot/Ballot";
 
-export default function VotacaoPage() {
-  const { categorias, loading: loadingCategorias } = useCategorias();
+const MESSAGE = "px-6 pt-32 text-foreground/80";
+
+export default function VotacaoClient() {
   const { user } = useAuth();
+  const {
+    categorias,
+    loading: loadingCategorias,
+    error: erroCategorias,
+  } = useCategorias();
   const {
     votante,
     loading: loadingVotante,
@@ -17,12 +24,11 @@ export default function VotacaoPage() {
     escolherIndicado,
   } = useVotante();
 
-  const [confirmando, setConfirmando] = useState(false);
-  const [erro, setErro] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState(false);
 
-  async function handleConfirmar() {
+  async function handleConfirm() {
     if (!user) return;
-    setConfirmando(true);
+    setConfirming(true);
     try {
       const token = await user.getIdToken();
       const res = await fetch("/api/votar", {
@@ -38,71 +44,48 @@ export default function VotacaoPage() {
     } catch {
       toast.error("Erro de conexão.");
     } finally {
-      setConfirmando(false);
+      setConfirming(false);
     }
   }
 
   if (!user) {
     return (
-      <main className="p-10">
+      <main className={MESSAGE}>
         <p className="mb-4">Você precisa estar logado pra votar.</p>
         <UserMenu />
       </main>
     );
   }
 
-  if (loadingCategorias || loadingVotante)
-    return <p className="p-10">Carregando...</p>;
+  if (loadingCategorias || loadingVotante) {
+    return (
+      <main className={MESSAGE}>
+        <p role="status">Carregando sua cédula...</p>
+      </main>
+    );
+  }
+
+  const error = erroCategorias ?? erroVotante;
+  if (error || !votante) {
+    return (
+      <main className={MESSAGE}>
+        <p role="alert" className="border-l-[3px] border-primary bg-primary/10 p-4">
+          {error ?? "Não foi possível carregar sua cédula. Recarregue a página."}
+        </p>
+      </main>
+    );
+  }
 
   return (
-    <main className="p-10">
-      <h1 className="text-4xl font-title font-bold mb-6">Votação</h1>
-
-      {erroVotante && (
-        <p className="mb-4 text-red-400 border border-red-400 rounded p-3">
-          ⚠️ {erroVotante}
-        </p>
-      )}
-
-      {categorias.map((categoria) => (
-        <div key={categoria.id} className="mb-8">
-          <h2 className="text-2xl font-title mb-2">{categoria.nome}</h2>
-          <div className="flex gap-2 flex-wrap">
-            {categoria.indicados.map((indicado) => {
-              const selecionado = votante?.votos[categoria.id] === indicado.id;
-              return (
-                <button
-                  key={indicado.id}
-                  onClick={() => escolherIndicado(categoria.id, indicado.id)}
-                  disabled={votante?.confirmado}
-                  className={`px-4 py-2 rounded border ${
-                    selecionado ? "bg-primary text-dark-bg" : "border-secondary"
-                  }`}
-                >
-                  {indicado.nome}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-
-      {votante?.confirmado ? (
-        <p className="text-primary font-bold text-xl">
-          ✅ Voto confirmado, obrigado por participar!
-        </p>
-      ) : (
-        <>
-          {erro && <p className="text-red-400 mb-2">{erro}</p>}
-          <button
-            onClick={handleConfirmar}
-            disabled={confirmando}
-            className="px-6 py-3 rounded bg-primary text-dark-bg font-bold"
-          >
-            {confirmando ? "Confirmando..." : "Confirmar votos"}
-          </button>
-        </>
-      )}
+    <main>
+      <Ballot
+        categories={categorias}
+        votes={votante.votos}
+        confirmed={votante.confirmado}
+        confirming={confirming}
+        onChoose={escolherIndicado}
+        onConfirm={handleConfirm}
+      />
     </main>
   );
 }

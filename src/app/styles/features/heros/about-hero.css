@@ -77,18 +77,28 @@
 
   /* Pontilhado só nos cantos de cima, mais fraco */
   .about-hero__dots {
-    position: absolute;
-    inset: 0 0 auto 0;
-    height: 55%;
-    z-index: -3;
-    pointer-events: none;
-    opacity: 0.22;
-    background-image: radial-gradient(circle, rgb(255 255 255 / 0.4) 1.5px, transparent 2px);
-    background-size: 10px 10px;
-    mask-image:
-      radial-gradient(circle at 0 0, #000, transparent 55%),
-      radial-gradient(circle at 100% 0, #000, transparent 55%);
-  }
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 70%;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image: radial-gradient(circle, rgb(255 255 255 / 0.4) 1.5px, transparent 2px);
+  background-size: 10px 10px;
+  mask-image:
+    linear-gradient(
+      180deg,
+      #000 0%,
+      rgb(0 0 0 / 0.8) 40%,
+      rgb(0 0 0 / 0.5) 70%,
+      rgb(0 0 0 / 0.2) 90%,
+      transparent 100%
+    ),
+    radial-gradient(circle at 0 0, #000, rgb(0 0 0 / 0.6) 45%, transparent 95%),
+    radial-gradient(circle at 100% 0, #000, rgb(0 0 0 / 0.6) 45%, transparent 95%);
+  mask-composite: intersect, add;
+  -webkit-mask-composite: source-in, source-over;
+}
 
   /* Fecha com a linha laranja de 3px */
   .about-hero::after {

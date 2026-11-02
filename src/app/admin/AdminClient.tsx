@@ -2,190 +2,149 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import AeroButton from "@/components/ui/AeroButton";
+import { AeroText } from "@/components/ui/AeroText";
 import { useAuth } from "@/context/AuthContext";
+import { useAgora } from "@/hooks/useAgora";
 import { useCategorias } from "@/hooks/useCategorias";
-import { Categoria } from "@/types/voto";
-
-type IndicadoForm = { id: string; nome: string; imagemUrl: string };
+import { deleteCategory } from "@/lib/services/adminCategories";
+import { categoriesLocked, MAX_INDICADOS } from "@/lib/voting/categories";
+import type { Categoria } from "@/types/voto";
+import CategoryForm from "./_components/CategoryForm";
 
 export default function AdminClient() {
   const { user } = useAuth();
-  const { categorias } = useCategorias();
+  const { categorias, loading, error, refetch } = useCategorias();
+  const agora = useAgora();
+  // Só avisa; quem trava de verdade é a API
+  const locked = agora !== 0 && categoriesLocked(agora);
 
-  const [id, setId] = useState("");
-  const [nome, setNome] = useState("");
-  const [ordem, setOrdem] = useState(1);
-  const [indicados, setIndicados] = useState<IndicadoForm[]>([
-    { id: "ind_1", nome: "", imagemUrl: "" },
-  ]);
-  const [salvando, setSalvando] = useState(false);
-  const [editandoId, setEditandoId] = useState<string | null>(null);
+  const [editing, setEditing] = useState<Categoria | null>(null);
+  const [run, setRun] = useState(0); // trocar a key reinicia o formulário
 
-  function carregarParaEdicao(categoria: Categoria) {
-    setEditandoId(categoria.id);
-    setId(categoria.id);
-    setNome(categoria.nome);
-    setOrdem(categoria.ordem);
-    setIndicados(categoria.indicados.map((i) => ({ ...i })));
+  const nextOrder = categorias.length
+    ? Math.max(...categorias.map((c) => c.ordem)) + 1
+    : 1;
+
+  function reset() {
+    setEditing(null);
+    setRun((n) => n + 1);
+  }
+
+  function startEdit(category: Categoria) {
+    setEditing(category);
+    setRun((n) => n + 1);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function cancelarEdicao() {
-    setEditandoId(null);
-    setId("");
-    setNome("");
-    setOrdem(1);
-    setIndicados([{ id: "ind_1", nome: "", imagemUrl: "" }]);
+  function handleSaved() {
+    refetch();
+    reset();
   }
 
-  function addIndicado() {
-    setIndicados((prev) => [...prev, { id: `ind_${prev.length + 1}`, nome: "", imagemUrl: "" }]);
-  }
-
-  function removeIndicado(index: number) {
-    setIndicados((prev) => prev.filter((_, i) => i !== index));
-  }
-
-  function updateIndicado(index: number, campo: keyof IndicadoForm, valor: string) {
-    setIndicados((prev) => prev.map((ind, i) => (i === index ? { ...ind, [campo]: valor } : ind)));
-  }
-
-  async function handleSalvar() {
+  async function handleDelete(category: Categoria) {
     if (!user) return;
-    if (!id || !nome || indicados.some((i) => !i.nome)) {
-      toast.error("Preencha ID, nome da categoria e o nome de todos os indicados.");
-      return;
-    }
-    setSalvando(true);
+    if (!confirm(`Apagar a categoria "${category.nome}"?`)) return;
     try {
-      const token = await user.getIdToken();
-      const res = await fetch("/api/admin/categorias", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ id, nome, ordem, indicados }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error(data.error ?? "Erro ao salvar.");
-      } else {
-        toast.success(editandoId ? "Categoria atualizada!" : "Categoria salva!");
-        cancelarEdicao();
-      }
-    } catch {
-      toast.error("Erro de conexão.");
-    } finally {
-      setSalvando(false);
-    }
-  }
-
-  async function handleDeletar(categoriaId: string) {
-    if (!user) return;
-    if (!confirm(`Apagar a categoria "${categoriaId}"?`)) return;
-    const token = await user.getIdToken();
-    const res = await fetch("/api/admin/categorias", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ id: categoriaId }),
-    });
-    if (res.ok) {
+      await deleteCategory(await user.getIdToken(), category.id);
       toast.success("Categoria apagada.");
-      if (editandoId === categoriaId) cancelarEdicao();
-    } else {
-      toast.error("Erro ao apagar.");
+      if (editing?.id === category.id) reset();
+      refetch();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Erro ao apagar.");
     }
   }
 
   return (
-    <main className="p-10 max-w-2xl">
-      <h1 className="text-3xl font-title font-bold mb-6">Admin — Categorias</h1>
+    <main className="px-6 py-10 md:py-16">
+      <div className="mx-auto max-w-3xl">
+        <h1>
+          <AeroText className="block py-0 text-3xl leading-[1.35] md:text-5xl">
+            Categorias
+          </AeroText>
+        </h1>
 
-      <div className="mb-10 border p-4 rounded">
-        <h2 className="text-xl font-title mb-3">
-          {editandoId ? `Editando: ${editandoId}` : "Nova categoria"}
-        </h2>
+        {locked && (
+          <p role="status" className="mt-6 border-l-[3px] border-primary bg-primary/10 p-4">
+            A votação já abriu: criar, editar e apagar estão bloqueados, porque isso invalidaria
+            votos já gravados.
+          </p>
+        )}
 
-        <label className="block mb-2">
-          ID (sem espaço, ex: melhor_momento)
-          <input
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-            disabled={!!editandoId}
-            className="border p-2 w-full text-black disabled:bg-gray-200"
-          />
-        </label>
-
-        <label className="block mb-2">
-          Nome
-          <input value={nome} onChange={(e) => setNome(e.target.value)} className="border p-2 w-full text-black" />
-        </label>
-
-        <label className="block mb-4">
-          Ordem
-          <input
-            type="number"
-            value={ordem}
-            onChange={(e) => setOrdem(Number(e.target.value))}
-            className="border p-2 w-full text-black"
-          />
-        </label>
-
-        <h3 className="font-bold mb-2">Indicados</h3>
-        {indicados.map((ind, index) => (
-          <div key={index} className="flex gap-2 mb-2">
-            <input
-              placeholder="Nome do indicado"
-              value={ind.nome}
-              onChange={(e) => updateIndicado(index, "nome", e.target.value)}
-              className="border p-2 flex-1 text-black"
+        <div className="mt-8">
+          {loading ? (
+            <p role="status" className="text-foreground/80">
+              Carregando...
+            </p>
+          ) : (
+            <CategoryForm
+              key={`${editing?.id ?? "new"}-${run}`}
+              initial={editing}
+              nextOrder={nextOrder}
+              locked={locked}
+              onSaved={handleSaved}
+              onCancel={reset}
             />
-            <input
-              placeholder="URL da imagem (opcional)"
-              value={ind.imagemUrl}
-              onChange={(e) => updateIndicado(index, "imagemUrl", e.target.value)}
-              className="border p-2 flex-1 text-black"
-            />
-            <button onClick={() => removeIndicado(index)} className="px-2 border rounded">
-              ✕
-            </button>
-          </div>
-        ))}
-        <button onClick={addIndicado} className="text-sm underline mb-4 block">
-          + adicionar indicado
-        </button>
-
-        <div className="flex gap-2">
-          <button
-            onClick={handleSalvar}
-            disabled={salvando}
-            className="bg-primary text-dark-bg font-bold px-4 py-2 rounded"
-          >
-            {salvando ? "Salvando..." : editandoId ? "Atualizar categoria" : "Salvar categoria"}
-          </button>
-
-          {editandoId && (
-            <button onClick={cancelarEdicao} className="px-4 py-2 rounded border">
-              Cancelar edição
-            </button>
           )}
         </div>
-      </div>
 
-      <h2 className="text-xl font-title mb-3">Categorias existentes</h2>
-      {categorias.map((cat) => (
-        <div key={cat.id} className="flex justify-between items-center border-b py-2">
-          <span>
-            {cat.nome} ({cat.indicados.length} indicados)
-          </span>
-          <div className="flex gap-3">
-            <button onClick={() => carregarParaEdicao(cat)} className="text-secondary underline text-sm">
-              editar
-            </button>
-            <button onClick={() => handleDeletar(cat.id)} className="text-red-400 underline text-sm">
-              apagar
-            </button>
-          </div>
-        </div>
-      ))}
+        <h2 className="mt-12">
+          <AeroText variant="primary" className="block py-0 text-2xl leading-[1.35] md:text-3xl">
+            Existentes
+          </AeroText>
+        </h2>
+
+        {error && (
+          <p role="alert" className="mt-4 border-l-[3px] border-primary bg-primary/10 p-4">
+            {error}
+          </p>
+        )}
+
+        {!loading && categorias.length === 0 ? (
+          <p className="mt-4 text-foreground/80">Nenhuma categoria cadastrada.</p>
+        ) : (
+          <ul className="mt-4 divide-y divide-foreground/15 border border-foreground/20">
+            {categorias.map((category) => (
+              <li
+                key={category.id}
+                className="flex flex-wrap items-center justify-between gap-3 p-4"
+              >
+                <div className="min-w-0">
+                  <p className="font-bold wrap-anywhere">
+                    <span className="mr-3 font-mono text-sm text-primary">
+                      {String(category.ordem).padStart(2, "0")}
+                    </span>
+                    {category.nome}
+                  </p>
+                  <p className="text-xs text-foreground/70">
+                    {category.tipo === "video" ? "Vídeo" : "Imagem"} · {category.indicados.length}{" "}
+                    indicados
+                    {category.indicados.length === MAX_INDICADOS && " · final"}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <AeroButton
+                    variant="blue"
+                    size="sm"
+                    disabled={locked}
+                    onClick={() => startEdit(category)}
+                  >
+                    Editar<span className="sr-only"> {category.nome}</span>
+                  </AeroButton>
+                  <AeroButton
+                    variant="blue"
+                    size="sm"
+                    disabled={locked}
+                    onClick={() => handleDelete(category)}
+                  >
+                    Apagar<span className="sr-only"> {category.nome}</span>
+                  </AeroButton>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </main>
   );
 }

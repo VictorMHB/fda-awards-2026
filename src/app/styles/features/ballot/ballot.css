@@ -1,0 +1,86 @@
+@layer components {
+  .ballot {
+    min-height: 100svh;
+  }
+
+  .ballot__heading:focus-visible {
+    outline: none; /* foco programático, não é um controle */
+  }
+
+  /* ---------- Progresso em blocos ---------- */
+  .ballot-progress {
+    --stroke: color-mix(in srgb, var(--color-dark-bg) 60%, black);
+    --steel: color-mix(in srgb, var(--color-secondary) 55%, var(--color-foreground));
+    display: flex;
+    gap: 3px;
+    padding: 4px;
+    background: var(--color-dark-bg);
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 30%, transparent);
+  }
+
+  .ballot-progress__block {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 1.25rem;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--steel) 45%, var(--color-dark-bg)) 0 50%,
+      color-mix(in srgb, var(--steel) 30%, var(--color-dark-bg)) 50%
+    );
+    border: 2px solid var(--stroke);
+  }
+
+  .ballot-progress__block--current {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--steel) 85%, white) 0 50%,
+      var(--steel) 50%
+    );
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 1px;
+  }
+
+  /* Por último, para vencer o "atual" quando a categoria atual já foi votada */
+  .ballot-progress__block--filled {
+    background: var(--aero-fill);
+    border-color: var(--stroke);
+  }
+
+  /* ---------- Marcador de confirmação ---------- */
+  /* Input nativo escondido (continua focável e lido pelo leitor de tela) */
+  .ballot-check__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .ballot-check {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: transparent; /* o ícone usa currentColor: some quando desmarcado */
+    background: var(--color-dark-bg);
+    border: 2px solid var(--color-secondary);
+  }
+
+  .ballot-check__input:checked + .ballot-check {
+    color: var(--color-dark-bg);
+    background: var(--aero-gradient);
+    border-color: var(--color-primary);
+  }
+
+  .ballot-check__input:focus-visible + .ballot-check {
+    outline: 3px solid var(--color-foreground);
+    outline-offset: 3px;
+  }
+
+  .ballot-check__input:disabled + .ballot-check {
+    opacity: 0.5;
+  }
+}

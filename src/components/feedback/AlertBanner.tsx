@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import AeroButton from "@/components/ui/AeroButton";
 import { useAgora } from "@/hooks/useAgora";
 import { ANUNCIO_PREVISTO, targetPhase, formatarData, getPhase } from "@/lib/content/shared/phases";
 
@@ -15,20 +15,23 @@ export default function AlertBanner() {
 
   return (
     <div className="notice-bar relative -mt-4">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-2 px-4 py-3.5 text-center text-sm font-extrabold uppercase tracking-wider text-dark-bg md:py-4 md:text-lg">
+      <div className="notice-bar__inner">
+        <span className="tag">
+          {fase === "aguardando" ? "Em breve" : "Votação aberta"}
+        </span>
+
         {fase === "aguardando" ? (
-          <span className="notice-text">
+          <p className="notice-bar__text">
             Os indicados serão anunciados {ANUNCIO_PREVISTO}
-          </span>
+          </p>
         ) : (
           <>
-            <span className="notice-text">Votação aberta</span>
             {alvo && (
-              <span className="notice-text">Encerra em {formatarData(alvo)}</span>
+              <p className="notice-bar__text">Encerra em {formatarData(alvo)}</p>
             )}
-            <Link href="/votacao" className="notice-btn">
-              Votar agora →
-            </Link>
+            <AeroButton href="/votacao" size="sm" shine>
+              Votar agora <span aria-hidden="true">→</span>
+            </AeroButton>
           </>
         )}
       </div>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import AeroButton from "@/components/ui/AeroButton";
 import Card from "@/components/ui/Card";
 import { getVotingStateContent, type VotingState } from "@/lib/services/voting";
 import LoginButton from "./LoginButton";
@@ -18,12 +18,16 @@ export default function VotingStatus({ state, firstName }: Props) {
         <p className="mt-2 text-foreground/80">{content.description}</p>
 
         {state === "login" && content.action && (
-          <div className="mt-6"><LoginButton label={content.action} /></div>
+          <div className="mt-6">
+            <LoginButton label={content.action} />
+          </div>
         )}
         {state === "ready" && content.action && (
-          <Link href="/votacao/votar" className={/* mesmas classes do botão do VotingCta */ ""}>
-            {content.action}
-          </Link>
+          <div className="mt-6">
+            <AeroButton href="/votacao/votar" shine>
+              {content.action}
+            </AeroButton>
+          </div>
         )}
       </div>
     </Card>

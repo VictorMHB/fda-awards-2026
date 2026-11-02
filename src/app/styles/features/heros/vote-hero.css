@@ -11,16 +11,12 @@
     inset: 0;
     z-index: -5;
     background:
-      radial-gradient(
-        ellipse 45% 55% at 82% 30%,
+      radial-gradient(ellipse 45% 55% at 82% 30%,
         color-mix(in srgb, var(--color-primary) 16%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 55% 60% at 12% 75%,
+        transparent 70%),
+      radial-gradient(ellipse 55% 60% at 12% 75%,
         color-mix(in srgb, var(--color-secondary) 28%, transparent),
-        transparent 70%
-      ),
+        transparent 70%),
       linear-gradient(180deg, var(--color-dark-bg) 0%, var(--color-background) 100%);
   }
 
@@ -54,11 +50,9 @@
       radial-gradient(1px 1px at 120px 190px, rgb(255 255 255 / 0.7), transparent),
       radial-gradient(1.4px 1.4px at 330px 160px, #fff, transparent),
       radial-gradient(1px 1px at 400px 300px, rgb(255 255 255 / 0.8), transparent),
-      radial-gradient(
-        1.6px 1.6px at 250px 340px,
+      radial-gradient(1.6px 1.6px at 250px 340px,
         color-mix(in srgb, var(--color-primary) 80%, white),
-        transparent
-      );
+        transparent);
     background-size: 470px 410px;
     animation: vote-star-soft 6.5s ease-in-out 1.2s infinite alternate;
   }
@@ -111,10 +105,8 @@
     aspect-ratio: 1;
     z-index: -2;
     background: var(--c, #fff);
-    clip-path: polygon(
-      50% 0, 60% 40%, 100% 50%, 60% 60%,
-      50% 100%, 40% 60%, 0 50%, 40% 40%
-    );
+    clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%,
+        50% 100%, 40% 60%, 0 50%, 40% 40%);
     opacity: 0.85;
     animation: vote-twinkle var(--d) ease-in-out infinite alternate;
   }
@@ -122,17 +114,18 @@
   /* Estrela cadente: passa de vez em quando */
   .vote-shoot {
     position: absolute;
-    left: 28%;
-    top: 9%;
+    left: var(--x, 28%);
+    top: var(--y, 9%);
     width: 7rem;
     height: 2px;
     z-index: -2;
     opacity: 0;
     background: linear-gradient(90deg, transparent, #fff);
-    animation: vote-shoot 11s ease-in infinite;
+    animation: vote-shoot var(--dur, 11s) ease-in var(--delay, 0s) infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
+
     .vote-hero__stars--a,
     .vote-hero__stars--b,
     .vote-spark {
@@ -149,6 +142,7 @@
   from {
     opacity: 0.45;
   }
+
   to {
     opacity: 1;
   }
@@ -159,6 +153,7 @@
     opacity: 0.25;
     transform: scale(0.7);
   }
+
   to {
     opacity: 0.95;
     transform: scale(1);
@@ -166,14 +161,17 @@
 }
 
 @keyframes vote-shoot {
+
   0%,
   90% {
     opacity: 0;
     transform: translate(0, 0) rotate(28deg);
   }
+
   92% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     transform: translate(17rem, 9rem) rotate(28deg);
