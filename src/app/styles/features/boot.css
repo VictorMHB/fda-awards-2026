@@ -1,4 +1,15 @@
 .boot {
+  /* Tempos do boot: para mudar a duração, altere só --boot-load */
+  --boot-start: 0.5s;
+  --boot-load: 1.5s;
+  --boot-shine-at: calc(var(--boot-start) + var(--boot-load) - 0.05s);
+  --boot-exit-at: calc(var(--boot-shine-at) + 0.55s);
+  --boot-end: calc(var(--boot-exit-at) + 0.45s);
+
+  --boot-bar: var(--color-primary);
+  --boot-steel: var(--steel, var(--color-dark-bg));
+  --boot-stroke: var(--stroke, var(--color-background));
+
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -87,28 +98,33 @@
   text-shadow: 0 0 0.15em white;
 }
 
+/* Barra contínua: trilho escuro com moldura + preenchimento em vidro */
 .boot__progress {
   position: relative;
-  width: 70%;
-  max-width: 22rem;
-  height: 3px;
-  background: color-mix(in srgb, var(--color-foreground) 14%, transparent);
+  width: min(88vw, 54rem);
+  height: clamp(1.25rem, 3.5svh, 1.75rem);
+  border: 2px solid var(--boot-stroke);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--boot-steel) 45%, var(--color-dark-bg)) 0 50%,
+    color-mix(in srgb, var(--boot-steel) 30%, var(--color-dark-bg)) 50%
+  );
 }
 
 .boot__progress::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 3px; /* mantenha o inset que você já tinha */
   transform-origin: left;
   background: linear-gradient(
-    90deg,
-    var(--color-primary) 0%,
-    var(--color-primary) 35%,
-    var(--color-secondary) 100%
+    180deg,
+    #fff8ef 0%,
+    #ffe2c6 28%,
+    var(--color-primary) 49%,
+    #e48c50 51%,
+    #f6b07c 74%,
+    #ffd6b3 100%
   );
-  box-shadow:
-    0 0 14px color-mix(in srgb, var(--color-primary) 55%, transparent),
-    0 0 2px color-mix(in srgb, var(--color-primary) 90%, transparent);
 }
 
 .boot__skip {
@@ -130,7 +146,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .boot {
     animation-duration: 0.45s, 0s;
-    animation-delay: 2.05s, 2.5s;
+    animation-delay: var(--boot-exit-at), var(--boot-end);
   }
 
   .boot__logo {
@@ -138,16 +154,17 @@
   }
 
   .boot__progress::after {
-    animation: boot-progress 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.35s backwards;
+    animation: boot-progress var(--boot-load) cubic-bezier(0.65, 0, 0.35, 1) var(--boot-start)
+      backwards;
   }
 
   .boot__shine {
     display: block;
-    animation: boot-shine 0.55s ease-in-out 1.5s both;
+    animation: boot-shine 0.55s ease-in-out var(--boot-shine-at) both;
   }
 
   .boot__shine > .boot__wordmark {
-    animation: boot-shine-counter 0.55s ease-in-out 1.5s both;
+    animation: boot-shine-counter 0.55s ease-in-out var(--boot-shine-at) both;
   }
 }
 

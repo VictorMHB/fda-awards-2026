@@ -4,7 +4,8 @@ import { useEffect, useRef, useSyncExternalStore } from "react";
 import { BOOT_DONE, BOOT_PLAYING, BOOT_STORAGE_KEY } from "@/lib/intro";
 
 const EXIT_ANIMATION = "boot-exit";
-const EXIT_FALLBACK_MS = 2500;
+const EXIT_FALLBACK_MS = 6000;
+const BLOCK_COUNT = 20;
 const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta"]);
 const SCROLL_KEYS = new Set([" ", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"]);
 
