@@ -4,12 +4,14 @@ import data from "@/data/about/records.json";
 //   compact -> 220000 vira "220 mil" (1500000 vira "1,5 milhão")
 //   percent -> 68.2 vira "68,2%"
 //   number  -> 18 vira "18" (220000 vira "220.000")
+// Sem format: número com unit opcional (ex.: unit "%"). Texto em value aparece como está.
 export type RecordFormat = "compact" | "percent" | "number";
 
 export type RecordEntry = {
   label: string;
-  value: number | null;
-  format: RecordFormat;
+  value: number | string | null;
+  format?: RecordFormat;
+  unit?: string;
   detail: string;
 };
 
@@ -36,11 +38,18 @@ export function formatRecordValue(value: number | null, format: RecordFormat = "
 
 const records = data as RecordEntry[];
 
+function formatValue({ value, format, unit = "" }: RecordEntry) {
+  if (value === null) return NO_VALUE;
+  if (typeof value === "string") return `${value}${unit}`;
+  if (format) return formatRecordValue(value, format);
+  return `${formatters.number.format(value)}${unit}`;
+}
+
 export function getRecords() {
-  return records.map(({ label, value, format, detail }, index) => ({
-    label,
-    detail,
-    value: formatRecordValue(value, format),
+  return records.map((record, index) => ({
+    label: record.label,
+    detail: record.detail,
+    value: formatValue(record),
     bar: `${BAR_PREFIX} ${String(index + 1).padStart(2, "0")}`,
   }));
 }

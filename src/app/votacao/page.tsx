@@ -6,7 +6,7 @@ import VotingSection from "@/components/voting/VotingSection";
 import VotingStatus from "@/components/voting/VotingStatus";
 import CategoriesSection from "@/components/voting/CategoriesSection";
 import { getServerUser } from "@/lib/auth/session";
-import { getPhase } from "@/lib/content/shared/phases";
+import { getCurrentPhase } from "@/lib/content/shared/phases";
 import {
   getVotingCategoriesContent,
   getVotingHero,
@@ -40,7 +40,7 @@ export default async function VotingPage({
   searchParams: Promise<{ reason?: string }>;
 }) {
   const [{ reason }, user] = await Promise.all([searchParams, getServerUser()]);
-  const state = getVotingState(getPhase(Date.now()), Boolean(user));
+  const state = getVotingState(getCurrentPhase(), Boolean(user));
   const notice = state === "login" ? getVotingNotice(reason) : null;
   const hero = getVotingHero();
   const firstName = user?.name?.split(" ")[0];
