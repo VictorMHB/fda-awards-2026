@@ -10,15 +10,18 @@ import { toast } from "sonner";
 export function useVotante() {
   const { user } = useAuth();
   const [votante, setVotante] = useState<Votante | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => user !== null);
   const [error, setError] = useState<string | null>(null);
+  const [trackedUser, setTrackedUser] = useState(user);
+
+  if (trackedUser !== user) {
+    setTrackedUser(user);
+    setVotante(null);
+    setLoading(user !== null);
+  }
 
   useEffect(() => {
-    if (!user) {
-      setVotante(null);
-      setLoading(false);
-      return;
-    }
+    if (!user) return;
 
     const ref = doc(db, "votantes", user.uid);
 

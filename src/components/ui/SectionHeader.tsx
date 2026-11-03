@@ -8,7 +8,7 @@ type SectionHeaderProps = {
 export default function SectionHeader({ title, description }: SectionHeaderProps) {
   return (
     <header className="mb-8 md:mb-12">
-      <AeroText as="h2" className="text-3xl md:text-4xl">
+      <AeroText as="h2" className="text-[length:min(1.875rem,8vw)] md:text-4xl">
         {title}
       </AeroText>
       {description && (

@@ -15,7 +15,7 @@ export default function HomeHero() {
       <GlassShapes />
 
       <h1
-        className="logo-aero logo-aero--italic relative z-10 font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+        className="logo-aero logo-aero--italic relative z-10 flex-wrap justify-center font-display text-[length:min(3rem,13.5vw)] sm:text-6xl md:text-7xl lg:text-8xl"
         aria-label="FDA Awards 2026"
       >
         <span className="logo-aero-word logo-aero-fda" data-l="FDA" aria-hidden="true">

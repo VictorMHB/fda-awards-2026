@@ -49,6 +49,10 @@ export function getPhase(agora: number): PhaseId {
   return "encerrado";
 }
 
+export function getCurrentPhase(): PhaseId {
+  return getPhase(Date.now());
+}
+
 // Momento em que a fase atual termina (null = sem contagem).
 // Com fase forçada, a contagem continua usando as datas reais.
 export function targetPhase(phase: PhaseId): number | null {

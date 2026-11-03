@@ -11,7 +11,7 @@ import Ballot from "@/components/voting/ballot/Ballot";
 const MESSAGE = "px-6 pt-32 text-foreground/80";
 
 export default function VotacaoClient() {
-  const { user } = useAuth();
+  const { user, loading: loadingAuth } = useAuth();
   const {
     categorias,
     loading: loadingCategorias,
@@ -48,7 +48,7 @@ export default function VotacaoClient() {
     }
   }
 
-  if (!user) {
+  if (!user && !loadingAuth) {
     return (
       <main className={MESSAGE}>
         <p className="mb-4">Você precisa estar logado pra votar.</p>
@@ -57,7 +57,7 @@ export default function VotacaoClient() {
     );
   }
 
-  if (loadingCategorias || loadingVotante) {
+  if (loadingAuth || loadingCategorias || loadingVotante) {
     return (
       <main className={MESSAGE}>
         <p role="status">Carregando sua cédula...</p>
