@@ -15,6 +15,9 @@ export type RecordEntry = {
 
 export const NO_VALUE = "—";
 
+// Prefixo da barra de título do card: "Recorde 01", "Recorde 02"...
+const BAR_PREFIX = "Recorde";
+
 const formatters = {
   compact: new Intl.NumberFormat("pt-BR", {
     notation: "compact",
@@ -34,9 +37,10 @@ export function formatRecordValue(value: number | null, format: RecordFormat = "
 const records = data as RecordEntry[];
 
 export function getRecords() {
-  return records.map(({ label, value, format, detail }) => ({
+  return records.map(({ label, value, format, detail }, index) => ({
     label,
     detail,
     value: formatRecordValue(value, format),
+    bar: `${BAR_PREFIX} ${String(index + 1).padStart(2, "0")}`,
   }));
 }
