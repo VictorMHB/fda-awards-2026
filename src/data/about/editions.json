@@ -1,22 +1,27 @@
 [
   {
-    "year": "2022",
-    "title": "1ª edição",
-    "description": "Texto sobre a primeira edição."
+    "year": 2021,
+    "winner": "Geovane do Carmo Elias",
+    "description": "A primeira edição do FDA Awards foi realizada em 2021 como um pequeno resumo das categorias que marcaram o ano. O maior vencedor dessa edição foi Geovane do Carmo Elias, que conquistou um total de cinco troféus durante a noite."
   },
   {
-    "year": "2023",
-    "title": "2ª edição",
-    "description": "Texto sobre a segunda edição."
+    "year": 2022,
+    "winner": "Geovane do Carmo Elias",
+    "description": "A edição de 2022 marcou a primeira transmissão online do prêmio para o público. A competição foi muito acirrada, porém Geovane do Carmo Elias terminou a noite com mais troféus, continuando sua dominância do ano passado. Além disso, foi nesse ano que os “Vagabundos Supremos” se consagraram vencedores na categoria “Grupo do Ano”, antes de sua dissolução."
   },
   {
-    "year": "2024",
-    "title": "3ª edição",
-    "description": "Texto sobre a terceira edição."
+    "year": 2023,
+    "winner": "Gianluca “Senhor” de Andrade",
+    "description": "Em 2023, após alguns imprevistos, não foi possível realizar ou transmitir o FDA Awards. Essa edição ficou marcada pela paridade nos prêmios, em que o maior vencedor da noite foi Gianluca “Senhor” de Andrade, com dois troféus."
   },
   {
-    "year": "2025",
-    "title": "4ª edição",
-    "description": "Texto sobre a quarta edição."
+    "year": 2024,
+    "winner": "Fariaz MC",
+    "description": "O FDA Awards de 2024 foi a edição com o maior número de votantes, totalizando 210 mil, um aumento de 60 mil em relação à edição anterior. Outro grande marco dessa edição foi a utilização do Auditório Freguesia do Ó pela primeira vez para a realização da cerimônia do prêmio. A noite ainda contou com uma apresentação exclusiva da “Stultus Orchestra”."
+  },
+  {
+    "year": 2025,
+    "winner": null,
+    "description": null
   }
 ]
