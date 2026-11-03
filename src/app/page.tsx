@@ -32,7 +32,7 @@ export default function Home() {
       {/* 4. Notícias */}
       <section className="px-6 py-16 md:py-24">
         <div className="mx-auto max-w-6xl">
-          <AeroText as="h2" className="text-3xl md:text-4xl">
+          <AeroText as="h2" className="text-[length:min(1.875rem,8vw)] md:text-4xl">
             Notícias
           </AeroText>
           <p className="mt-3 max-w-2xl text-base text-foreground/70">
@@ -49,7 +49,7 @@ export default function Home() {
       <section className="w-full py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4">
           <header className="mb-8 md:mb-12">
-            <AeroText as="h2" className="text-3xl md:text-4xl">
+            <AeroText as="h2" className="text-[length:min(1.875rem,8vw)] md:text-4xl">
               Explorar
             </AeroText>
             <p className="mt-3 max-w-2xl text-base text-foreground/70">
