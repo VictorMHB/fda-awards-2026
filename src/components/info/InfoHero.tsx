@@ -48,9 +48,15 @@ export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
       <div className="mx-auto max-w-6xl">
         <p className="info-eyebrow">FDA Awards 2026 · 5ª edição</p>
 
-        <AeroText as="h1" className="mt-4 block uppercase text-5xl md:text-7xl">
-          Informações
-        </AeroText>
+        {/* Até 640px a palavra inteira não cabe: vira "INFOS". O aria-label mantém o nome completo */}
+        <h1 className="mt-4 uppercase" aria-label="Informações">
+          <span aria-hidden="true" className="info-hero__title-full">
+            <AeroText className="block text-5xl md:text-6xl lg:text-7xl">Informações</AeroText>
+          </span>
+          <span aria-hidden="true" className="info-hero__title-short">
+            <AeroText className="block text-5xl">Infos</AeroText>
+          </span>
+        </h1>
 
         <ul className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
           {details.map(({ id, label, value, note }) => {
@@ -62,12 +68,13 @@ export default function InfoHero({ imageSrc }: { imageSrc?: string }) {
                   <span className="btn-aero flex h-12 w-12 shrink-0 items-center justify-center text-dark-bg md:h-14 md:w-14">
                     <Icon aria-hidden="true" width={28} height={28} />
                   </span>
-                  <div>
+                  {/* min-w-0: sem ele o texto não encolhe ao lado do ícone. O overflow-wrap vem do .card */}
+                  <div className="min-w-0">
                     <p className="font-display text-lg text-balance text-foreground md:text-xl">
                       <span className="sr-only">{label}: </span>
                       {value}
                     </p>
-                    {note && <p className="mt-1 text-sm text-foreground/70">{note}</p>}
+                    {note && <p className="mt-1 text-sm text-balance text-foreground/70">{note}</p>}
                   </div>
                 </div>
               </Card>
