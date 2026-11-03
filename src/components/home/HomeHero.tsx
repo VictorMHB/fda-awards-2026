@@ -1,6 +1,8 @@
 import IsoCube from "@/components/ui/IsoCube";
 
-const HOME_BG = "/images/home_page.png";
+// Foto antiga do fundo, trocada pelo fundo em CSS. A imagem continua em
+// public/images até decidirem no PR se ela sai do projeto.
+// const HOME_BG = "/images/home_page.png";
 
 type Cube = {
   size: string;
@@ -52,13 +54,15 @@ function CubeLayer({ cubes, position }: { cubes: Cube[]; position: "upper" | "lo
 export default function HomeHero() {
   return (
     <section className="home-hero">
-      {/* Fundo decorativo */}
-      <div
+      {/* Fundo decorativo, de trás para frente (a base é o fundo da própria seção) */}
+      {/* <div
         aria-hidden="true"
         className="home-hero__photo"
         style={{ backgroundImage: `url(${HOME_BG})` }}
-      />
-      <div aria-hidden="true" className="home-hero__aurora" />
+      /> */}
+      <div aria-hidden="true" className="home-hero__glow" />
+      <div aria-hidden="true" className="home-hero__dots" />
+      <div aria-hidden="true" className="home-hero__crosses" />
       <CubeLayer cubes={UPPER_CUBES} position="upper" />
       <CubeLayer cubes={LOWER_CUBES} position="lower" />
 

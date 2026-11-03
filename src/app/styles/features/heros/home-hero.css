@@ -15,11 +15,7 @@
     justify-items: center;
     min-height: calc(100svh - 5rem);
     /* Base opaca: esconde o fundo global dentro do hero */
-    background: linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--color-background) 88%, var(--color-dark-bg)) 0%,
-      var(--color-dark-bg) 100%
-    );
+    background: linear-gradient(180deg, var(--color-dark-bg) 0%, var(--color-background) 100%);
   }
 
   @media (width >= 48rem) {
@@ -52,7 +48,78 @@
     grid-row: 4;
   }
 
-  /* Imagem de fundo, esmaecendo para baixo */
+  /* ==========================================================================
+     Fundo em CSS (sem imagem), de trás para frente: base (fundo da seção),
+     luzes, pontilhado, cruzes e cubos. Tudo com opacidade baixa e só com
+     cores do tema; nada anima aqui além dos cubos.
+     ========================================================================== */
+
+  /* Luzes: mesma ideia do fundo do modal de notícia */
+  .home-hero__glow {
+    position: absolute;
+    inset: 0;
+    z-index: -5;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 55% 45% at 12% 18%,
+        color-mix(in srgb, var(--color-secondary) 20%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 45% 40% at 88% 58%,
+        color-mix(in srgb, var(--color-primary) 8%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 70% 40% at 40% 105%,
+        color-mix(in srgb, var(--color-secondary) 16%, transparent),
+        transparent 70%
+      );
+  }
+
+  /* Pontilhado: um bloco só, no canto de baixo à direita, sumindo para o centro */
+  .home-hero__dots {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 60%;
+    height: 75%;
+    z-index: -4;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-foreground) 40%, transparent) 1.5px,
+      transparent 2px
+    );
+    background-size: 10px 10px;
+    mask-image: radial-gradient(ellipse 100% 100% at 100% 100%, black, transparent 75%);
+  }
+
+  /* Cruzes: o mesmo desenho do fundo do site, no canto de cima à esquerda.
+     A forma vem da máscara e a cor do tema, do background. A segunda
+     máscara esmaece a grade aos poucos, sem corte */
+  .home-hero__crosses {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 45%;
+    height: 65%;
+    z-index: -4;
+    pointer-events: none;
+    opacity: 0.28;
+    background: var(--color-foreground);
+    mask-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 9v14M9 16h14' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E"),
+      radial-gradient(ellipse 100% 100% at 0 0, black 15%, transparent 75%);
+    mask-size: 32px 32px, 100% 100%;
+    mask-repeat: repeat, no-repeat;
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+
+  /* Foto antiga (desligada no HomeHero). Apagar junto com a imagem se ela sair do projeto
   .home-hero__photo {
     position: absolute;
     inset: 0;
@@ -61,47 +128,6 @@
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0.7;
-    mask-image: linear-gradient(180deg, #000 40%, transparent 100%);
-  }
-
-  /* Aurora por cima da imagem: manchas de cor sobrepostas */
-  .home-hero__aurora {
-    position: absolute;
-    inset: -15%;
-    z-index: -5;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        ellipse 45% 40% at 23% 68%,
-        color-mix(in srgb, var(--color-secondary) 48%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 40% 38% at 68% 29%,
-        color-mix(in srgb, var(--color-primary) 24%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 60% 45% at 50% 105%,
-        color-mix(in srgb, var(--color-secondary) 32%, transparent),
-        transparent 70%
-      );
-    mask-image: linear-gradient(180deg, #000 65%, transparent 92%);
-  }
-
-  /* A aurora se move só no desktop e sem "reduzir movimento" */
-  @media (width >= 48rem) and (prefers-reduced-motion: no-preference) {
-    .home-hero__aurora {
-      animation: home-drift 20s ease-in-out infinite alternate;
-    }
-  }
-}
-
-@keyframes home-drift {
-  from {
-    transform: translate3d(-2%, 1%, 0) scale(1.05);
-  }
-  to {
-    transform: translate3d(2%, -2%, 0) scale(1);
-  }
+    mask-image: linear-gradient(180deg, black 40%, transparent 100%);
+  } */
 }
