@@ -29,6 +29,13 @@ const LOWER_CUBES: Cube[] = [
   { size: "2.25rem", x: "30%", y: "30%", opacity: 0.5, duration: "8s", delay: "-1s" },
 ];
 
+// Anotações do fundo (estética Y2K): o texto se repete em eco, como na arte
+// antiga. Só a primeira linha é lida pelo leitor de tela.
+const NOTES = [
+  { text: "5 anos de história", position: "start" },
+  { text: "Os maiores prêmios", position: "end" },
+] as const;
+
 function CubeLayer({ cubes, position }: { cubes: Cube[]; position: "upper" | "lower" }) {
   return (
     <div aria-hidden="true" className={`home-hero__cubes home-hero__cubes--${position}`}>
@@ -66,8 +73,9 @@ export default function HomeHero() {
       <CubeLayer cubes={UPPER_CUBES} position="upper" />
       <CubeLayer cubes={LOWER_CUBES} position="lower" />
 
+      {/* No celular o AWARDS some (fica "FDA 2026"), mas o aria-label mantém o nome completo */}
       <h1
-        className="home-hero__title logo-aero logo-aero--italic flex-wrap justify-center font-display text-[length:min(3rem,13.5vw)] sm:text-6xl md:text-7xl lg:text-8xl"
+        className="home-hero__title logo-aero logo-aero--italic font-display"
         aria-label="FDA Awards 2026"
       >
         <span className="logo-aero-word logo-aero-fda" data-l="FDA" aria-hidden="true">
@@ -80,6 +88,14 @@ export default function HomeHero() {
           <span className="logo-aero-face">2026</span>
         </span>
       </h1>
+
+      {NOTES.map(({ text, position }) => (
+        <p key={text} className={`home-note home-note--${position}`}>
+          <span>{text}</span>
+          <span aria-hidden="true" className="home-note__echo">{text}</span>
+          <span aria-hidden="true" className="home-note__echo">{text}</span>
+        </p>
+      ))}
     </section>
   );
 }

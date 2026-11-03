@@ -4,6 +4,8 @@
      1. faixa do topo   2. troféu   3. título   4. faixa de baixo
      As faixas (1fr) dividem a sobra da altura. As camadas de cubos ocupam
      1–2 e 4, nunca a 3: assim nenhum cubo fica atrás do título.
+     Todo item leva grid-column: 1. Sem isso, o que cai numa linha já ocupada
+     por uma camada de cubos vai para uma coluna implícita e desalinha tudo.
      ========================================================================== */
   .home-hero {
     position: relative;
@@ -14,6 +16,8 @@
     grid-template-rows: minmax(5rem, 1fr) auto auto minmax(5rem, 1fr);
     justify-items: center;
     min-height: calc(100svh - 5rem);
+    /* O título mede a própria fonte pela largura do hero (unidade cqi) */
+    container-type: inline-size;
     /* Base opaca: esconde o fundo global dentro do hero */
     background: linear-gradient(180deg, var(--color-dark-bg) 0%, var(--color-background) 100%);
   }
@@ -24,11 +28,100 @@
     }
   }
 
+  /* ==========================================================================
+     Título: numa linha só e nunca mais largo que o hero menos 1.5rem de cada
+     lado. A Krona One é larga: "FDA 2026" ocupa ~7.1 vezes o tamanho da fonte
+     e "FDA AWARDS 2026" ~13.4 (medido, com itálico; o contorno passa um pouco
+     disso). Os divisores 7.4 e 13.8 deixam essa folga. A fonte é
+     a largura útil dividida por isso, com um teto. O vw vem antes como
+     reserva para navegador sem cqi.
+     ========================================================================== */
   .home-hero__title {
     grid-row: 3;
+    grid-column: 1;
     position: relative;
     z-index: 1;
     margin-top: 1.25rem;
+    flex-wrap: nowrap;
+    font-size: min(2.75rem, calc((100vw - 3rem) / 7.4));
+    font-size: min(2.75rem, calc((100cqi - 3rem) / 7.4));
+  }
+
+  @media (width >= 40rem) {
+    .home-hero__title {
+      font-size: min(6rem, calc((100vw - 4rem) / 13.8));
+      font-size: min(6rem, calc((100cqi - 4rem) / 13.8));
+    }
+  }
+
+  /* ==========================================================================
+     Anotações (Y2K): mono em itálico, laranja com sombra azul e o texto
+     repetido em eco. Uma em cada lado do título no desktop, em linhas
+     próprias da grade (nunca em cima dele). No celular ficam ocultas.
+     ========================================================================== */
+  .home-note {
+    display: none;
+    grid-column: 1;
+    position: relative;
+    align-self: center;
+    margin-block: 0;
+    pointer-events: none;
+    font-family: var(--font-share-tech-mono), ui-monospace, monospace;
+    font-size: clamp(1.05rem, 0.55rem + 1vw, 1.6rem);
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    color: var(--color-primary);
+    /* A Share Tech Mono só tem peso 400: um contorno fino na mesma cor a engrossa */
+    -webkit-text-stroke: 0.03em currentColor;
+    text-shadow: 0.09em 0.09em 0 color-mix(in srgb, var(--color-secondary) 70%, var(--color-dark-bg));
+    transform: skewX(-12deg);
+  }
+
+  @media (width >= 48rem) {
+    .home-note {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .home-note--start {
+    grid-row: 1;
+    justify-self: start;
+    align-items: flex-start;
+    margin-inline-start: max(1.5rem, 7%);
+  }
+
+  .home-note--end {
+    grid-row: 4;
+    justify-self: end;
+    align-items: flex-end;
+    margin-inline-end: max(1.5rem, 7%);
+  }
+
+  /* Eco: cada linha anda 1ch para fora e fica mais fraca */
+  .home-note__echo {
+    opacity: 0.45;
+  }
+
+  .home-note__echo:last-child {
+    opacity: 0.22;
+  }
+
+  .home-note--start .home-note__echo {
+    margin-inline-start: 1ch;
+  }
+
+  .home-note--start .home-note__echo:last-child {
+    margin-inline-start: 2ch;
+  }
+
+  .home-note--end .home-note__echo {
+    margin-inline-end: 1ch;
+  }
+
+  .home-note--end .home-note__echo:last-child {
+    margin-inline-end: 2ch;
   }
 
   /* Camadas dos cubos: cada cubo se posiciona em % da sua camada */
@@ -130,4 +223,13 @@
     opacity: 0.7;
     mask-image: linear-gradient(180deg, black 40%, transparent 100%);
   } */
+}
+
+/* Fora de @layer de propósito: .logo-aero-word (logo.css) não tem layer e
+   ganharia de qualquer regra dentro de um. No celular o título vira
+   "FDA 2026"; o h1 continua com aria-label="FDA Awards 2026" */
+@media (width < 40rem) {
+  .home-hero__title .logo-aero-awards {
+    display: none;
+  }
 }
