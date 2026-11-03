@@ -5,7 +5,7 @@
 @import "./styles/core/background.css";
 
 @import "./styles/components/glass.css";
-@import "./styles/components/solids.css";
+@import "./styles/components/iso-cube.css";
 @import "./styles/components/aero.css";
 @import "./styles/components/card.css";
 @import "./styles/components/phase-override.css";
