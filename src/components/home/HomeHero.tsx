@@ -1,4 +1,5 @@
 import IsoCube from "@/components/ui/IsoCube";
+import Trophy from "@/components/home/Trophy";
 
 // Foto antiga do fundo, trocada pelo fundo em CSS. A imagem continua em
 // public/images até decidirem no PR se ela sai do projeto.
@@ -25,7 +26,7 @@ const UPPER_CUBES: Cube[] = [
 ];
 
 const LOWER_CUBES: Cube[] = [
-  { size: "4rem", x: "11%", y: "20%", opacity: 0.4, duration: "11s", delay: "-8s", desktopOnly: true },
+  { size: "4rem", x: "11%", y: "10%", opacity: 0.4, duration: "11s", delay: "-8s", desktopOnly: true },
   { size: "2.25rem", x: "30%", y: "30%", opacity: 0.5, duration: "8s", delay: "-1s" },
 ];
 
@@ -72,6 +73,9 @@ export default function HomeHero() {
       <div aria-hidden="true" className="home-hero__crosses" />
       <CubeLayer cubes={UPPER_CUBES} position="upper" />
       <CubeLayer cubes={LOWER_CUBES} position="lower" />
+
+      {/* Para usar a imagem do troféu: <Trophy src="/images/trophy.png" ... /> */}
+      <Trophy className="home-hero__trophy" />
 
       {/* No celular o AWARDS some (fica "FDA 2026"), mas o aria-label mantém o nome completo */}
       <h1

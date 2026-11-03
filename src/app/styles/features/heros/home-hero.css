@@ -13,7 +13,7 @@
     overflow: clip;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(5rem, 1fr) auto auto minmax(5rem, 1fr);
+    grid-template-rows: minmax(6rem, 1fr) auto auto minmax(6rem, 1fr);
     justify-items: center;
     min-height: calc(100svh - 5rem);
     /* O título mede a própria fonte pela largura do hero (unidade cqi) */
@@ -122,6 +122,12 @@
 
   .home-note--end .home-note__echo:last-child {
     margin-inline-end: 2ch;
+  }
+
+  /* Troféu no meio, logo acima do título */
+  .home-hero__trophy {
+    grid-row: 2;
+    grid-column: 1;
   }
 
   /* Camadas dos cubos: cada cubo se posiciona em % da sua camada */

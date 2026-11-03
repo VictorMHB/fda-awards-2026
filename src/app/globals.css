@@ -26,6 +26,7 @@
 @import "./styles/features/logo.css";
 @import "./styles/features/boot.css";
 @import "./styles/features/news-modal.css";
+@import "./styles/features/trophy.css";
 
 @import "./styles/features/ballot/ballot.css";
 @import "./styles/features/ballot/category-menu.css";
