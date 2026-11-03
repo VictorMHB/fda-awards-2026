@@ -1,0 +1,195 @@
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--color-foreground);
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 45%,
+      color-mix(in srgb, var(--color-background) 55%, transparent),
+      transparent 70%
+    ),
+    var(--color-dark-bg);
+  animation:
+    boot-exit 0.3s ease 0.9s forwards,
+    boot-hide 0s linear 1.2s forwards;
+}
+
+[data-boot="off"] .boot {
+  display: none;
+}
+
+.boot::before {
+  --boot-dot: clamp(0.5rem, 1.5vmin, 0.875rem);
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-foreground) 22%, transparent) 18%,
+    transparent 24%
+  );
+  background-size: var(--boot-dot) var(--boot-dot);
+  mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, transparent 40%, black);
+}
+
+.boot__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 5svh, 2.5rem);
+  min-width: 0;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 0
+    max(1rem, env(safe-area-inset-left));
+}
+
+.boot__logo {
+  position: relative;
+  max-width: 100%;
+}
+
+.boot__wordmark {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.12em;
+  font-size: min(clamp(2rem, 1rem + 5vw, 5rem), 13vw, 15svh);
+}
+
+.boot__shine {
+  position: absolute;
+  inset: 0;
+  display: none;
+  mask-image: linear-gradient(110deg, transparent 36%, black 46%, black 54%, transparent 64%);
+}
+
+.boot__shine > .boot__wordmark {
+  width: 100%;
+  height: 100%;
+}
+
+.boot__shine .logo-aero-word::before {
+  content: none;
+}
+
+.boot__shine .logo-aero-face {
+  background-image: none;
+  color: white;
+  text-shadow: 0 0 0.15em white;
+}
+
+.boot__progress {
+  position: relative;
+  width: 70%;
+  max-width: 22rem;
+  height: 3px;
+  background: color-mix(in srgb, var(--color-foreground) 14%, transparent);
+}
+
+.boot__progress::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-primary) 35%,
+    var(--color-secondary) 100%
+  );
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--color-primary) 55%, transparent),
+    0 0 2px color-mix(in srgb, var(--color-primary) 90%, transparent);
+}
+
+.boot__skip {
+  justify-self: end;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0 max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) 0;
+  padding: 0 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-foreground) 30%, transparent);
+  background: color-mix(in srgb, var(--color-dark-bg) 70%, transparent);
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+  font-family: var(--font-share-tech-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .boot {
+    animation-duration: 0.45s, 0s;
+    animation-delay: 2.05s, 2.5s;
+  }
+
+  .boot__logo {
+    animation: boot-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s backwards;
+  }
+
+  .boot__progress::after {
+    animation: boot-progress 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.35s backwards;
+  }
+
+  .boot__shine {
+    display: block;
+    animation: boot-shine 0.55s ease-in-out 1.5s both;
+  }
+
+  .boot__shine > .boot__wordmark {
+    animation: boot-shine-counter 0.55s ease-in-out 1.5s both;
+  }
+}
+
+@keyframes boot-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes boot-hide {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes boot-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
+
+@keyframes boot-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes boot-shine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes boot-shine-counter {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

@@ -23,10 +23,7 @@
 @import "./styles/features/footer.css";
 @import "./styles/features/notice-bar.css";
 @import "./styles/features/logo.css";
-
-@import "./styles/intro/boot.css";
-@import "./styles/intro/intro.css";
-@import "./styles/intro/rev.css";
+@import "./styles/features/boot.css";
 
 @import "./styles/features/about.css";
 @import "./styles/features/news-modal.css";

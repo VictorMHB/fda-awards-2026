@@ -1,146 +1,122 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import { BOOT_DONE, BOOT_PLAYING, BOOT_STORAGE_KEY } from "@/lib/intro";
 
-const BLOCOS = 20;
-const INICIO_BARRA = 2.0; // s: quando a barra começa a encher
-const DURACAO = 5200; // ms: quando começa o fade out
-const FADE = 900; // ms: duração do fade out
-const CHAVE = "fda-boot-visto";
-const ANO = "2026";
+const EXIT_ANIMATION = "boot-exit";
+const EXIT_FALLBACK_MS = 2500;
+const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta"]);
+const SCROLL_KEYS = new Set([" ", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"]);
 
-// Quando cada bloco acende (s). As "travadinhas" fazem parecer carregamento de verdade
-const ATRASOS = Array.from({ length: BLOCOS }, (_, i) =>
-  Math.round((i * 0.1 + (i > 6 ? 0.25 : 0) + (i > 13 ? 0.35 : 0)) * 100) / 100,
-);
+const WORDS = [
+  { text: "FDA", face: "logo-aero-fda" },
+  { text: "AWARDS", face: "logo-aero-awards" },
+  { text: "2026", face: "logo-aero-fda" },
+];
 
-const vars = (v: Record<string, string | number>) => v as CSSProperties;
+const listeners = new Set<() => void>();
+let ended = false;
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function isPlaying() {
+  if (ended) return false;
+  try {
+    return sessionStorage.getItem(BOOT_STORAGE_KEY) === BOOT_PLAYING;
+  } catch {
+    return false;
+  }
+}
+
+function endBoot() {
+  if (ended) return;
+  ended = true;
+  try {
+    sessionStorage.setItem(BOOT_STORAGE_KEY, BOOT_DONE);
+  } catch {}
+  listeners.forEach((listener) => listener());
+}
+
+function lockScroll() {
+  const root = document.documentElement;
+  const { overflow, scrollbarGutter } = root.style;
+  if (root.scrollHeight > root.clientHeight) root.style.scrollbarGutter = "stable";
+  root.style.overflow = "hidden";
+  return () => {
+    root.style.overflow = overflow;
+    root.style.scrollbarGutter = scrollbarGutter;
+  };
+}
 
 export default function Boot() {
-  const [estado, setEstado] = useState<"ativo" | "saindo" | "fim">("ativo");
-  const [blocos, setBlocos] = useState(0);
+  const playing = useSyncExternalStore(subscribe, isPlaying, () => true);
+  return playing ? <BootScreen /> : null;
+}
 
-  // Toca uma vez por sessão + agenda a barra e o fade out
+function BootScreen() {
+  const screenRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem(CHAVE)) {
-        setEstado("fim");
-        return;
-      }
-    } catch {}
+    const screen = screenRef.current;
+    if (!screen) return;
 
-    const reduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timers: number[] = [];
-
-    if (reduzido) {
-      setBlocos(BLOCOS);
-      timers.push(window.setTimeout(() => setEstado("saindo"), 1200));
-    } else {
-      ATRASOS.forEach((s, i) => {
-        timers.push(window.setTimeout(() => setBlocos(i + 1), (INICIO_BARRA + s) * 1000));
-      });
-      timers.push(window.setTimeout(() => setEstado("saindo"), DURACAO));
+    const exit = screen
+      .getAnimations?.()
+      .find((animation) => (animation as CSSAnimation).animationName === EXIT_ANIMATION);
+    if (exit?.playState === "finished") {
+      endBoot();
+      return;
     }
 
-    return () => timers.forEach((t) => window.clearTimeout(t));
+    const unlockScroll = lockScroll();
+    const fallback = exit ? undefined : window.setTimeout(endBoot, EXIT_FALLBACK_MS);
+    exit?.finished.then(endBoot, endBoot);
+
+    const skipOnKey = (event: KeyboardEvent) => {
+      if (MODIFIER_KEYS.has(event.key) || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (SCROLL_KEYS.has(event.key)) event.preventDefault();
+      endBoot();
+    };
+    window.addEventListener("keydown", skipOnKey);
+    window.addEventListener("wheel", endBoot, { passive: true });
+
+    return () => {
+      unlockScroll();
+      window.clearTimeout(fallback);
+      window.removeEventListener("keydown", skipOnKey);
+      window.removeEventListener("wheel", endBoot);
+    };
   }, []);
 
-  // Depois do fade, sai do DOM
-  useEffect(() => {
-    if (estado !== "saindo") return;
-    try {
-      sessionStorage.setItem(CHAVE, "1");
-    } catch {}
-    const t = window.setTimeout(() => setEstado("fim"), FADE);
-    return () => window.clearTimeout(t);
-  }, [estado]);
-
-  // Trava a rolagem enquanto a capa está na tela
-  useEffect(() => {
-    if (estado === "fim") return;
-    const antes = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = antes;
-    };
-  }, [estado]);
-
-  // Qualquer tecla pula
-  useEffect(() => {
-    if (estado !== "ativo") return;
-    const pular = (e: KeyboardEvent) => {
-      if (["Tab", "Shift", "Control", "Alt", "Meta"].includes(e.key)) return;
-      setEstado("saindo");
-    };
-    window.addEventListener("keydown", pular);
-    return () => window.removeEventListener("keydown", pular);
-  }, [estado]);
-
-  if (estado === "fim") return null;
-
-  const pct = Math.round((blocos / BLOCOS) * 100);
-
   return (
-    <div
-      className="boot"
-      data-saindo={estado === "saindo" ? "" : undefined}
-      onClick={() => setEstado("saindo")}
-      role="presentation"
-    >
-      <div className="boot-base" aria-hidden="true">
-        <div className="boot-pontos" />
-      </div>
-      <div className="boot-varredura" aria-hidden="true" />
-
-      <div className="boot-centro">
-        <div className="boot-logo" role="img" aria-label={`FDA Awards ${ANO}`}>
-          <Palavra texto="FDA" className="boot-fda" inicio={0.7} passo={0.14} />
-          <div className="boot-awards">
-            <span className="boot-placa" />
-            <Palavra texto="AWARDS" className="boot-awards-letras" inicio={1.25} passo={0.08} />
-          </div>
-          <span className="boot-ano btn-aero">{ANO}</span>
+    <div ref={screenRef} className="boot" aria-hidden="true" onClick={endBoot}>
+      <div className="boot__content">
+        <div className="boot__logo">
+          <Wordmark />
+          <span className="boot__shine">
+            <Wordmark />
+          </span>
         </div>
-
-        <div className="boot-barra" aria-hidden="true">
-          <div className="boot-barra-topo">
-            <span className="boot-barra-rotulo">Carregando</span>
-            <span>{pct}%</span>
-          </div>
-          <div className="boot-trilho">
-            <div className="boot-blocos">
-              {Array.from({ length: BLOCOS }, (_, i) => (
-                <span key={i} data-on={i < blocos ? "" : undefined} />
-              ))}
-            </div>
-          </div>
-        </div>
+        <span className="boot__progress" />
       </div>
-
-      <div className="boot-luz" aria-hidden="true" />
-      <div className="boot-crt" aria-hidden="true">
-        <span className="boot-crt-linha" />
-      </div>
+      <button type="button" tabIndex={-1} className="boot__skip">
+        Pular
+      </button>
     </div>
   );
 }
 
-function Palavra({
-  texto,
-  className,
-  inicio,
-  passo,
-}: {
-  texto: string;
-  className: string;
-  inicio: number;
-  passo: number;
-}) {
+function Wordmark() {
   return (
-    <span className={className} style={vars({ "--t0": inicio, "--p": passo })}>
-      {[...texto].map((letra, i) => (
-        <span key={i} className="boot-letra" data-l={letra} style={vars({ "--i": i })}>
-          <span className="boot-face">{letra}</span>
+    <span className="boot__wordmark logo-aero font-display">
+      {WORDS.map(({ text, face }) => (
+        <span key={text} className={`logo-aero-word ${face}`} data-l={text}>
+          <span className="logo-aero-face">{text}</span>
         </span>
       ))}
     </span>
