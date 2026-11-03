@@ -12,7 +12,7 @@ export default function RulesSection() {
 
         <div className="grid gap-4 lg:grid-cols-2 lg:gap-6">
           {getRuleGroups().map((group) => (
-            <Card key={group.id} variant="window" title={group.title}>
+            <Card key={group.id} variant="window" title={group.title} className="card--flat">
               <div className="p-6 md:p-8">
                 <h3 className="sr-only">{group.title}</h3>
                 <ol className="space-y-4">

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { AeroText } from "@/components/ui/AeroText";
 import ForcedPhaseBanner from "@/components/dev/ForcedPhaseBanner";
-import VotingSection from "@/components/info/VotingSection";
+import VotingSection from "@/components/voting/VotingSection";
 import VotingStatus from "@/components/voting/VotingStatus";
 import CategoriesSection from "@/components/voting/CategoriesSection";
 import { getServerUser } from "@/lib/auth/session";
@@ -121,7 +121,7 @@ export default async function VotingPage({
         </div>
       </section>
 
-      <VotingSection showCta={false} />
+      <VotingSection />
 
       <CategoriesSection {...getVotingCategoriesContent()} />
     </main>

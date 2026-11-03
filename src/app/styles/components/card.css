@@ -36,6 +36,22 @@
     pointer-events: none;
   }
 
+    /* ==========================================================================
+     flat (opt-in via className): corpo numa cor só, a mais escura, sem o corte
+     de vidro. A barra da janela mantém o brilho claro do card padrão.
+     ========================================================================== */
+  .card--flat {
+    background: color-mix(in srgb, var(--color-dark-bg) var(--card-bg-alpha), transparent);
+  }
+
+  .card--flat > .card__bar {
+    background: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.22) 0 50%,
+      rgb(255 255 255 / 0.15) 50% 100%
+    );
+  }
+
   /* ==========================================================================
      Clicável: sobe 4px e a borda fica laranja. A borda laranja é uma camada
      por cima que só muda de opacidade, então só transform e opacity animam.

@@ -9,14 +9,13 @@ type RecordCardProps = {
 
 // Cada filho do Card (barra, rótulo, corpo) vira uma linha do subgrid da lista,
 // então o número começa na mesma altura em todos os cards da fileira.
-// Brilho só na barra e no rótulo; o corpo é vidro liso: o corte cai entre o rótulo e o número.
 export default function RecordCard({ bar, label, value, detail }: RecordCardProps) {
   return (
     <Card
       as="li"
       variant="window"
       title={bar}
-      className="row-span-3 grid grid-rows-subgrid gap-y-0 bg-none text-center [&>.card__bar]:bg-none [&>.card__bar]:bg-white/12"
+      className="card--flat row-span-3 grid grid-rows-subgrid gap-y-0 text-center"
     >
       <p className="flex items-center justify-center bg-white/12 px-6 py-5 text-sm font-semibold uppercase tracking-wider text-foreground/80">
         {label}
