@@ -1,0 +1,212 @@
+.boot {
+  /* Tempos do boot: para mudar a duração, altere só --boot-load */
+  --boot-start: 0.5s;
+  --boot-load: 1.5s;
+  --boot-shine-at: calc(var(--boot-start) + var(--boot-load) - 0.05s);
+  --boot-exit-at: calc(var(--boot-shine-at) + 0.55s);
+  --boot-end: calc(var(--boot-exit-at) + 0.45s);
+
+  --boot-bar: var(--color-primary);
+  --boot-steel: var(--steel, var(--color-dark-bg));
+  --boot-stroke: var(--stroke, var(--color-background));
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--color-foreground);
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 45%,
+      color-mix(in srgb, var(--color-background) 55%, transparent),
+      transparent 70%
+    ),
+    var(--color-dark-bg);
+  animation:
+    boot-exit 0.3s ease 0.9s forwards,
+    boot-hide 0s linear 1.2s forwards;
+}
+
+[data-boot="off"] .boot {
+  display: none;
+}
+
+.boot::before {
+  --boot-dot: clamp(0.5rem, 1.5vmin, 0.875rem);
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-foreground) 22%, transparent) 18%,
+    transparent 24%
+  );
+  background-size: var(--boot-dot) var(--boot-dot);
+  mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, transparent 40%, black);
+}
+
+.boot__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.25rem, 5svh, 2.5rem);
+  min-width: 0;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) 0
+    max(1rem, env(safe-area-inset-left));
+}
+
+.boot__logo {
+  position: relative;
+  max-width: 100%;
+}
+
+.boot__wordmark {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.12em;
+  font-size: min(clamp(2rem, 1rem + 5vw, 5rem), 13vw, 15svh);
+}
+
+.boot__shine {
+  position: absolute;
+  inset: 0;
+  display: none;
+  mask-image: linear-gradient(110deg, transparent 36%, black 46%, black 54%, transparent 64%);
+}
+
+.boot__shine > .boot__wordmark {
+  width: 100%;
+  height: 100%;
+}
+
+.boot__shine .logo-aero-word::before {
+  content: none;
+}
+
+.boot__shine .logo-aero-face {
+  background-image: none;
+  color: white;
+  text-shadow: 0 0 0.15em white;
+}
+
+/* Barra contínua: trilho escuro com moldura + preenchimento em vidro */
+.boot__progress {
+  position: relative;
+  width: min(88vw, 54rem);
+  height: clamp(1.25rem, 3.5svh, 1.75rem);
+  border: 2px solid var(--boot-stroke);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--boot-steel) 45%, var(--color-dark-bg)) 0 50%,
+    color-mix(in srgb, var(--boot-steel) 30%, var(--color-dark-bg)) 50%
+  );
+}
+
+.boot__progress::after {
+  content: "";
+  position: absolute;
+  inset: 3px; /* mantenha o inset que você já tinha */
+  transform-origin: left;
+  background: linear-gradient(
+    180deg,
+    #fff8ef 0%,
+    #ffe2c6 28%,
+    var(--color-primary) 49%,
+    #e48c50 51%,
+    #f6b07c 74%,
+    #ffd6b3 100%
+  );
+}
+
+.boot__skip {
+  justify-self: end;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0 max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) 0;
+  padding: 0 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-foreground) 30%, transparent);
+  background: color-mix(in srgb, var(--color-dark-bg) 70%, transparent);
+  color: color-mix(in srgb, var(--color-foreground) 85%, transparent);
+  font-family: var(--font-share-tech-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .boot {
+    animation-duration: 0.45s, 0s;
+    animation-delay: var(--boot-exit-at), var(--boot-end);
+  }
+
+  .boot__logo {
+    animation: boot-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s backwards;
+  }
+
+  .boot__progress::after {
+    animation: boot-progress var(--boot-load) cubic-bezier(0.65, 0, 0.35, 1) var(--boot-start)
+      backwards;
+  }
+
+  .boot__shine {
+    display: block;
+    animation: boot-shine 0.55s ease-in-out var(--boot-shine-at) both;
+  }
+
+  .boot__shine > .boot__wordmark {
+    animation: boot-shine-counter 0.55s ease-in-out var(--boot-shine-at) both;
+  }
+}
+
+@keyframes boot-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes boot-hide {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes boot-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
+
+@keyframes boot-progress {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes boot-shine {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes boot-shine-counter {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
