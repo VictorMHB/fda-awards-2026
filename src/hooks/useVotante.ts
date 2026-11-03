@@ -16,10 +16,8 @@ export function useVotante() {
 
   if (trackedUser !== user) {
     setTrackedUser(user);
-    if (!user) {
-      setVotante(null);
-      setLoading(false);
-    }
+    setVotante(null);
+    setLoading(user !== null);
   }
 
   useEffect(() => {
