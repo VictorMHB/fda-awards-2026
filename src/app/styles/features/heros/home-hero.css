@@ -207,7 +207,8 @@
     height: 65%;
     z-index: -4;
     pointer-events: none;
-    opacity: 0.28;
+    /* Até 0.2: acima disso uma cruz atrás de "5 anos de história" baixa o contraste para menos de 4.5:1 */
+    opacity: 0.2;
     background: var(--color-foreground);
     mask-image:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cpath d='M16 9v14M9 16h14' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E"),
