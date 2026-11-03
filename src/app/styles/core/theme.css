@@ -10,6 +10,8 @@
   --color-tier-gold: #daa520;
   --color-tier-silver: #c0c0c0;
   --color-tier-bronze: #cd7f32;
+
+  --color-danger: #e5484d;
 }
 
 @theme inline {

@@ -2,17 +2,19 @@
   {
     "label": "Maior quantidade de votos em uma edição",
     "value": 220000,
+    "format": "compact",
     "detail": "FDA Awards 2025"
   },
   {
     "label": "Maior quantidade de vitórias da história do prêmio",
     "value": 18,
+    "format": "number",
     "detail": "Geovane do Carmo Elias"
   },
   {
     "label": "Maior porcentagem de votos em uma categoria",
     "value": 68.2,
-    "unit": "%",
+    "format": "percent",
     "detail": "Senhor - Merecimento do Ano (2025)"
   }
 ]

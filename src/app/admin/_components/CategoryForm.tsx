@@ -7,6 +7,7 @@ import Card from "@/components/ui/Card";
 import { useAuth } from "@/context/AuthContext";
 import { saveCategory } from "@/lib/services/adminCategories";
 import {
+  MAX_DESCRICAO,
   MAX_INDICADOS,
   MIN_INDICADOS,
   parseYouTubeId,
@@ -48,6 +49,7 @@ export default function CategoryForm({
   const { user } = useAuth();
 
   const [name, setName] = useState(initial?.nome ?? "");
+  const [description, setDescription] = useState(initial?.descricao ?? "");
   const [id, setId] = useState(initial?.id ?? "");
   const [idTouched, setIdTouched] = useState(Boolean(initial));
   const [order, setOrder] = useState<number | null>(initial?.ordem ?? null);
@@ -59,7 +61,6 @@ export default function CategoryForm({
 
   function changeName(value: string) {
     setName(value);
-    // O ID acompanha o nome até a pessoa mexer nele (e nunca na edição)
     if (!initial && !idTouched) setId(slug(value));
   }
 
@@ -83,6 +84,7 @@ export default function CategoryForm({
     const result = validateCategory({
       id,
       nome: name,
+      descricao: description,
       ordem: order ?? nextOrder,
       tipo: type,
       indicados: nominees.map((n) => ({
@@ -121,8 +123,21 @@ export default function CategoryForm({
             onChange={(e) => changeName(e.target.value)}
             className={`${INPUT} mt-1`}
           />
+        </label> 
+                <label className="block">
+          <span className={LABEL}>Descrição (opcional)</span>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            maxLength={MAX_DESCRICAO}
+            rows={3}
+            placeholder="O que é esta categoria e como os indicados foram escolhidos."
+            className={`${INPUT} mt-1 resize-y`}
+          />
+          <span className="mt-1 block text-right text-xs text-foreground/60">
+            {description.length}/{MAX_DESCRICAO}
+          </span>
         </label>
-
         <div className="grid gap-5 sm:grid-cols-[1fr_8rem_10rem]">
           <label className="block">
             <span className={LABEL}>ID {initial ? "(fixo)" : "(gerado do nome)"}</span>

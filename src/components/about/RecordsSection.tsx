@@ -1,4 +1,4 @@
-import Card from "@/components/ui/Card";
+import RecordCard from "@/components/about/RecordCard";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getRecords } from "@/lib/content/about/records";
 
@@ -13,11 +13,13 @@ export default function RecordsSection() {
 
         <ul className="grid gap-6 md:grid-cols-3">
           {getRecords().map((record) => (
-            <Card key={record.label} as="li" variant="stat" className="p-6">
-              <p className="text-sm uppercase tracking-wider text-foreground/80">{record.label}</p>
-              <p className="mt-3 font-display text-4xl text-primary">{record.value}</p>
-              <p className="mt-2 text-sm text-foreground/80">{record.detail}</p>
-            </Card>
+            <RecordCard
+              key={record.label}
+              bar={record.bar}
+              label={record.label}
+              value={record.value}
+              detail={record.detail}
+            />
           ))}
         </ul>
       </div>

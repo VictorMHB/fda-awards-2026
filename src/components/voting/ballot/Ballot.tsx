@@ -35,6 +35,7 @@ export default function Ballot({
   onConfirm,
 }: BallotProps) {
   const headingId = useId();
+  const descriptionId = useId();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [agreed, setAgreed] = useState(false);
   const [watching, setWatching] = useState<{
@@ -233,7 +234,22 @@ export default function Ballot({
           </>
         ) : (
           <>
-            <p className="mt-3 text-foreground/80">
+                        {category.descricao && (
+              <p
+                id={descriptionId}
+                className="mt-4 max-w-3xl whitespace-pre-line text-base text-foreground/90 md:text-lg"
+              >
+                {category.descricao}
+              </p>
+            )}
+
+            <p
+              className={
+                category.descricao
+                  ? "mt-3 text-sm text-foreground/70"
+                  : "mt-3 text-foreground/80"
+              }
+            >
               {category.tipo === "video"
                 ? "Assista aos vídeos e escolha um. Sua escolha é salva na hora."
                 : "Escolha um indicado. Sua escolha é salva na hora."}
@@ -242,6 +258,7 @@ export default function Ballot({
             <div
               role="radiogroup"
               aria-labelledby={headingId}
+              aria-describedby={category.descricao ? descriptionId : undefined}
               className="nominee-grid mt-8"
               data-count={category.indicados.length}
               data-type={category.tipo ?? "imagem"}

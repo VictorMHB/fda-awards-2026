@@ -27,7 +27,6 @@ type VotingInfo = {
   categories: { title: string; description: string; empty: string };
   steps: VotingStep[];
   rules: string[];
-  cta: { upcoming: string; open: string; closed: string };
 };
 
 const voting = data satisfies VotingInfo;
@@ -40,13 +39,6 @@ export function getVotingRules() {
   return voting.rules;
 }
 
-// Texto do botão para /votacao (null = ainda sem fase, antes de montar no navegador)
-export function getVotingCtaLabel(phase: PhaseId | null) {
-  if (phase === "votacao") return voting.cta.open;
-  if (phase === null || phase === "aguardando") return voting.cta.upcoming;
-  return voting.cta.closed;
-}
-
 export function getVotingState(phase: PhaseId, loggedIn: boolean): VotingState {
   if (phase === "aguardando") return "upcoming";
   if (phase === "votacao") return loggedIn ? "ready" : "login";
@@ -54,16 +46,13 @@ export function getVotingState(phase: PhaseId, loggedIn: boolean): VotingState {
 }
 
 export function getVotingStateContent(
-  state: VotingState, 
-  firstName?: string
+  state: VotingState,
+  firstName?: string,
 ): VotingStateContent {
   const content = voting.states[state];
   return {
     ...content,
-    description: content.description.replace(
-      "{name}",
-      firstName ? `, ${firstName}` : "",
-    ),
+    description: content.description.replace("{name}", firstName ? `, ${firstName}` : ""),
   };
 }
 
