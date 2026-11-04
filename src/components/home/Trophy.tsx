@@ -15,15 +15,12 @@ const PIXELS = [
   [5, 11, 6, 1], [4, 12, 8, 2], // base
 ];
 
-// Troféu girando no próprio eixo vertical, no meio do hero. A volta vai de
-// -90° a 90° e recomeça: nas duas pontas ele está de perfil (invisível), então
-// o giro parece contínuo e os dois lados mostram o troféu de frente, sem espelhar.
 export default function Trophy({ src, className = "" }: TrophyProps) {
   return (
     <div aria-hidden="true" className={`trophy ${className}`}>
       <div className={`trophy__spin ${src ? "" : "trophy__spin--placeholder"}`}>
         {src ? (
-          <Image src={src} alt="" fill sizes="(width >= 48rem) 13rem, 9rem" className="trophy__image" />
+          <Image src={src} alt="" fill sizes="(width >= 48rem) 23rem, 17rem" className="trophy__image" />
         ) : (
           <>
             <svg viewBox="0 0 16 16" className="trophy__icon" shapeRendering="crispEdges">

@@ -1,4 +1,4 @@
-import IsoCube from "@/components/ui/IsoCube";
+import SpinCube from "@/components/ui/SpinCube";
 import Trophy from "@/components/home/Trophy";
 
 // Foto antiga do fundo, trocada pelo fundo em CSS. A imagem continua em
@@ -13,37 +13,52 @@ type Cube = {
   opacity: number;
   duration: string;
   delay: string;
-  desktopOnly?: boolean; // no celular ficam só os pequenos (3 no total)
+  desktopOnly?: boolean; // no celular ficam só 3 cubos
 };
 
-// Cubos em duas camadas: uma acima do título (faixa do topo + troféu) e outra
-// abaixo dele. Nenhuma camada ocupa a linha do título, então nenhum cubo passa
-// atrás dele. Desktop: 5 cubos (3 pequenos e 2 médios). Celular: 3 pequenos.
+// Cubos de vidro em duas camadas: a faixa de cima e a faixa de baixo do hero.
+// Nenhuma camada ocupa a linha do centro (título e troféu), então nenhum cubo
+// passa atrás do título. Cada grupo fica no miolo de uma nebulosa:
+//   faixa de cima: nebulosa laranja (~15% da borda direita)
+//   faixa de baixo: nebulosa azul (~15% da borda esquerda)
+// Desktop: 10 cubos. Celular: 3.
 const UPPER_CUBES: Cube[] = [
-  { size: "2.5rem", x: "8%", y: "16%", side: "end", opacity: 0.55, duration: "9s", delay: "-2s" },
-  { size: "4.25rem", x: "17%", y: "46%", side: "end", opacity: 0.4, duration: "12s", delay: "-6s", desktopOnly: true },
-  { size: "2.25rem", x: "9%", y: "68%", opacity: 0.45, duration: "10s", delay: "-4s" },
+  { size: "2.5rem", x: "14%", y: "30%", side: "end", opacity: 0.9, duration: "9s", delay: "-2s" },
+  { size: "4.25rem", x: "20%", y: "44%", side: "end", opacity: 0.85, duration: "12s", delay: "-6s", desktopOnly: true },
+  { size: "3rem", x: "9%", y: "52%", side: "end", opacity: 0.9, duration: "10s", delay: "-8s", desktopOnly: true },
+  { size: "2rem", x: "26%", y: "24%", side: "end", opacity: 0.8, duration: "8s", delay: "-3s", desktopOnly: true },
+  { size: "2.25rem", x: "31%", y: "56%", side: "end", opacity: 0.8, duration: "11s", delay: "-5s", desktopOnly: true },
 ];
 
 const LOWER_CUBES: Cube[] = [
-  { size: "4rem", x: "11%", y: "10%", opacity: 0.4, duration: "11s", delay: "-8s", desktopOnly: true },
-  { size: "2.25rem", x: "30%", y: "30%", opacity: 0.5, duration: "8s", delay: "-1s" },
+  { size: "4rem", x: "13%", y: "24%", opacity: 0.85, duration: "11s", delay: "-8s", desktopOnly: true },
+  { size: "3rem", x: "7%", y: "48%", opacity: 0.9, duration: "9s", delay: "-4s" },
+  { size: "2.25rem", x: "20%", y: "50%", opacity: 0.85, duration: "10s", delay: "-7s" },
+  { size: "2rem", x: "24%", y: "18%", opacity: 0.8, duration: "8s", delay: "-1s", desktopOnly: true },
+  { size: "2.75rem", x: "29%", y: "46%", opacity: 0.8, duration: "12s", delay: "-2s", desktopOnly: true },
 ];
 
-// Anotações do fundo (estética Y2K): o texto se repete em eco, como na arte
-// antiga. Só a primeira linha é lida pelo leitor de tela.
+// Anotações grandes do fundo (estética Y2K): o texto se repete em eco, como na
+// arte antiga. Só a primeira linha é lida pelo leitor de tela.
+// side: lado do hero. row: faixa de cima ("top") ou de baixo ("bottom").
 const NOTES = [
-  { text: "5 anos de história", position: "start" },
-  { text: "Os maiores prêmios", position: "end" },
+  { text: "5 anos de história", side: "start", row: "top" },
+  { text: "Os maiores prêmios", side: "end", row: "bottom" },
+] as const;
+
+// Rótulos verticais pequenos nas laterais: cima à direita (CD) e baixo à esquerda (BE)
+const SIDE_LABELS = [
+  { text: "Show ao vivo · 12.12.2026 · 20h", side: "end", row: "top" },
+  { text: "Votação · 27.11 a 05.12", side: "start", row: "bottom" },
 ] as const;
 
 function CubeLayer({ cubes, position }: { cubes: Cube[]; position: "upper" | "lower" }) {
   return (
     <div aria-hidden="true" className={`home-hero__cubes home-hero__cubes--${position}`}>
       {cubes.map(({ size, x, y, side, opacity, duration, delay, desktopOnly }, i) => (
-        <IsoCube
+        <SpinCube
           key={i}
-          className={`iso-cube--float ${desktopOnly ? "hidden sm:block" : ""}`}
+          className={`spin-cube--float ${desktopOnly ? "hidden sm:block" : ""}`}
           style={{
             "--cube-size": size,
             "--cube-duration": duration,
@@ -68,7 +83,10 @@ export default function HomeHero() {
         className="home-hero__photo"
         style={{ backgroundImage: `url(${HOME_BG})` }}
       /> */}
-      <div aria-hidden="true" className="home-hero__glow" />
+      {/* Quadrantes: nebulosa azul (baixo esq.), nebulosa laranja (cima dir.),
+          pontilhado (baixo dir.) e cruzes (cima esq.) */}
+      <div aria-hidden="true" className="home-hero__nebula home-hero__nebula--blue" />
+      <div aria-hidden="true" className="home-hero__nebula home-hero__nebula--orange" />
       <div aria-hidden="true" className="home-hero__dots" />
       <div aria-hidden="true" className="home-hero__crosses" />
       <CubeLayer cubes={UPPER_CUBES} position="upper" />
@@ -93,11 +111,18 @@ export default function HomeHero() {
         </span>
       </h1>
 
-      {NOTES.map(({ text, position }) => (
-        <p key={text} className={`home-note home-note--${position}`}>
+      {NOTES.map(({ text, side, row }) => (
+        <p key={text} className={`home-note home-note--${side} home-note--${row}`}>
           <span>{text}</span>
           <span aria-hidden="true" className="home-note__echo">{text}</span>
           <span aria-hidden="true" className="home-note__echo">{text}</span>
+        </p>
+      ))}
+
+      {/* Decorativos e repetem info que já existe no site: ocultos para leitor de tela */}
+      {SIDE_LABELS.map(({ text, side, row }) => (
+        <p key={text} aria-hidden="true" className={`home-side home-side--${side} home-side--${row}`}>
+          {text}
         </p>
       ))}
     </section>
