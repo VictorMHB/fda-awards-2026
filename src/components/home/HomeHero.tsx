@@ -23,27 +23,27 @@ type Cube = {
 //   faixa de baixo: nebulosa azul (~15% da borda esquerda)
 // Desktop: 10 cubos. Celular: 3.
 const UPPER_CUBES: Cube[] = [
-  { size: "2.5rem", x: "14%", y: "30%", side: "end", opacity: 0.9, duration: "9s", delay: "-2s" },
-  { size: "4.25rem", x: "20%", y: "44%", side: "end", opacity: 0.85, duration: "12s", delay: "-6s", desktopOnly: true },
-  { size: "3rem", x: "9%", y: "52%", side: "end", opacity: 0.9, duration: "10s", delay: "-8s", desktopOnly: true },
+  { size: "2.25rem", x: "30%", y: "96%", side: "end", opacity: 0.8, duration: "11s", delay: "-5s", desktopOnly: true },
   { size: "2rem", x: "26%", y: "24%", side: "end", opacity: 0.8, duration: "8s", delay: "-3s", desktopOnly: true },
-  { size: "2.25rem", x: "31%", y: "56%", side: "end", opacity: 0.8, duration: "11s", delay: "-5s", desktopOnly: true },
+  { size: "4.25rem", x: "18%", y: "70%", side: "end", opacity: 0.85, duration: "12s", delay: "-6s", desktopOnly: true },
+  { size: "2.5rem", x: "14%", y: "150%", side: "end", opacity: 0.9, duration: "9s", delay: "-2s" },
+  { size: "3rem", x: "9%", y: "54%", side: "end", opacity: 0.9, duration: "10s", delay: "-8s", desktopOnly: true },
 ];
 
 const LOWER_CUBES: Cube[] = [
-  { size: "4rem", x: "13%", y: "24%", opacity: 0.85, duration: "11s", delay: "-8s", desktopOnly: true },
-  { size: "3rem", x: "7%", y: "48%", opacity: 0.9, duration: "9s", delay: "-4s" },
-  { size: "2.25rem", x: "20%", y: "50%", opacity: 0.85, duration: "10s", delay: "-7s" },
-  { size: "2rem", x: "24%", y: "18%", opacity: 0.8, duration: "8s", delay: "-1s", desktopOnly: true },
-  { size: "2.75rem", x: "29%", y: "46%", opacity: 0.8, duration: "12s", delay: "-2s", desktopOnly: true },
+  { size: "3rem", x: "9%", y: "21%", opacity: 0.9, duration: "9s", delay: "-4s" },
+  { size: "4rem", x: "20%", y: "2%", opacity: 0.85, duration: "11s", delay: "-8s", desktopOnly: true },
+  { size: "2.25rem", x: "16%", y: "-60%", opacity: 0.85, duration: "10s", delay: "-7s" },
+  { size: "2rem", x: "28%", y: "-40%", opacity: 0.8, duration: "8s", delay: "-1s", desktopOnly: true },
+  { size: "2.75rem", x: "34%", y: "36%", opacity: 0.8, duration: "12s", delay: "-2s", desktopOnly: true },
 ];
 
 // Anotações grandes do fundo (estética Y2K): o texto se repete em eco, como na
 // arte antiga. Só a primeira linha é lida pelo leitor de tela.
 // side: lado do hero. row: faixa de cima ("top") ou de baixo ("bottom").
 const NOTES = [
-  { text: "5 anos de história", side: "start", row: "top" },
-  { text: "Os maiores prêmios", side: "end", row: "bottom" },
+  { text: "Cinco anos de história", side: "start", row: "top" },
+  { text: "Os maiores prêmios do ano", side: "end", row: "bottom" },
 ] as const;
 
 // Rótulos verticais pequenos nas laterais: cima à direita (CD) e baixo à esquerda (BE)
@@ -77,23 +77,15 @@ function CubeLayer({ cubes, position }: { cubes: Cube[]; position: "upper" | "lo
 export default function HomeHero() {
   return (
     <section className="home-hero">
-      {/* Fundo decorativo, de trás para frente (a base é o fundo da própria seção) */}
-      {/* <div
-        aria-hidden="true"
-        className="home-hero__photo"
-        style={{ backgroundImage: `url(${HOME_BG})` }}
-      /> */}
-      {/* Quadrantes: nebulosa azul (baixo esq.), nebulosa laranja (cima dir.),
-          pontilhado (baixo dir.) e cruzes (cima esq.) */}
+      <div aria-hidden="true" className="home-hero__nebula home-hero__nebula--orange-center" />
+      <div aria-hidden="true" className="home-hero__nebula home-hero__nebula--blue-top" />
       <div aria-hidden="true" className="home-hero__nebula home-hero__nebula--blue" />
-      <div aria-hidden="true" className="home-hero__nebula home-hero__nebula--orange" />
       <div aria-hidden="true" className="home-hero__dots" />
       <div aria-hidden="true" className="home-hero__crosses" />
       <CubeLayer cubes={UPPER_CUBES} position="upper" />
       <CubeLayer cubes={LOWER_CUBES} position="lower" />
 
-      {/* Para usar a imagem do troféu: <Trophy src="/images/trophy.png" ... /> */}
-      <Trophy className="home-hero__trophy" />
+      <Trophy src="/images/trophy.png" className="home-hero__trophy" />
 
       {/* No celular o AWARDS some (fica "FDA 2026"), mas o aria-label mantém o nome completo */}
       <h1
