@@ -4,10 +4,31 @@
      Hero da página de Informações: céu Aero, raios, bolhas e janelas de vidro
      Só transform e opacity animam, e não há backdrop-filter aqui.
      ========================================================================== */
+    /* overflow: clip (e não hidden): corta as decorações na borda sem virar
+       um contêiner de rolagem, que o navegador ainda rola sozinho (foco, âncora) */
     .info-hero {
         position: relative;
         isolation: isolate;
-        overflow: hidden;
+        overflow: clip;
+    }
+
+    /* Título: "INFORMAÇÕES" não cabe até 640px, então vira "INFOS" */
+    .info-hero__title-full {
+        display: block;
+    }
+
+    .info-hero__title-short {
+        display: none;
+    }
+
+    @media (width <= 40rem) {
+        .info-hero__title-full {
+            display: none;
+        }
+
+        .info-hero__title-short {
+            display: block;
+        }
     }
 
     /* Céu em degradê */

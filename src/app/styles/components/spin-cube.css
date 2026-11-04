@@ -1,0 +1,103 @@
+@layer components {
+  .spin-cube {
+    --cube-color: var(--color-secondary);
+    --cube-fill: color-mix(
+      in srgb,
+      color-mix(in srgb, var(--cube-color) 85%, var(--color-dark-bg)) 42%,
+      transparent
+    );
+    --cube-edge: color-mix(in srgb, var(--color-foreground) 60%, transparent);
+    --half: calc(var(--cube-size, 3rem) / 2);
+
+    position: absolute;
+    width: var(--cube-size, 3rem);
+    height: var(--cube-size, 3rem);
+    pointer-events: none;
+  }
+
+  .spin-cube__scene {
+    width: 100%;
+    height: 100%;
+    /* Proporcional ao tamanho: cubo pequeno e grande têm a mesma profundidade */
+    perspective: calc(var(--cube-size, 3rem) * 8);
+  }
+
+  .spin-cube__body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateX(-24deg) rotateY(-30deg);
+  }
+
+  .spin-cube__face {
+    position: absolute;
+    inset: 0;
+    box-sizing: border-box;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    background: var(--cube-fill);
+    /* Borda clara e brilho interno: é o que dá o efeito de vidro e marca as arestas */
+    border: 1px solid var(--cube-edge);
+    box-shadow:
+      inset 0 0 0.75rem color-mix(in srgb, var(--color-foreground) 16%, transparent),
+      0 0 0.5rem color-mix(in srgb, var(--color-foreground) 14%, transparent);
+  }
+
+  .spin-cube__face--top {
+    transform: rotateX(90deg) translateZ(var(--half));
+  }
+
+  .spin-cube__face--front {
+    transform: translateZ(var(--half));
+  }
+
+  .spin-cube__face--right {
+    transform: rotateY(90deg) translateZ(var(--half));
+  }
+
+  .spin-cube__face--left {
+    transform: rotateY(-90deg) translateZ(var(--half));
+  }
+
+  .spin-cube__face--back {
+    transform: rotateY(180deg) translateZ(var(--half));
+  }
+
+  .spin-cube__face--bottom {
+    transform: rotateX(-90deg) translateZ(var(--half));
+  }
+
+  /* Sem movimento reduzido: o cubo fica parado, inclinado */
+  @media (prefers-reduced-motion: no-preference) {
+    .spin-cube__body {
+      will-change: transform;
+      animation: spin-cube calc(var(--cube-duration, 10s) * 3) linear var(--cube-delay, 0s) infinite;
+    }
+
+    .spin-cube--float {
+      animation: spin-cube-float var(--cube-duration, 10s) ease-in-out var(--cube-delay, 0s) infinite;
+    }
+  }
+}
+
+@keyframes spin-cube {
+  from {
+    transform: rotateX(-24deg) rotateY(0deg);
+  }
+
+  to {
+    transform: rotateX(-24deg) rotateY(360deg);
+  }
+}
+
+@keyframes spin-cube-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-1rem);
+  }
+}

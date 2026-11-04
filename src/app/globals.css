@@ -5,7 +5,6 @@
 @import "./styles/core/background.css";
 
 @import "./styles/components/glass.css";
-@import "./styles/components/solids.css";
 @import "./styles/components/aero.css";
 @import "./styles/components/card.css";
 @import "./styles/components/phase-override.css";
@@ -13,6 +12,7 @@
 @import "./styles/components/sponsor-grid.css";
 @import "./styles/components/tag.css";
 @import "./styles/components/toast.css";
+@import "./styles/components/spin-cube.css";
 
 @import "./styles/features/user-menu.css";
 @import "./styles/features/info.css";
@@ -26,6 +26,7 @@
 @import "./styles/features/logo.css";
 @import "./styles/features/boot.css";
 @import "./styles/features/news-modal.css";
+@import "./styles/features/trophy.css";
 
 @import "./styles/features/ballot/ballot.css";
 @import "./styles/features/ballot/category-menu.css";
