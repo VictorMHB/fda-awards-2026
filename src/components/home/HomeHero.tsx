@@ -49,7 +49,7 @@ const NOTES = [
 // Rótulos verticais pequenos nas laterais: cima à direita (CD) e baixo à esquerda (BE)
 const SIDE_LABELS = [
   { text: "Show ao vivo · 12.12.2026 · 20h", side: "end", row: "top" },
-  { text: "Votação · 27.11 a 05.12", side: "start", row: "bottom" },
+  { text: "Votação · 13.11 a 30.11", side: "start", row: "bottom" },
 ] as const;
 
 function CubeLayer({ cubes, position }: { cubes: Cube[]; position: "upper" | "lower" }) {

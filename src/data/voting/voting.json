@@ -2,25 +2,25 @@
   "steps": [
     {
       "title": "Entre com o Google",
-      "description": "Faça login com sua conta Google. Cada conta tem uma cédula só."
+      "description": "Faça login com sua conta Google. Cada conta pode votar apenas uma vez."
     },
     {
       "title": "Escolha os indicados",
-      "description": "Marque um indicado em cada categoria. As escolhas são salvas na hora, então dá para continuar depois."
+      "description": "Selecione um indicado em cada categoria. Suas escolhas são salvas automaticamente, assim você pode continuar mais tarde."
     },
     {
       "title": "Confirme a cédula",
-      "description": "Com todas as categorias preenchidas, confirme o voto. Depois disso, ele não muda mais."
+      "description": "Quando terminar, confirme suas escolhas. Não é possível alterar o voto depois."
     },
     {
       "title": "Veja o resultado",
-      "description": "Os vencedores são revelados na cerimônia, ao vivo."
+      "description": "Os vencedores serão revelados durante a cerimônia ao vivo e, em seguida, publicados no site."
     }
   ],
   "rules": [
     "Um voto por categoria, com uma conta Google por pessoa.",
-    "A votação vai de 27 de novembro a 5 de dezembro, até 23h59 (horário de Brasília).",
-    "Só contam cédulas confirmadas: escolhas sem confirmação até o prazo ficam de fora.",
+    "A votação vai de 13 de novembro a 30 de novembro, até 23h59 (horário de Brasília).",
+    "Apenas votos confirmados serão contabilizados. Escolhas não confirmadas até o prazo final serão descartadas.",
     "Votos de contas falsas ou duplicadas são anulados."
   ],
   "cta": {
@@ -38,18 +38,18 @@
     "upcoming": {
       "label": "Status",
       "title": "Votação em breve",
-      "description": "A votação ainda não abriu. Volte em breve para montar sua cédula."
+      "description": "A votação ainda não abriu. Volte em breve para escolher seus indicados."
     },
     "login": {
       "label": "Status",
       "title": "Votação aberta",
-      "description": "Entre com sua conta Google para montar sua cédula.",
+      "description": "Entre com sua conta Google para votar!",
       "action": "Entrar com Google"
     },
     "ready": {
       "label": "Status",
       "title": "Votação aberta",
-      "description": "Olá{name}! Sua cédula está esperando por você.",
+      "description": "Olá, {name}! Chegou a hora de fazer suas escolhas.",
       "action": "Começar a votar"
     },
     "closed": {
@@ -60,7 +60,7 @@
   },
   "categories": {
     "title": "Categorias em disputa",
-    "description": "Estas são as categorias desta edição. Os indicados você vê na hora de votar.",
+    "description": "Estas são as categorias desta edição. Os indicados serão revelados quando a votação abrir.",
     "empty": "As categorias serão reveladas em breve."
   },
   "notices": {

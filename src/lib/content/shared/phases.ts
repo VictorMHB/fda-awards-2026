@@ -1,12 +1,12 @@
 // Todas as datas em horário de Brasília (UTC-3).
 export const DATAS = {
-  votacaoAbre: "2026-11-27T00:00:00-03:00",
-  votacaoFecha: "2026-12-05T23:59:59-03:00",
+  votacaoAbre: "2026-11-13T00:00:00-03:00",
+  votacaoFecha: "2026-11-30T23:59:59-03:00",
   showInicio: "2026-12-12T20:00:00-03:00",
-  showFim: "2026-12-12T23:30:00-03:00",
+  showFim: "2026-12-12T02:00:00-03:00",
 } as const;
 
-export const ANUNCIO_PREVISTO = "no final de novembro";
+export const ANUNCIO_PREVISTO = "dia 13 de novembro";
 export const LINK_TRANSMISSAO: string | null = null;
 export const PROXIMA_EDICAO = 2027;
 

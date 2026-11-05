@@ -5,7 +5,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { getEditions, type Edition } from "@/lib/content/about/editions";
 import { TO_BE_ANNOUNCED } from "@/lib/content/info/event";
 
-function EditionItem({ edition }: { edition: Edition }) {
+function EditionItem({ edition, eager = false }: { edition: Edition; eager?: boolean }) {
   const { year, winnerLabel, winner, description, image } = edition;
 
   return (
@@ -16,6 +16,7 @@ function EditionItem({ edition }: { edition: Edition }) {
             src={image.src}
             alt={image.alt}
             fill
+            loading={eager ? "eager" : "lazy"}
             sizes="(min-width: 768px) 40vw, 100vw"
             className="object-cover"
           />
@@ -60,7 +61,7 @@ export default function EditionsSection() {
 
         <ol className="space-y-16 md:space-y-24">
           {getEditions().map((edition) => (
-            <EditionItem key={edition.year} edition={edition} />
+            <EditionItem key={edition.year} edition={edition} eager />
           ))}
         </ol>
       </div>

@@ -8,7 +8,7 @@ export default function RecordsSection() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           title="Recordes"
-          description="As marcas que ficaram na história da premiação."
+          description="Os feitos que ficaram na história da premiação."
         />
 
         <ul className="grid gap-6 md:grid-cols-3">

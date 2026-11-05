@@ -15,7 +15,7 @@ export default function TimelineSection() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           title="Linha do tempo"
-          description="As etapas da premiação, do anúncio dos indicados à cerimônia."
+          description="A etapa atual e as próximas fases da premiação."
         />
 
         <ol className="timeline">

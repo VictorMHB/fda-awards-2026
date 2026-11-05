@@ -13,8 +13,7 @@ type EditionData = {
   winnerLabel?: string;
   winner?: string | null;
   description?: string | null;
-  image?: string;
-  imageAlt?: string;
+  image?: { src?: string; alt?: string };
 };
 
 const DEFAULT_WINNER_LABEL = "Maior vencedor da noite";
@@ -30,10 +29,14 @@ function readText(entry: EditionData, field: "winner" | "description", year: num
 
 function readImage(entry: EditionData, year: number) {
   if (!entry.image) return undefined;
-  if (!entry.imageAlt?.trim()) {
-    throw new Error(`[editions] a edição de ${year} tem "image", mas está sem "imageAlt"`);
+  const { src, alt } = entry.image;
+  if (!src?.trim()) {
+    throw new Error(`[editions] a edição de ${year} tem "image", mas está sem "src"`);
   }
-  return { src: entry.image, alt: entry.imageAlt };
+  if (!alt?.trim()) {
+    throw new Error(`[editions] a edição de ${year} tem "image", mas está sem "alt"`);
+  }
+  return { src, alt };
 }
 
 function toEdition(entry: EditionData, index: number): Edition {

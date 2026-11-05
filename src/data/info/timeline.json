@@ -7,15 +7,15 @@
   },
   {
     "phase": "votacao",
-    "date": "27 de novembro",
+    "date": "13 de novembro",
     "title": "Abertura da votação",
     "description": "Entre com sua conta Google e escolha um indicado por categoria."
   },
   {
     "phase": "aguardandoShow",
-    "date": "5 de dezembro",
+    "date": "30 de novembro",
     "title": "Encerramento da votação",
-    "description": "Último dia para confirmar a cédula, até 23h59 (horário de Brasília)."
+    "description": "Último dia para confirmar seus votos, até 23h59 (horário de Brasília)."
   },
   {
     "phase": "aoVivo",

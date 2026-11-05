@@ -2,26 +2,46 @@
   {
     "year": 2021,
     "winner": "Geovane do Carmo Elias",
-    "description": "A primeira edição do FDA Awards foi realizada em 2021 como um pequeno resumo das categorias que marcaram o ano. O maior vencedor dessa edição foi Geovane do Carmo Elias, que conquistou um total de cinco troféus durante a noite."
+    "description": "A primeira edição do FDA Awards foi realizada em 2021 como um pequeno resumo das categorias que marcaram o ano. O maior vencedor dessa edição foi Geovane do Carmo Elias, que conquistou um total de cinco troféus durante a noite.",
+    "image": {
+      "src": "/editions/fda_2021.png",
+      "alt": "Capa FDA Awards 2021"
+    }
   },
   {
     "year": 2022,
     "winner": "Geovane do Carmo Elias",
-    "description": "A edição de 2022 marcou a primeira transmissão online do prêmio para o público. A competição foi muito acirrada, porém Geovane do Carmo Elias terminou a noite com mais troféus, continuando sua dominância do ano passado. Além disso, foi nesse ano que os “Vagabundos Supremos” se consagraram vencedores na categoria “Grupo do Ano”, antes de sua dissolução."
+    "description": "A edição de 2022 marcou a primeira transmissão online do prêmio para o público. A competição foi muito acirrada, porém Geovane do Carmo Elias terminou a noite com mais troféus, continuando sua dominância do ano passado. Além disso, foi nesse ano que os “Vagabundos Supremos” se consagraram vencedores na categoria “Grupo do Ano”, antes de sua dissolução.",
+    "image": {
+      "src": "/editions/fda_2022.png",
+      "alt": "Capa FDA Awards 2022"
+    }
   },
   {
     "year": 2023,
     "winner": "Gianluca “Senhor” de Andrade",
-    "description": "Em 2023, após alguns imprevistos, não foi possível realizar ou transmitir o FDA Awards. Essa edição ficou marcada pela paridade nos prêmios, em que o maior vencedor da noite foi Gianluca “Senhor” de Andrade, com dois troféus."
+    "description": "Em 2023, após alguns imprevistos, não foi possível realizar ou transmitir o FDA Awards. Essa edição ficou marcada pela paridade nos prêmios, em que o maior vencedor da noite foi Gianluca “Senhor” de Andrade, com dois troféus.",
+    "image": {
+      "src": "/editions/fda_2023.png",
+      "alt": "Capa FDA Awards 2023"
+    }
   },
   {
     "year": 2024,
     "winner": "Fariaz MC",
-    "description": "O FDA Awards de 2024 foi a edição com o maior número de votantes, totalizando 210 mil, um aumento de 60 mil em relação à edição anterior. Outro grande marco dessa edição foi a utilização do Auditório Freguesia do Ó pela primeira vez para a realização da cerimônia do prêmio. A noite ainda contou com uma apresentação exclusiva da “Stultus Orchestra”."
+    "description": "O FDA Awards de 2024 foi a edição com o maior número de votantes, totalizando 210 mil, um aumento de 60 mil em relação à edição anterior. Outro grande marco dessa edição foi a utilização do Auditório Freguesia do Ó pela primeira vez para a realização da cerimônia do prêmio. A noite ainda contou com uma apresentação exclusiva da “Stultus Orchestra”.",
+    "image": {
+      "src": "/editions/fda_2024.png",
+      "alt": "Capa FDA Awards 2024"
+    }
   },
   {
     "year": 2025,
-    "winner": null,
-    "description": null
+    "winner": "Gustavo Liuti",
+    "description": "A edição de 2025 do FDA Awards foi marcada por um grande aumento no número de patrocinadores e pela grande presença nas redes sociais, com mais de 200 mil votos computados. O grande vencedor da noite foi Gustavo Liuti, que conquistou três troféus, incluindo o de “Casal do Ano”.",
+    "image": {
+      "src": "/editions/fda_2025.png",
+      "alt": "Capa FDA Awards 2025"
+    }
   }
 ]

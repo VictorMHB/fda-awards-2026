@@ -2,9 +2,9 @@
   { "name": "Cativeiro", "tier": "diamond", "logo": "/sponsors/cativeiro.png", "master": true },
   { "name": "Logika", "tier": "diamond", "logo": "/sponsors/logika.png", "master": true },
 
-  { "name": "Solomon Studios", "tier": "platinum" },
-  { "name": "Hillebrande Enterprise", "tier": "platinum" },
-  { "name": "Vermes Corp", "tier": "platinum" },
+  { "name": "Solomon Studios", "tier": "platinum", "logo": "/sponsors/solomon.png" },
+  { "name": "Hillebrand Enterprise", "tier": "platinum", "logo": "/sponsors/hillebrand.png" },
+  { "name": "Vermes Corp", "tier": "platinum", "logo": "/sponsors/vermes.png" },
 
   { "name": "Armarinhos Romane", "tier": "gold" },
   { "name": "Bunker Pub", "tier": "gold" },
