@@ -3,15 +3,15 @@
   { "name": "Logika", "tier": "diamond", "logo": "/sponsors/logika.png", "master": true },
 
   { "name": "Solomon Studios", "tier": "platinum", "logo": "/sponsors/solomon.png" },
-  { "name": "Hillebrand Enterprise", "tier": "platinum", "logo": "/sponsors/hillebrand.png" },
+  { "name": "Levita", "tier": "platinum", "logo": "/sponsors/levita.png" },
   { "name": "Vermes Corp", "tier": "platinum", "logo": "/sponsors/vermes.png" },
 
-  { "name": "Armarinhos Romane", "tier": "gold" },
-  { "name": "Bunker Pub", "tier": "gold" },
-  { "name": "Olive Studios", "tier": "gold" },
-  { "name": "X-Brain Desenvolvimento", "tier": "gold" },
-  { "name": "Levita", "tier": "gold" },
-  
+  { "name": "Armarinhos Romane", "tier": "gold", "logo": "/sponsors/armarinhos.png" },
+  { "name": "Bunker Pub", "tier": "gold", "logo": "/sponsors/bunker.png" },
+  { "name": "Olive Studios", "tier": "gold", "logo": "/sponsors/olive.png" },
+  { "name": "X-Brain Desenvolvimento", "tier": "gold", "logo": "/sponsors/xbrain.png" },
+  { "name": "Hillebrand Enterprise", "tier": "gold", "logo": "/sponsors/hillebrand.png"},
+ 
   { "name": "Cismus LTDA", "tier": "silver" },
   { "name": "INSA Cambé", "tier": "silver" },
   { "name": "Medicina UFPR", "tier": "silver" },
