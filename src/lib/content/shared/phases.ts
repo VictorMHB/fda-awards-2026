@@ -1,6 +1,6 @@
 // Todas as datas em horário de Brasília (UTC-3).
 export const DATAS = {
-  votacaoAbre: "2026-11-13T00:00:00-03:00",
+  votacaoAbre: "2026-11-13T12:00:00-03:00",
   votacaoFecha: "2026-11-30T23:59:59-03:00",
   showInicio: "2026-12-12T20:00:00-03:00",
   showFim: "2026-12-12T02:00:00-03:00",
