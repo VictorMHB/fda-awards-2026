@@ -1,0 +1,15 @@
+{
+    "titleFda": "FDA",
+    "titleAwards": "AWARDS",
+    "titleYear": "2026",
+    "status": "Voto confirmado",
+    "dateLine": "em {data} às {hora}",
+    "windowTitle": "comprovante.png",
+    "heading": "Seu comprovante",
+    "hint": "Uma imagem de lembrança que você participou da história dessa edição.",
+    "button": "Baixar comprovante",
+    "busy": "Gerando...",
+    "error": "Não foi possível gerar o comprovante.",
+    "fileName": "fda-awards-2026-comprovante.png",
+    "fallbackName": "Votante"
+}

@@ -142,7 +142,7 @@ export default function Ballot({
               </p>
             )}
 
-            <Card variant="window" title="Revisão" className="mt-8">
+            <Card variant="window" title="Revisão" className="card--solid mt-8">
               <ul className="divide-y divide-foreground/15">
                 {categories.map((c, index) => {
                   const chosen = chosenIn(c);

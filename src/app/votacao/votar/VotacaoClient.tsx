@@ -7,6 +7,7 @@ import { useCategorias } from "@/hooks/useCategorias";
 import { useVotante } from "@/hooks/useVotante";
 import UserMenu from "@/components/layout/UserMenu";
 import Ballot from "@/components/voting/ballot/Ballot";
+import ReceiptDownload from "@/components/voting/ReceiptDownload";
 
 const MESSAGE = "px-6 pt-32 text-foreground/80";
 
@@ -86,6 +87,10 @@ export default function VotacaoClient() {
         onChoose={escolherIndicado}
         onConfirm={handleConfirm}
       />
+
+      {votante.confirmado && typeof votante.confirmadoEm === "number" && (
+        <ReceiptDownload name={votante.nome} confirmedAt={votante.confirmadoEm} />
+      )}
     </main>
   );
 }
