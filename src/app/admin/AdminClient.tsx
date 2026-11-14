@@ -89,6 +89,12 @@ export default function AdminClient() {
           </AeroText>
         </h1>
 
+        <div className="mt-6">
+          <AeroButton href="/admin/resultados" variant="blue" size="sm">
+            Ver resultados
+          </AeroButton>
+        </div>
+
         {locked && (
           <p role="status" className="mt-6 border-l-[3px] border-primary bg-primary/10 p-4">
             A votação já abriu: criar, editar, reordenar e apagar estão bloqueados, porque isso

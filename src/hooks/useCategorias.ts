@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -9,29 +10,43 @@ export function useCategorias() {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const latest = useRef(0); // só a busca mais recente vale
 
-  // Devolve uma Promise: quem precisa esperar a lista nova (ex.: admin reordenando) usa await
+  const latest = useRef(0);
+
   const refetch = useCallback(async () => {
     const request = ++latest.current;
+
     try {
       const q = query(collection(db, "categorias"), orderBy("ordem"));
       const snapshot = await getDocs(q);
+
       if (request !== latest.current) return;
+
       setCategorias(
-        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Categoria[],
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Categoria[],
       );
+
       setError(null);
     } catch (err) {
       console.error(err);
-      if (request === latest.current) setError("Erro ao carregar categorias.");
+
+      if (request === latest.current) {
+        setError("Erro ao carregar categorias.");
+      }
     } finally {
-      if (request === latest.current) setLoading(false);
+      if (request === latest.current) {
+        setLoading(false);
+      }
     }
   }, []);
 
   useEffect(() => {
-    refetch();
+    void (async () => {
+      await refetch();
+    })();
   }, [refetch]);
 
   return { categorias, loading, error, refetch };
