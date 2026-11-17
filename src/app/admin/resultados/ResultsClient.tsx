@@ -22,6 +22,7 @@ import type {
 import CategoryDetail from "./_components/CategoryDetail";
 import PieChart from "./_components/PieChart";
 import ResultsSummary from "./_components/ResultsSummary";
+import { getVotersContent } from "@/lib/content/admin/voters";
 
 function exportJson(data: ResultadosResponse) {
   const iso = new Date(data.geradoEm).toISOString();
@@ -169,6 +170,10 @@ export default function ResultsClient() {
         <div>
           <AeroButton href="/admin" variant="blue" size="sm">
             Voltar ao admin
+          </AeroButton>
+
+          <AeroButton href="/admin/results/voters" variant="blue" size="sm">
+            {getVotersContent().linkFromResults}
           </AeroButton>
         </div>
 
