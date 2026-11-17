@@ -1,0 +1,67 @@
+{
+  "title": "Votantes",
+  "description": "Quem votou em quem. Use para conferir contas suspeitas antes de anular.",
+  "back": "Resultados",
+  "linkFromResults": "Ver votantes",
+  "refresh": "Atualizar",
+  "refreshing": "Atualizando...",
+  "updatedAt": "Atualizado às {time}",
+  "summary": {
+    "all": "Contas",
+    "confirmed": "Confirmadas",
+    "draft": "Rascunhos",
+    "annulled": "Anuladas"
+  },
+  "view": {
+    "label": "Modo de visualização",
+    "voters": "Por votante",
+    "categories": "Por categoria"
+  },
+  "filters": {
+    "label": "Filtrar por status",
+    "all": "Todos",
+    "confirmed": "Confirmadas",
+    "draft": "Rascunhos",
+    "annulled": "Anuladas"
+  },
+  "search": {
+    "label": "Buscar por nome ou e-mail",
+    "placeholder": "Nome ou e-mail",
+    "result": "Mostrando {shown} de {total}"
+  },
+  "status": {
+    "confirmed": "Confirmada",
+    "draft": "Rascunho",
+    "annulled": "Anulada"
+  },
+  "annulledNote": "Conta anulada: não entra nos totais de resultados.",
+  "voter": {
+    "barLabel": "Votante {n}",
+    "noName": "Sem nome",
+    "uid": "UID",
+    "copy": "Copiar UID",
+    "copied": "UID copiado.",
+    "copyError": "Não foi possível copiar o UID.",
+    "confirmedAt": "Confirmada em {date}",
+    "notConfirmed": "Não confirmada",
+    "progress": "{done} de {total} categorias"
+  },
+  "choice": {
+    "none": "Sem voto",
+    "removed": "Indicado removido"
+  },
+  "byCategory": {
+    "select": "Categoria",
+    "votes": "Votos confirmados: {count}",
+    "empty": "Ninguém votou neste indicado."
+  },
+  "truncated": "Mostrando só as primeiras {count} contas. A lista completa exige paginação.",
+  "states": {
+    "loading": "Carregando votantes...",
+    "error": "Não foi possível carregar os votantes.",
+    "signedOut": "Sua sessão expirou. Entre de novo para ver os votantes.",
+    "empty": "Nenhum votante ainda.",
+    "noMatch": "Nenhuma conta encontrada com esses filtros.",
+    "noCategories": "Nenhuma categoria cadastrada."
+  }
+}

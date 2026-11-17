@@ -22,4 +22,5 @@ export interface Votante {
   confirmado: boolean;
   confirmadoEm: number | null;
   votos: Record<string, string>;
+  anulado?: boolean;
 }
