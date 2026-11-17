@@ -100,8 +100,8 @@ export default function VotersClient() {
         </h1>
         <p className="mt-3 max-w-2xl text-foreground/80">{t.description}</p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <AeroButton href="/admin/results" variant="blue" size="sm">
+        <div className="mt-6 mf-8 flex flex-wrap items-center gap-3">
+          <AeroButton href="/admin/resultados" variant="blue" size="sm">
             <span aria-hidden="true">← </span>
             {t.back}
           </AeroButton>

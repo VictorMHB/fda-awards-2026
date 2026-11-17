@@ -172,7 +172,7 @@ export default function ResultsClient() {
             Voltar ao admin
           </AeroButton>
 
-          <AeroButton href="/admin/results/voters" variant="blue" size="sm">
+          <AeroButton href="/admin/resultados/votantes" variant="blue" size="sm">
             {getVotersContent().linkFromResults}
           </AeroButton>
         </div>
