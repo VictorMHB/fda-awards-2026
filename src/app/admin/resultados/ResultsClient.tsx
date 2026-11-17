@@ -167,7 +167,7 @@ export default function ResultsClient() {
     <main className="px-6 py-10 md:py-16">
       <div className="mx-auto max-w-3xl">
         {/* Cabeçalho */}
-        <div>
+        <div className="flex flex-wrap items-center gap-3">
           <AeroButton href="/admin" variant="blue" size="sm">
             Voltar ao admin
           </AeroButton>

@@ -12,6 +12,6 @@ export async function fetchVoters(token: string): Promise<VotersReport> {
     throw new Error("Erro de conexão.");
   }
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.error ?? "Erro inesperado.");
+  if (!res.ok) throw new Error(data.error ?? `Erro ${res.status} ao carregar os votantes.`);
   return data as VotersReport;
 }
